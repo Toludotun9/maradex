@@ -2,30 +2,31 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import PersonalInfoForm from '@/components/PersonalInfoForm';
+import LoanInfoForm from '@/components/LoanInfoForm';
 import { useAppContext } from '@/context/AppContext';
 
-export default function PersonalInfoPage() {
+export default function LoanInfoPage() {
   const router = useRouter();
   const { setCurrentStep, saveApplication } = useAppContext();
 
   const handleContinue = async () => {
     const result = await saveApplication();
     if (result.success) {
-      setCurrentStep(1); // Move to Loan Info step on the stepper
-      router.push('/apply/loan');
+      setCurrentStep(2); // Move to Add Cosigner step
+      // router.push('/apply/cosigner');
     } else {
       alert('Failed to save your application. Please try again.');
     }
   };
 
   const handleBack = () => {
-    router.push('/');
+    setCurrentStep(0);
+    router.push('/apply/personal');
   };
 
   return (
     <div className="flex flex-col items-center justify-center flex-1 py-16 px-8 md:px-20">
-      <PersonalInfoForm onBack={handleBack} onContinue={handleContinue} />
+      <LoanInfoForm onBack={handleBack} onContinue={handleContinue} />
     </div>
   );
 }

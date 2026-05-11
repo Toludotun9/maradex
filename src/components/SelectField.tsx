@@ -10,6 +10,8 @@ interface SelectFieldProps {
   className?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  placeholder?: string;
+  error?: string;
 }
 
 const SelectField: React.FC<SelectFieldProps> = ({ 
@@ -19,7 +21,9 @@ const SelectField: React.FC<SelectFieldProps> = ({
   optional, 
   className = '',
   value,
-  onChange
+  onChange,
+  placeholder = 'Select',
+  error
 }) => {
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
@@ -33,9 +37,12 @@ const SelectField: React.FC<SelectFieldProps> = ({
           name={name}
           value={value}
           onChange={onChange}
-          className="w-full px-4 py-3 rounded border border-gray-300 focus:border-secondary-blue focus:ring-1 focus:ring-secondary-blue outline-none appearance-none transition-all text-gray-700 bg-white"
+          className={`
+            w-full px-4 py-3 rounded border outline-none appearance-none transition-all text-gray-700 bg-white
+            ${error ? 'border-red-600 focus:ring-1 focus:ring-red-600' : 'border-gray-300 focus:border-secondary-blue focus:ring-1 focus:ring-secondary-blue'}
+          `}
         >
-          <option value="">Select</option>
+          <option value="">{placeholder}</option>
           {options.map(opt => (
             <option key={opt.value} value={opt.value}>{opt.label}</option>
           ))}
@@ -46,6 +53,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
           </svg>
         </div>
       </div>
+      {error && <p className="text-xs text-red-600 font-bold mt-1">{error}</p>}
     </div>
   );
 };

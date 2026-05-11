@@ -1,11 +1,12 @@
 "use client";
 
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import InputField from './InputField';
 import SelectField from './SelectField';
 import ToggleGroup from './ToggleGroup';
 import DisclaimerBox from './DisclaimerBox';
 import Button from './Button';
+import AddressAutocomplete from './AddressAutocomplete';
 
 import { useAppContext } from '@/context/AppContext';
 
@@ -16,7 +17,51 @@ const PersonalInfoForm = ({
   onBack: () => void;
   onContinue: () => void;
 }) => {
-  const { formData, updateFormData } = useAppContext();
+  const { formData, updateFormData, saveApplication, isLoading } = useAppContext();
+  const [isSaved, setIsSaved] = useState(false);
+  const [isContinuing, setIsContinuing] = useState(false);
+
+  const stateMapping: { [key: string]: string } = {
+    'Alabama': 'AL', 'Alaska': 'AK', 'Arizona': 'AZ', 'Arkansas': 'AR', 'California': 'CA',
+    'Colorado': 'CO', 'Connecticut': 'CT', 'Delaware': 'DE', 'Florida': 'FL', 'Georgia': 'GA',
+    'Hawaii': 'HI', 'Idaho': 'ID', 'Illinois': 'IL', 'Indiana': 'IN', 'Iowa': 'IA',
+    'Kansas': 'KS', 'Kentucky': 'KY', 'Louisiana': 'LA', 'Maine': 'ME', 'Maryland': 'MD',
+    'Massachusetts': 'MA', 'Michigan': 'MI', 'Minnesota': 'MN', 'Mississippi': 'MS', 'Missouri': 'MO',
+    'Montana': 'MT', 'Nebraska': 'NE', 'Nevada': 'NV', 'New Hampshire': 'NH', 'New Jersey': 'NJ',
+    'New Mexico': 'NM', 'New York': 'NY', 'North Carolina': 'NC', 'North Dakota': 'ND', 'Ohio': 'OH',
+    'Oklahoma': 'OK', 'Oregon': 'OR', 'Pennsylvania': 'PA', 'Rhode Island': 'RI', 'South Carolina': 'SC',
+    'South Dakota': 'SD', 'Tennessee': 'TN', 'Texas': 'TX', 'Utah': 'UT', 'Vermont': 'VT',
+    'Virginia': 'VA', 'Washington': 'WA', 'West Virginia': 'WV', 'Wisconsin': 'WI', 'Wyoming': 'WY'
+  };
+
+  const handleAddressSelect = (selected: { street: string; city: string; state: string; zip: string }) => {
+    updateFormData({
+      addressStreet: selected.street,
+      addressCity: selected.city,
+      addressState: stateMapping[selected.state] || selected.state.slice(0, 2).toUpperCase(),
+      addressZip: selected.zip
+    });
+  };
+
+  // Refs for auto-focusing DOB boxes
+  const dobMonthRef = useRef<HTMLInputElement>(null);
+  const dobDayRef = useRef<HTMLInputElement>(null);
+  const dobYearRef = useRef<HTMLInputElement>(null);
+
+  const handleSaveLater = async () => {
+    const result = await saveApplication();
+    if (result.success) {
+      setIsSaved(true);
+      setTimeout(() => setIsSaved(false), 3000);
+    }
+  };
+
+  const handleContinue = async () => {
+    setIsContinuing(true);
+    await saveApplication();
+    onContinue();
+    setIsContinuing(false);
+  };
 
   const formatSSN = (val: string) => {
     const nums = val.replace(/\D/g, '').slice(0, 9);
@@ -25,8 +70,54 @@ const PersonalInfoForm = ({
     return `${nums.slice(0, 3)}-${nums.slice(3, 5)}-${nums.slice(5)}`;
   };
 
+  const formatPhone = (val: string) => {
+    const nums = val.replace(/\D/g, '').slice(0, 10);
+    if (nums.length <= 3) return nums;
+    if (nums.length <= 6) return `(${nums.slice(0, 3)}) ${nums.slice(3)}`;
+    return `(${nums.slice(0, 3)}) ${nums.slice(3, 6)}-${nums.slice(6)}`;
+  };
+
+  const validateEmail = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  const isInvalidDOB = () => {
+    const { dobMonth, dobDay, dobYear } = formData;
+    if (!dobMonth || !dobDay || !dobYear) return false;
+    if (dobMonth.length < 2 || dobDay.length < 2 || dobYear.length < 4) return false;
+    
+    const m = parseInt(dobMonth);
+    const d = parseInt(dobDay);
+    const y = parseInt(dobYear);
+    
+    const date = new Date(y, m - 1, d);
+    const now = new Date();
+    
+    // Check if valid date (e.g. not Feb 31st) and in the past
+    const isValid = date.getFullYear() === y && date.getMonth() === m - 1 && date.getDate() === d;
+    return !isValid || date >= now;
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    updateFormData({ [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    let finalValue = value;
+
+    // Reject non-numeric input for specific fields if needed
+    if (['dobMonth', 'dobDay', 'dobYear'].includes(name)) {
+      if (value && !/^\d+$/.test(value)) return;
+      
+      // Range checks
+      if (name === 'dobMonth' && parseInt(value) > 12) return;
+      if (name === 'dobDay' && parseInt(value) > 31) return;
+    }
+
+    if (name === 'phone') finalValue = formatPhone(value);
+    
+    updateFormData({ [name]: finalValue });
+
+    // Auto-focus logic for DOB
+    if (name === 'dobMonth' && value.length === 2) dobDayRef.current?.focus();
+    if (name === 'dobDay' && value.length === 2) dobYearRef.current?.focus();
   };
 
   return (
@@ -97,6 +188,7 @@ const PersonalInfoForm = ({
             placeholder="name@email.com"
             value={formData.email}
             onChange={handleChange}
+            error={formData.email && !validateEmail(formData.email) ? 'Please enter a valid email address.' : ''}
           />
           <p className="mt-4 text-[10px] text-gray-500 leading-relaxed max-w-2xl">
             By providing your email address, you authorize Sallie Mae Bank and any affiliates with which it shares this email address to send you commercial messages at such email address.
@@ -113,6 +205,7 @@ const PersonalInfoForm = ({
               hint="Must be a U.S. phone number."
               value={formData.phone}
               onChange={handleChange}
+              error={formData.phone && formData.phone.replace(/\D/g, '').length < 10 ? 'Please enter a valid 10-digit U.S. phone number.' : ''}
             />
           </div>
           <DisclaimerBox hasArrow className="md:mt-6">
@@ -199,32 +292,38 @@ const PersonalInfoForm = ({
             <label className="text-sm font-bold text-primary-blue mb-2 block">Date of birth</label>
             <div className="flex items-center gap-3">
               <input
+                ref={dobMonthRef}
                 name="dobMonth"
                 placeholder="MM"
                 maxLength={2}
                 value={formData.dobMonth}
                 onChange={handleChange}
-                className="w-16 px-3 py-3 rounded border border-gray-300 focus:border-secondary-blue outline-none text-center text-gray-700"
+                className={`w-16 px-3 py-3 rounded border transition-all text-center text-gray-700 outline-none ${isInvalidDOB() ? 'border-red-600' : 'border-gray-300 focus:border-secondary-blue'}`}
               />
               <span className="text-xl text-gray-400">/</span>
               <input
+                ref={dobDayRef}
                 name="dobDay"
                 placeholder="DD"
                 maxLength={2}
                 value={formData.dobDay}
                 onChange={handleChange}
-                className="w-16 px-3 py-3 rounded border border-gray-300 focus:border-secondary-blue outline-none text-center text-gray-700"
+                className={`w-16 px-3 py-3 rounded border transition-all text-center text-gray-700 outline-none ${isInvalidDOB() ? 'border-red-600' : 'border-gray-300 focus:border-secondary-blue'}`}
               />
               <span className="text-xl text-gray-400">/</span>
               <input
+                ref={dobYearRef}
                 name="dobYear"
                 placeholder="YYYY"
                 maxLength={4}
                 value={formData.dobYear}
                 onChange={handleChange}
-                className="w-28 px-3 py-3 rounded border border-gray-300 focus:border-secondary-blue outline-none text-center text-gray-700"
+                className={`w-28 px-3 py-3 rounded border transition-all text-center text-gray-700 outline-none ${isInvalidDOB() ? 'border-red-600' : 'border-gray-300 focus:border-secondary-blue'}`}
               />
             </div>
+            {isInvalidDOB() && (
+              <p className="text-sm text-red-600 font-bold mt-2 animate-in fade-in slide-in-from-top-1 duration-300">Please enter a valid date of birth in the past.</p>
+            )}
           </div>
 
           {/* Gate everything below DOB behind a complete DOB */}
@@ -282,20 +381,110 @@ const PersonalInfoForm = ({
         </div>
       )}
 
+      {/* Address Card - Shows only after ITIN/SSN is complete */}
+      {((formData.citizenshipStatus !== 'non-us-citizen' && formData.ssn.replace(/\D/g, '').length === 9) || 
+        (formData.citizenshipStatus === 'non-us-citizen' && (formData.hasSsn === 'no' || (formData.hasSsn === 'yes' && formData.ssn.replace(/\D/g, '').length === 9)))) && (
+        <div className="mt-10 bg-white rounded-lg p-10 shadow-xl border border-gray-200 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <h2 className="text-2xl font-bold text-primary-blue mb-8">What's your home address?</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            <AddressAutocomplete
+              label="Street address"
+              name="addressStreet"
+              placeholder="Type to search"
+              hint="This must be a street address and not a P.O. box."
+              value={formData.addressStreet}
+              onChange={handleChange}
+              onSelect={handleAddressSelect}
+            />
+            <InputField
+              label="Apt/suite/unit/building (optional)"
+              name="addressApt"
+              optional
+              value={formData.addressApt}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="md:col-span-2">
+              <InputField
+                label="City"
+                name="addressCity"
+                value={formData.addressCity}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <InputField
+                label="State"
+                name="addressState"
+                placeholder="XX"
+                value={formData.addressState}
+                onChange={handleChange}
+                formatter={(val) => val.toUpperCase().slice(0, 2)}
+              />
+            </div>
+            <div>
+              <InputField
+                label="ZIP code"
+                name="addressZip"
+                placeholder="XXXXX"
+                value={formData.addressZip}
+                onChange={handleChange}
+                formatter={(val) => val.replace(/\D/g, '').slice(0, 5)}
+                error={formData.addressZip && formData.addressZip.length < 5 ? 'Enter 5 digits.' : ''}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
       <p className="mt-8 text-xs text-gray-500 leading-relaxed max-w-3xl">
         Selecting "Save and finish later" or "Continue" saves your progress and provides your agreement to let Sallie Mae send you emails with instructions for returning to your loan application. See link below for privacy policy.
       </p>
 
       {/* Navigation Actions */}
-      <div className="flex flex-col md:flex-row items-center justify-end gap-6 mt-12">
-        <button className="text-secondary-blue font-bold border-b-2 border-secondary-blue hover:text-primary-blue hover:border-primary-blue transition-all">
-          Save and finish later
+      <div className="flex flex-col md:flex-row items-center justify-end gap-8 mt-12 pt-8 border-t border-gray-100">
+        <button 
+          onClick={handleSaveLater}
+          disabled={isLoading || isSaved}
+          className={`
+            flex items-center gap-2 font-bold transition-all duration-300
+            ${isSaved ? 'text-green-600' : 'text-secondary-blue hover:text-primary-blue'}
+            disabled:opacity-70
+          `}
+        >
+          {isLoading ? (
+            <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          ) : isSaved ? (
+            <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+            </svg>
+          ) : null}
+          <span className={isSaved ? '' : 'border-b-2 border-current'}>
+            {isLoading ? 'Saving progress...' : isSaved ? 'Saved!' : 'Save and finish later'}
+          </span>
         </button>
-        <div className="flex items-center gap-4">
-          <Button variant="secondary" className="min-w-[140px]" onClick={onBack}>
+
+        <div className="flex items-center gap-4 w-full md:w-auto">
+          <Button 
+            variant="secondary" 
+            className="flex-1 md:min-w-[140px]" 
+            onClick={onBack}
+            disabled={isLoading || isContinuing}
+          >
             Back
           </Button>
-          <Button className="min-w-[140px]" onClick={onContinue}>
+          <Button 
+            className="flex-1 md:min-w-[140px]" 
+            onClick={handleContinue}
+            loading={isContinuing}
+            disabled={isLoading}
+          >
             Continue
           </Button>
         </div>

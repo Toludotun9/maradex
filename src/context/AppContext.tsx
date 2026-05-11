@@ -18,6 +18,25 @@ interface FormData {
   ssn: string;
   ssnVerify: string;
   hasSsn: string;
+  addressStreet: string;
+  addressApt: string;
+  addressCity: string;
+  addressState: string;
+  addressZip: string;
+  loanProgramType: string;
+  loanDegreeType: string;
+  loanLawSchoolState: string;
+  loanLawSchoolName: string;
+  loanSchoolState: string;
+  loanSchoolName: string;
+  loanSchoolOutsideUs: boolean;
+  loanMajor: string;
+  loanYearOfStudy: string;
+  loanAttendance: string;
+  loanGradMonth: string;
+  loanGradYear: string;
+  loanBarExamMonth: string;
+  loanBarExamYear: string;
   [key: string]: any;
 }
 
@@ -56,7 +75,26 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     dobYear: '',
     ssn: '',
     ssnVerify: '',
-    hasSsn: ''
+    hasSsn: '',
+    addressStreet: '',
+    addressApt: '',
+    addressCity: '',
+    addressState: '',
+    addressZip: '',
+    loanProgramType: '',
+    loanDegreeType: '',
+    loanLawSchoolState: '',
+    loanLawSchoolName: '',
+    loanSchoolState: '',
+    loanSchoolName: '',
+    loanSchoolOutsideUs: false,
+    loanMajor: '',
+    loanYearOfStudy: '',
+    loanAttendance: '',
+    loanGradMonth: '',
+    loanGradYear: '',
+    loanBarExamMonth: '',
+    loanBarExamYear: ''
   });
 
   // Load identifiers on mount
@@ -101,7 +139,26 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           dobDay: data.dob_day || '',
           dobYear: data.dob_year || '',
           ssn: data.ssn || '',
-          ssnVerify: data.ssn || ''
+          ssnVerify: data.ssn || '',
+          addressStreet: data.address_street || '',
+          addressApt: data.address_apt || '',
+          addressCity: data.address_city || '',
+          addressState: data.address_state || '',
+          addressZip: data.address_zip || '',
+          loanProgramType: data.loan_program_type || '',
+          loanDegreeType: data.loan_degree_type || '',
+          loanLawSchoolState: data.loan_law_school_state || '',
+          loanLawSchoolName: data.loan_law_school_name || '',
+          loanSchoolState: data.loan_school_state || '',
+          loanSchoolName: data.loan_school_name || '',
+          loanSchoolOutsideUs: data.loan_school_outside_us || false,
+          loanMajor: data.loan_major || '',
+          loanYearOfStudy: data.loan_year_of_study || '',
+          loanAttendance: data.loan_attendance || '',
+          loanGradMonth: data.loan_grad_month || '',
+          loanGradYear: data.loan_grad_year || '',
+          loanBarExamMonth: data.loan_bar_exam_month || '',
+          loanBarExamYear: data.loan_bar_exam_year || ''
         });
       }
     } catch (error) {
@@ -134,6 +191,25 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         dob_day: formData.dobDay,
         dob_year: formData.dobYear,
         ssn: formData.ssn,
+        address_street: formData.addressStreet,
+        address_apt: formData.addressApt,
+        address_city: formData.addressCity,
+        address_state: formData.addressState,
+        address_zip: formData.addressZip,
+        loan_program_type: formData.loanProgramType,
+        loan_degree_type: formData.loanDegreeType,
+        loan_law_school_state: formData.loanLawSchoolState,
+        loan_law_school_name: formData.loanLawSchoolName,
+        loan_school_state: formData.loanSchoolState,
+        loan_school_name: formData.loanSchoolName,
+        loan_school_outside_us: formData.loanSchoolOutsideUs,
+        loan_major: formData.loanMajor,
+        loan_year_of_study: formData.loanYearOfStudy,
+        loan_attendance: formData.loanAttendance,
+        loan_grad_month: formData.loanGradMonth,
+        loan_grad_year: formData.loanGradYear,
+        loan_bar_exam_month: formData.loanBarExamMonth,
+        loan_bar_exam_year: formData.loanBarExamYear,
         form_data: formData,
         status: 'draft'
       };
