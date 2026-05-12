@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { GraduationCap, Gavel, BriefcaseMedical, FileText } from 'lucide-react';
 import Button from './Button';
 import ToggleGroup from './ToggleGroup';
@@ -21,6 +21,31 @@ const LoanInfoForm = ({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSaved, setIsSaved] = useState(false);
   const [isContinuing, setIsContinuing] = useState(false);
+  const [fetchedFieldsOfStudy, setFetchedFieldsOfStudy] = useState<{ label: string; value: string }[]>([]);
+  const [isFetchingFields, setIsFetchingFields] = useState(false);
+
+  // Fetch dynamic fields of study from API when school or program changes
+  useEffect(() => {
+    if (formData.loanSchoolName && formData.loanProgramType) {
+      setIsFetchingFields(true);
+      const params = new URLSearchParams({
+        school: formData.loanSchoolName,
+        program: formData.loanProgramType,
+        degree: formData.loanDegreeType || ''
+      });
+      fetch(`/api/school-details?${params.toString()}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.fieldsOfStudy) {
+            setFetchedFieldsOfStudy(data.fieldsOfStudy);
+          }
+        })
+        .catch(err => console.error('Error fetching dynamic fields:', err))
+        .finally(() => setIsFetchingFields(false));
+    } else {
+      setFetchedFieldsOfStudy([]);
+    }
+  }, [formData.loanSchoolName, formData.loanProgramType, formData.loanDegreeType]);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -327,7 +352,7 @@ const LoanInfoForm = ({
                   name="loanMajor"
                   value={formData.loanMajor}
                   error={errors.loanMajor}
-                  options={[
+                  options={fetchedFieldsOfStudy.length > 0 ? fetchedFieldsOfStudy : [
                     { label: 'Master of Business Administration', value: 'mba' },
                     { label: 'Master of Science', value: 'ms' },
                     { label: 'Master of Arts', value: 'ma' },
@@ -337,7 +362,7 @@ const LoanInfoForm = ({
                     { label: 'Other Professional Degree', value: 'other-prof' }
                   ]}
                   onChange={(e) => handleChange({ loanMajor: e.target.value })}
-                  placeholder="Select"
+                  placeholder={isFetchingFields ? "Loading curriculum from API..." : "Select"}
                 />
                 <p className="mt-4 text-xs text-gray-500 leading-relaxed font-medium">
                   Your school only has one option for a field of study. Don't worry- this won't impact your application.
@@ -483,7 +508,7 @@ const LoanInfoForm = ({
                   name="loanMajor"
                   value={formData.loanMajor}
                   error={errors.loanMajor}
-                  options={formData.loanDegreeType === 'medical' ? [
+                  options={fetchedFieldsOfStudy.length > 0 ? fetchedFieldsOfStudy : (formData.loanDegreeType === 'medical' ? [
                     { label: 'MD - Anesthesiology', value: 'anesthesiology' },
                     { label: 'MD - Dermatology', value: 'dermatology' },
                     { label: 'MD - Dermatopathology', value: 'dermatopathology' },
@@ -506,9 +531,9 @@ const LoanInfoForm = ({
                     { label: 'DDS/DMD - Periodontics', value: 'periodontics' },
                     { label: 'DDS/DMD - Prosthodontics', value: 'prosthodontics' },
                     { label: 'DDS/DMD - Other', value: 'other-dental' }
-                  ]}
+                  ])}
                   onChange={(e) => handleChange({ loanMajor: e.target.value })}
-                  placeholder="Select"
+                  placeholder={isFetchingFields ? "Loading curriculum from API..." : "Select"}
                 />
                 <p className="mt-4 text-xs text-gray-500 leading-relaxed font-medium">
                   We’re interested in learning more about your {formData.loanDegreeType} school journey. If you don’t see your field, choose whichever is closest. Your field won’t impact your loan application.
@@ -573,7 +598,7 @@ const LoanInfoForm = ({
                   name="loanMajor"
                   value={formData.loanMajor}
                   error={errors.loanMajor}
-                  options={[
+                  options={fetchedFieldsOfStudy.length > 0 ? fetchedFieldsOfStudy : [
                     { label: 'Agriculture & Natural Resources', value: 'agriculture' },
                     { label: 'Architecture & Related Services', value: 'architecture' },
                     { label: 'Arts, Visual & Performing', value: 'arts' },
@@ -597,7 +622,7 @@ const LoanInfoForm = ({
                     { label: 'Other', value: 'other' }
                   ]}
                   onChange={(e) => handleChange({ loanMajor: e.target.value })}
-                  placeholder="Select"
+                  placeholder={isFetchingFields ? "Loading curriculum from API..." : "Select"}
                 />
                 <p className="mt-4 text-xs text-gray-500 leading-relaxed font-medium">
                   We’re interested in learning more about your college journey. If you don’t see your major, choose whichever is closest. Your major won’t impact your loan application.

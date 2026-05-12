@@ -53,7 +53,14 @@ const SelectField: React.FC<SelectFieldProps> = ({
           </svg>
         </div>
       </div>
-      {error && <p className="text-xs text-red-600 font-bold mt-1">{error}</p>}
+      {error && (
+        <div className="flex items-center gap-2 mt-1">
+          <div className="w-5 h-5 rounded-full bg-red-600 flex items-center justify-center text-white text-[10px] flex-none font-bold">
+            !
+          </div>
+          <span className="text-sm text-red-600 font-bold">{error}</span>
+        </div>
+      )}
     </div>
   );
 };

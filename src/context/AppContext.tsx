@@ -37,6 +37,12 @@ interface FormData {
   loanGradYear: string;
   loanBarExamMonth: string;
   loanBarExamYear: string;
+  loanAcademicPeriod: string;
+  loanStartMonth: string;
+  loanStartYear: string;
+  loanEndMonth: string;
+  loanEndYear: string;
+  loanCostOfAttendance: string;
   [key: string]: any;
 }
 
@@ -94,7 +100,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     loanGradMonth: '',
     loanGradYear: '',
     loanBarExamMonth: '',
-    loanBarExamYear: ''
+    loanBarExamYear: '',
+    loanAcademicPeriod: '',
+    loanStartMonth: '',
+    loanStartYear: '',
+    loanEndMonth: '',
+    loanEndYear: '',
+    loanCostOfAttendance: ''
   });
 
   // Load identifiers on mount
@@ -158,7 +170,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           loanGradMonth: data.loan_grad_month || '',
           loanGradYear: data.loan_grad_year || '',
           loanBarExamMonth: data.loan_bar_exam_month || '',
-          loanBarExamYear: data.loan_bar_exam_year || ''
+          loanBarExamYear: data.loan_bar_exam_year || '',
+          loanAcademicPeriod: data.loan_academic_period || '',
+          loanStartMonth: data.loan_start_month || '',
+          loanStartYear: data.loan_start_year || '',
+          loanEndMonth: data.loan_end_month || '',
+          loanEndYear: data.loan_end_year || '',
+          loanCostOfAttendance: data.loan_cost_of_attendance || ''
         });
       }
     } catch (error) {
@@ -210,6 +228,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         loan_grad_year: formData.loanGradYear,
         loan_bar_exam_month: formData.loanBarExamMonth,
         loan_bar_exam_year: formData.loanBarExamYear,
+        loan_academic_period: formData.loanAcademicPeriod,
+        loan_start_month: formData.loanStartMonth,
+        loan_start_year: formData.loanStartYear,
+        loan_end_month: formData.loanEndMonth,
+        loan_end_year: formData.loanEndYear,
+        loan_cost_of_attendance: formData.loanCostOfAttendance,
         form_data: formData,
         status: 'draft'
       };
