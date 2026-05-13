@@ -26,7 +26,7 @@ export default function LoanInfoPage() {
     const result = await saveApplication();
     if (result.success) {
       setCurrentStep(2); // Move to Add Cosigner step
-      // router.push('/apply/cosigner'); // Enable once cosigner page route exists
+      router.push('/apply/cosigner');
     } else {
       alert('Failed to save your application. Please try again.');
     }

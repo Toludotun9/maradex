@@ -119,12 +119,42 @@ const LoanPeriodForm = ({
     }
 
     // 4. Cost of Attendance validation
+    let costNum = 0;
     if (!formData.loanCostOfAttendance) {
       newErrors.loanCostOfAttendance = 'Please enter your cost of attendance.';
     } else {
-      const costNum = parseInt(formData.loanCostOfAttendance);
+      costNum = parseInt(formData.loanCostOfAttendance);
       if (isNaN(costNum) || costNum <= 0) {
         newErrors.loanCostOfAttendance = 'Please enter a valid positive amount.';
+      }
+    }
+
+    // 5. Financial Aid validation
+    let aidNum = 0;
+    if (!formData.loanFinancialAid) {
+      newErrors.loanFinancialAid = 'Please enter your estimated financial aid.';
+    } else {
+      aidNum = parseInt(formData.loanFinancialAid);
+      if (isNaN(aidNum) || aidNum < 0) {
+        newErrors.loanFinancialAid = 'Please enter a valid amount.';
+      } else if (costNum > 0 && aidNum > costNum) {
+        newErrors.loanFinancialAid = 'Financial aid cannot exceed your total cost of attendance.';
+      }
+    }
+
+    // 6. Requested Loan Amount validation
+    const useCalc = formData.loanUseCalculatedNeed !== undefined ? formData.loanUseCalculatedNeed : true;
+    const calcNeed = Math.max(0, costNum - aidNum);
+    if (!useCalc) {
+      if (!formData.loanAmountRequested) {
+        newErrors.loanAmountRequested = 'Please enter your requested loan amount.';
+      } else {
+        const reqNum = parseInt(formData.loanAmountRequested);
+        if (isNaN(reqNum) || reqNum <= 0) {
+          newErrors.loanAmountRequested = 'Please enter a valid positive amount.';
+        } else if (reqNum > calcNeed) {
+          newErrors.loanAmountRequested = `Requested amount cannot exceed your calculated financial need ($${calcNeed.toLocaleString()}).`;
+        }
       }
     }
 
@@ -168,6 +198,13 @@ const LoanPeriodForm = ({
   };
 
   const activePeriods = fetchedPeriods.length > 0 ? fetchedPeriods : fallbackPeriods;
+
+  // Derive final real-time budget calculations for UI displays
+  const parsedCost = parseInt(formData.loanCostOfAttendance) || costEstimate || 0;
+  const parsedAid = parseInt(formData.loanFinancialAid) || 0;
+  const calculatedNeed = Math.max(0, parsedCost - parsedAid);
+  const useCalculatedNeed = formData.loanUseCalculatedNeed !== undefined ? formData.loanUseCalculatedNeed : true;
+  const activeRequestedAmount = useCalculatedNeed ? calculatedNeed.toString() : (formData.loanAmountRequested || calculatedNeed.toString());
 
   return (
     <div className="w-full mx-auto animate-in fade-in slide-in-from-right-4 duration-500">
@@ -370,6 +407,151 @@ const LoanPeriodForm = ({
               <span className="text-sm text-red-600 font-bold">{errors.loanCostOfAttendance}</span>
             </div>
           )}
+        </div>
+      </div>
+
+      {/* Third Card: Financial Aid Factor */}
+      <div className="mt-8 bg-white rounded-lg p-10 shadow-xl border border-gray-200 animate-in fade-in slide-in-from-top-4 duration-500">
+        <h3 className="text-2xl font-bold text-primary-blue mb-3">
+          Now, let’s factor in your financial aid.
+        </h3>
+        <p className="text-sm text-gray-600 mb-4 leading-relaxed font-medium">
+          Enter the financial aid provided by {schoolNameDisplay}, as well as any other scholarships, grants, and federal or state aid.
+        </p>
+
+        <button 
+          type="button" 
+          className="text-xs font-bold text-secondary-blue border-b border-secondary-blue pb-0.5 mb-8 hover:text-primary-blue hover:border-primary-blue transition-colors block"
+        >
+          How to estimate financial aid
+        </button>
+
+        <div className="max-w-xs">
+          <div className="relative flex items-center">
+            <span className="absolute left-4 text-gray-700 font-bold text-lg pointer-events-none">$</span>
+            <input
+              name="loanFinancialAid"
+              type="text"
+              value={formData.loanFinancialAid || ''}
+              onChange={(e) => {
+                // allow numeric digits only
+                const val = e.target.value.replace(/\D/g, '');
+                handleChange({ loanFinancialAid: val });
+              }}
+              placeholder="XX,XXX"
+              className={`w-full pl-8 pr-4 py-3 rounded border font-mono text-lg text-gray-800 outline-none transition-all ${errors.loanFinancialAid ? 'border-red-600 focus:ring-1 focus:ring-red-600' : 'border-secondary-blue focus:ring-2 focus:ring-secondary-blue'}`}
+            />
+          </div>
+          {errors.loanFinancialAid && (
+            <div className="flex items-center gap-2 mt-2">
+              <div className="w-5 h-5 rounded-full bg-red-600 flex items-center justify-center text-white text-[10px] flex-none font-bold">
+                !
+              </div>
+              <span className="text-sm text-red-600 font-bold">{errors.loanFinancialAid}</span>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Fourth Card: Calculated Financial Need Preview */}
+      <div className="mt-8 bg-white rounded-lg p-10 shadow-xl border-2 border-secondary-blue animate-in fade-in slide-in-from-top-4 duration-500">
+        <h3 className="text-2xl font-bold text-primary-blue mb-6">
+          This is how much you may need to borrow.
+        </h3>
+
+        <div className="max-w-md space-y-3 font-medium text-gray-800">
+          <div className="flex justify-between items-center text-base">
+            <span>Cost of attendance</span>
+            <span className="font-mono">${parsedCost.toLocaleString()}</span>
+          </div>
+          <div className="flex justify-between items-center text-base">
+            <span>Financial aid</span>
+            <span className="font-mono">-${parsedAid.toLocaleString()}</span>
+          </div>
+          <div className="border-t border-gray-300 pt-3 mt-2 flex justify-between items-center">
+            <span className="text-lg font-bold text-primary-blue">Calculated financial need</span>
+            <span className="text-3xl font-bold text-primary-blue font-mono">${calculatedNeed.toLocaleString()}</span>
+          </div>
+        </div>
+
+        <p className="text-xs text-gray-500 mt-6 max-w-md leading-relaxed">
+          This is the estimated amount you’ll still need to pay for your education. These amounts will be included in your Private Education Loan Applicant Self-Certification form.
+        </p>
+
+        <button 
+          type="button" 
+          className="text-xs font-bold text-secondary-blue hover:underline mt-2 block"
+        >
+          Learn more
+        </button>
+      </div>
+
+      {/* Fifth Card: Final Requested Loan Amount */}
+      <div className="mt-8 bg-white rounded-lg p-10 shadow-xl border border-gray-200 animate-in fade-in slide-in-from-top-4 duration-500">
+        <h3 className="text-2xl font-bold text-primary-blue mb-3">
+          Finally, let’s decide on the amount of the loan request.
+        </h3>
+        <p className="text-sm text-gray-600 mb-6 leading-relaxed font-medium">
+          You can use your calculated financial need or enter your own amount.
+        </p>
+
+        <div className="max-w-xs mb-4">
+          <div className="relative flex items-center">
+            <span className="absolute left-4 text-gray-700 font-bold text-lg pointer-events-none">$</span>
+            <input
+              name="loanAmountRequested"
+              type="text"
+              disabled={useCalculatedNeed}
+              value={activeRequestedAmount}
+              onChange={(e) => {
+                const val = e.target.value.replace(/\D/g, '');
+                handleChange({ loanAmountRequested: val });
+              }}
+              placeholder={calculatedNeed.toString()}
+              className={`w-full pl-8 pr-4 py-3 rounded border font-mono text-lg text-gray-800 outline-none transition-all ${useCalculatedNeed ? 'bg-gray-50 border-gray-300 text-gray-500 cursor-not-allowed' : errors.loanAmountRequested ? 'border-red-600 focus:ring-1 focus:ring-red-600 bg-white' : 'border-secondary-blue focus:ring-2 focus:ring-secondary-blue bg-white'}`}
+            />
+          </div>
+          {errors.loanAmountRequested && (
+            <div className="flex items-center gap-2 mt-2">
+              <div className="w-5 h-5 rounded-full bg-red-600 flex items-center justify-center text-white text-[10px] flex-none font-bold">
+                !
+              </div>
+              <span className="text-sm text-red-600 font-bold">{errors.loanAmountRequested}</span>
+            </div>
+          )}
+        </div>
+
+        <div className="flex items-center gap-3 mb-4">
+          <input
+            id="useCalculatedNeedCheck"
+            type="checkbox"
+            checked={useCalculatedNeed}
+            onChange={(e) => {
+              const checked = e.target.checked;
+              handleChange({ 
+                loanUseCalculatedNeed: checked,
+                // Automatically resync the underlying custom string to prevent stale override errors
+                ...(checked ? { loanAmountRequested: calculatedNeed.toString() } : {})
+              });
+            }}
+            className="w-4 h-4 text-secondary-blue border-gray-300 rounded focus:ring-secondary-blue cursor-pointer"
+          />
+          <label htmlFor="useCalculatedNeedCheck" className="text-sm text-gray-800 font-medium select-none cursor-pointer">
+            Use calculated need (${calculatedNeed.toLocaleString()})
+          </label>
+        </div>
+
+        <p className="text-xs text-gray-500 mb-8 leading-relaxed">
+          {schoolNameDisplay} must certify your loan amount, which may cause it to be less than the amount you request.
+        </p>
+
+        <div className="border-t border-gray-100 pt-6">
+          <h4 className="text-xs font-bold text-gray-900 mb-2">
+            Where can I find rate, fee and other cost information about the loan?
+          </h4>
+          <p className="text-xs text-gray-500 leading-relaxed">
+            We provide a Loan Application Solicitation Disclosure to undergraduate, graduate, and career training students during the application process, before you submit.
+          </p>
         </div>
       </div>
 
