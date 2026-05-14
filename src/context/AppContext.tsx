@@ -68,7 +68,7 @@ interface AppContextType {
   updateFormData: (data: Partial<FormData>) => void;
   loanId: string | null;
   secretToken: string | null;
-  saveApplication: () => Promise<{ success: boolean; error?: any }>;
+  saveApplication: (overrides?: any) => Promise<{ success: boolean; error?: any }>;
   restoreApplication: (email: string, accessCode: string) => Promise<{ success: boolean; error?: string }>;
   isLoading: boolean;
 }
@@ -231,7 +231,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setFormData(prev => ({ ...prev, ...data }));
   };
 
-  const saveApplication = async () => {
+  const saveApplication = async (overrides?: any) => {
     try {
       // Generate fallback access code unconditionally if empty so every draft always has a reliable restore key
       let activeAccessCode = formData.accessCode;
@@ -309,7 +309,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         work_phone: formData.workPhone || null,
         access_code: activeAccessCode || null,
         form_data: updatedFormDataObj,
-        status: 'draft'
+        status: 'draft',
+        ...overrides
       };
 
       let result;
