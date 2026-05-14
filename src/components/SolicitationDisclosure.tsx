@@ -227,7 +227,6 @@ const SolicitationDisclosure = () => {
           </div>
         </div>
       </div>
-    </div>
 
       <div className="text-center py-4 border-y border-gray-200 mb-10">
         <p className="font-bold tracking-widest text-[11px]">SEE BACK OF PAGE</p>
@@ -342,6 +341,46 @@ const SolicitationDisclosure = () => {
         <div className="flex justify-between items-end border-b-2 border-black pb-2 mb-6">
           <h5 className="text-xl font-bold text-gray-900">Federal Loan Alternatives</h5>
           <p className="text-[11px] text-gray-500">Page 4 of 4</p>
+        </div>
+
+        <div className="flex flex-col md:flex-row gap-8 mb-10">
+          <div className="flex-1">
+            <table className="w-full border-collapse border border-gray-300 text-xs">
+              <thead>
+                <tr className="bg-gray-100">
+                  <th className="border border-gray-300 p-3 text-left">Loan Program</th>
+                  <th className="border border-gray-300 p-3 text-left">Current Interest Rates by Program Type*</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="border border-gray-300 p-3 font-bold">DIRECT <br/><span className="font-normal text-[10px]">for Students</span></td>
+                  <td className="border border-gray-300 p-3">
+                    <p className="mb-2"><strong>6.390% fixed</strong> Undergraduate subsidized and unsubsidized</p>
+                    <p><strong>7.940% fixed</strong> Graduate</p>
+                  </td>
+                </tr>
+                <tr className="bg-gray-50">
+                  <td className="border border-gray-300 p-3 font-bold">DIRECT PLUS <br/><span className="font-normal text-[10px]">for Parents and Graduate/Professional Students</span></td>
+                  <td className="border border-gray-300 p-3">
+                    <p><strong>8.940% fixed</strong> Federal Direct Loan</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p className="text-[10px] text-gray-500 mt-3 leading-tight italic">
+              *These interest rates are determined by federal law and are for federal loans first disbursed on or after July 1, 2025, and before July 1, 2026. The federal loan interest rates may change in the future, but only for new federal loans.
+            </p>
+          </div>
+          <div className="bg-blue-50 p-6 rounded-md border border-blue-100 flex-none md:w-64">
+            <h6 className="text-sm font-bold text-gray-900 mb-3 leading-tight">You may qualify for Federal education loans.</h6>
+            <p className="text-xs mb-4">
+              For additional information, <strong>contact your school's financial aid office</strong> or the <strong>Department of Education at:</strong>
+            </p>
+            <p className="text-sm font-bold text-secondary-blue border-b border-secondary-blue pb-1 w-fit">
+              www.studentaid.gov
+            </p>
+          </div>
         </div>
 
         <div className="mb-10">
