@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { MousePointer2, ExternalLink, ChevronDown, ChevronUp, FileText, ShieldCheck } from 'lucide-react';
