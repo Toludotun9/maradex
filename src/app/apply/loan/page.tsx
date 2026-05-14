@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import LoanInfoForm from '@/components/LoanInfoForm';
 import LoanPeriodForm from '@/components/LoanPeriodForm';
 import { useAppContext } from '@/context/AppContext';
 
-export default function LoanInfoPage() {
+function LoanInfoContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { setCurrentStep, saveApplication } = useAppContext();
@@ -48,5 +48,13 @@ export default function LoanInfoPage() {
         <LoanPeriodForm onBack={handlePeriodBack} onContinue={handleFinalContinue} />
       )}
     </div>
+  );
+}
+
+export default function LoanInfoPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
+      <LoanInfoContent />
+    </Suspense>
   );
 }
