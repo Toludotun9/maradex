@@ -64,7 +64,7 @@ export default function FinalizePage() {
 
     if (result.success) {
       setCurrentStep(4);
-      router.push('/apply/submit');
+      router.push('/apply/recap');
     } else {
       alert('Failed to save progress. Please try again.');
     }
