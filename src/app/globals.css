@@ -11,6 +11,13 @@
 
 body {
   @apply antialiased min-h-screen font-sans;
-  background: linear-gradient(135deg, #E8F6FA 0%, #E9F9F4 100%);
+  background-color: #f5fbff;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(255, 255, 255, 1) 0%, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(173, 232, 255, 0.4) 0%, transparent 60%),
+    radial-gradient(at 100% 100%, rgba(255, 255, 255, 1) 0%, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(186, 230, 253, 0.3) 0%, transparent 60%),
+    radial-gradient(at 50% 50%, rgba(224, 242, 254, 0.2) 0%, transparent 100%);
+  background-attachment: fixed;
   color: #1A1A1A;
 }

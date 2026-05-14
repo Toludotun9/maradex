@@ -37,7 +37,7 @@ const ProgressStepper = ({ currentStep = 0 }) => {
           
           {/* Line */}
           {index < steps.length - 1 && (
-            <div className={`absolute top-[7px] left-1/2 w-full h-[1px] -z-0 ${index < currentStep ? 'bg-accent-blue' : 'bg-gray-300'}`} />
+            <div className={`absolute top-[7px] left-1/2 w-full h-[2px] -z-0 ${index < currentStep ? 'bg-accent-blue' : 'bg-gray-300'}`} />
           )}
         </div>
       ))}

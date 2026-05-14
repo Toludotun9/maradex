@@ -1,15 +1,18 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import LoanInfoForm from '@/components/LoanInfoForm';
 import LoanPeriodForm from '@/components/LoanPeriodForm';
 import { useAppContext } from '@/context/AppContext';
 
 export default function LoanInfoPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { setCurrentStep, saveApplication } = useAppContext();
-  const [subStep, setSubStep] = useState(0);
+  
+  const initialSubStep = parseInt(searchParams.get('substep') || '0');
+  const [subStep, setSubStep] = useState(initialSubStep);
 
   const handleInfoContinue = () => {
     // Scroll to top smoothly when switching sub-steps

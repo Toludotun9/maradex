@@ -52,6 +52,9 @@ interface FormData {
   cosignerSendEmailDirect: boolean;
   cosignerEmailAddress: string;
   cosignerAccessCode: string;
+  employmentStatus: string;
+  annualIncome: string;
+  workPhone: string;
   accessCode: string;
   [key: string]: any;
 }
@@ -127,6 +130,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     cosignerSendEmailDirect: false,
     cosignerEmailAddress: '',
     cosignerAccessCode: '',
+    employmentStatus: '',
+    annualIncome: '',
+    workPhone: '',
     accessCode: ''
   });
 
@@ -207,6 +213,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           cosignerSendEmailDirect: data.form_data?.cosignerSendEmailDirect || false,
           cosignerEmailAddress: data.cosigner_email_address || '',
           cosignerAccessCode: data.cosigner_access_code || '',
+          employmentStatus: data.employment_status || '',
+          annualIncome: data.annual_income || '',
+          workPhone: data.work_phone || '',
           accessCode: data.access_code || ''
         });
       }
@@ -295,6 +304,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         cosigner_code_delivery_method: formData.cosignerSendEmailDirect ? 'cosigner_email' : (formData.cosignerSendText ? 'student_text' : 'student_email'),
         cosigner_email_address: formData.cosignerEmailAddress || null,
         cosigner_access_code: activeCosignerCode || formData.cosignerAccessCode || null,
+        employment_status: formData.employmentStatus || null,
+        annual_income: formData.annualIncome || null,
+        work_phone: formData.workPhone || null,
         access_code: activeAccessCode || null,
         form_data: updatedFormDataObj,
         status: 'draft'
@@ -438,6 +450,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         cosignerSendEmailDirect: data.form_data?.cosignerSendEmailDirect || false,
         cosignerEmailAddress: data.cosigner_email_address || '',
         cosignerAccessCode: data.cosigner_access_code || '',
+        employmentStatus: data.employment_status || '',
+        annualIncome: data.annual_income || '',
+        workPhone: data.work_phone || '',
         accessCode: data.access_code || ''
       });
 

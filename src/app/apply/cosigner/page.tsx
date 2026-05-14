@@ -56,8 +56,7 @@ export default function AddCosignerPage() {
     if (result.success) {
       // Progress forward to Finalize step layout sequence
       setCurrentStep(3);
-      // router.push('/apply/finalize'); // enable once next route template completes
-      alert('Cosigner step configuration saved successfully! Ready for the next Finalize stage.');
+      router.push('/apply/finalize');
     } else {
       alert('Failed to save progress. Please try again.');
     }

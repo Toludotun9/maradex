@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { AppProvider } from "@/context/AppContext";
+import BackgroundCurves from "@/components/BackgroundCurves";
 
 export const metadata: Metadata = {
   title: "Sallie Mae | Undergraduate Student Loan Application",
@@ -18,6 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <AppProvider>
+          <BackgroundCurves />
           <Header />
           <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             {children}
