@@ -4,14 +4,6 @@ import React from 'react';
 
 const PrivacyNotice = () => {
   return (
-    <div className="p-8 text-[13px] text-gray-700 leading-relaxed overflow-y-auto max-h-[800px] font-sans">
-      <div className="flex justify-between items-start mb-6">
-        <div className="w-32">
-          <svg viewBox="0 0 200 40" className="w-full text-[#5D2E8E] fill-current">
-            <text x="0" y="30" fontSize="24" fontWeight="900" style={{ letterSpacing: '-1px' }}>sallie mae</text>
-          </svg>
-        </div>
-        <div className="text-right text-[10px] text-gray-400 font-bold uppercase">
     <div className="p-8 text-[13px] text-gray-700 leading-relaxed font-sans bg-white">
       {/* Header Section */}
       <div className="flex justify-between items-start mb-10">
@@ -152,106 +144,105 @@ const PrivacyNotice = () => {
             </ul>
             <p className="font-bold mb-1">Please note:</p>
             <p>If you are a <em>new</em> customer, we can begin sharing your information 30 days from the date we sent this notice. When you are <em>no longer</em> our customer, we continue to share your information as described in this notice.</p>
+            <p className="mt-2">To limit sharing you can call us toll free Monday-Friday 8am-8pm ET.</p>
+          </div>
+        </div>
+        <div className="flex">
+          <div className="bg-gray-400 text-white p-4 font-bold text-lg w-40 flex items-center justify-center">
+            Questions?
+          </div>
+          <div className="p-4 flex-1 text-[13.5px] leading-relaxed flex items-center">
+            Call toll free 1-855-582-1928 or go to <span className="font-bold underline ml-1">www.SallieMae.com/legal/privacy</span>
           </div>
         </div>
       </div>
 
-      <div className="pt-20">
-        <div className="w-32 mb-6">
-          <svg viewBox="0 0 200 40" className="w-full text-[#5D2E8E] fill-current">
-            <text x="0" y="30" fontSize="24" fontWeight="900" style={{ letterSpacing: '-1px' }}>sallie mae</text>
-          </svg>
+      {/* Who We Are Table */}
+      <div className="border-[1.5px] border-gray-400 mb-8">
+        <div className="bg-gray-400 text-white p-3 font-bold text-base uppercase">Who we are</div>
+        <div className="flex border-b border-gray-200">
+          <div className="p-4 font-bold w-64 text-gray-800">Who is providing this notice?</div>
+          <div className="p-4 flex-1">Sallie Mae Bank</div>
         </div>
-        
-        <div className="border border-gray-400">
-          <div className="bg-gray-400 p-1 flex">
-            <div className="w-64 bg-gray-100 p-2 font-bold text-gray-600 border-r border-gray-400">Who we are</div>
-            <div className="flex-1 bg-white"></div>
-          </div>
-          <div className="flex border-b border-gray-400">
-            <div className="w-64 bg-gray-100 p-4 font-bold text-gray-600 text-[11px] border-r border-gray-400 leading-tight">Who is providing this notice?</div>
-            <div className="flex-1 p-4">Sallie Mae Bank</div>
-          </div>
 
-          <div className="bg-gray-400 p-1 flex">
-            <div className="w-64 bg-gray-100 p-2 font-bold text-gray-600 border-r border-gray-400">What we do</div>
-            <div className="flex-1 bg-white"></div>
+        <div className="bg-gray-400 text-white p-3 font-bold text-base uppercase">What we do</div>
+        <div className="flex border-b border-gray-200">
+          <div className="p-4 font-bold w-64 text-gray-800">How does Sallie Mae Bank protect my personal information?</div>
+          <div className="p-4 flex-1 leading-relaxed">
+            To protect your personal information from unauthorized access and use, we use security measures that comply with federal law. These measures include computer safeguards and secured files and buildings.
           </div>
-          <div className="flex border-b border-gray-400">
-            <div className="w-64 bg-gray-100 p-4 font-bold text-gray-600 text-[11px] border-r border-gray-400 leading-tight">How does Sallie Mae Bank protect my personal information?</div>
-            <div className="flex-1 p-4">
-              To protect your personal information from unauthorized access and use, we use security measures that comply with federal law. These measures include computer safeguards and secured files and buildings.
-            </div>
+        </div>
+        <div className="flex border-b border-gray-200">
+          <div className="p-4 font-bold w-64 text-gray-800">How does Sallie Mae Bank collect my personal information?</div>
+          <div className="p-4 flex-1 leading-relaxed">
+            We collect your personal information, for example, when you:
+            <ul className="mt-2 space-y-2 pl-2">
+              <li className="flex gap-4"><span className="font-bold">■</span> apply for a loan or give us your contact information</li>
+              <li className="flex gap-4"><span className="font-bold">■</span> open an account or make deposits or withdrawals from your account</li>
+              <li className="flex gap-4"><span className="font-bold">■</span> use your credit or debit card</li>
+            </ul>
+            We also collect your personal information from others, such as credit bureaus, affiliates, or other companies.
           </div>
-          <div className="flex border-b border-gray-400">
-            <div className="w-64 bg-gray-100 p-4 font-bold text-gray-600 text-[11px] border-r border-gray-400 leading-tight">How does Sallie Mae Bank collect my personal information?</div>
-            <div className="flex-1 p-4">
-              <p className="mb-2">We collect your personal information, for example, when you:</p>
-              <ul className="list-disc ml-5 space-y-1 mb-2">
-                <li>apply for a loan or give us your contact information</li>
-                <li>open an account or make deposits or withdrawals from your account</li>
-                <li>use your credit or debit card</li>
-              </ul>
-              <p>We also collect your personal information from others, such as credit bureaus, affiliates, or other companies.</p>
-            </div>
+        </div>
+        <div className="flex border-b border-gray-200">
+          <div className="p-4 font-bold w-64 text-gray-800">Why can’t I limit all sharing?</div>
+          <div className="p-4 flex-1 leading-relaxed">
+            Federal law gives you the right to limit only
+            <ul className="mt-2 space-y-2 pl-2">
+              <li className="flex gap-4"><span className="font-bold">■</span> sharing for affiliates’ everyday business purposes – information about your creditworthiness</li>
+              <li className="flex gap-4"><span className="font-bold">■</span> affiliates from using your information to market to you</li>
+              <li className="flex gap-4"><span className="font-bold">■</span> sharing for nonaffiliates to market to you</li>
+            </ul>
+            State laws and individual companies may give you additional rights to limit sharing. See below for more on your rights under state law.
           </div>
-          <div className="flex border-b border-gray-400">
-            <div className="w-64 bg-gray-100 p-4 font-bold text-gray-600 text-[11px] border-r border-gray-400 leading-tight">Why can’t I limit all sharing?</div>
-            <div className="flex-1 p-4">
-              <p className="mb-2">Federal law gives you the right to limit only</p>
-              <ul className="list-disc ml-5 space-y-1 mb-2">
-                <li>sharing for affiliates’ everyday business purposes – information about your creditworthiness</li>
-                <li>affiliates from using your information to market to you</li>
-                <li>sharing for nonaffiliates to market to you</li>
-              </ul>
-              <p>State laws and individual companies may give you additional rights to limit sharing. See below for more on your rights under state law.</p>
-            </div>
-          </div>
-          <div className="flex border-b border-gray-400">
-            <div className="w-64 bg-gray-100 p-4 font-bold text-gray-600 text-[11px] border-r border-gray-400 leading-tight">What happens when I limit sharing for an account I hold jointly with someone else?</div>
-            <div className="flex-1 p-4">Your choices will apply to everyone on your account.</div>
-          </div>
+        </div>
+        <div className="flex">
+          <div className="p-4 font-bold w-64 text-gray-800">What happens when I limit sharing for an account I hold jointly with someone else?</div>
+          <div className="p-4 flex-1">Your choices will apply to everyone on your account.</div>
+        </div>
 
-          <div className="bg-gray-400 p-1 flex">
-            <div className="w-64 bg-gray-100 p-2 font-bold text-gray-600 border-r border-gray-400">Definitions</div>
-            <div className="flex-1 bg-white"></div>
+        <div className="bg-gray-400 text-white p-3 font-bold text-base uppercase">Definitions</div>
+        <div className="flex border-b border-gray-200">
+          <div className="p-4 font-bold w-64 text-gray-800">Affiliates</div>
+          <div className="p-4 flex-1 leading-relaxed">
+            Companies related by common ownership or control. They can be financial and nonfinancial companies.
+            <ul className="mt-2 pl-2">
+              <li className="flex gap-4">
+                <span className="font-bold">■</span> 
+                <em>Our affiliates include companies related by common ownership and control with Sallie Mae Bank and that share the “Sallie Mae,” “SLM,” or “SMB” name, such as SLM Education Services, LLC; SMB Business Development, Inc.; SMB Shared Services, Inc.; SMB IT, Inc.; SMB Education Funding, LLC; and SLM Funding Solutions, LLC.</em>
+              </li>
+            </ul>
           </div>
-          <div className="flex border-b border-gray-400">
-            <div className="w-64 bg-gray-100 p-4 font-bold text-gray-600 text-[11px] border-r border-gray-400 leading-tight">Affiliates</div>
-            <div className="flex-1 p-4">
-              <p className="mb-2">Companies related by common ownership or control. They can be financial and nonfinancial companies.</p>
-              <ul className="list-disc ml-5 space-y-1 text-[11px]">
-                <li>Our affiliates include companies under common ownership and control with Sallie Mae Bank and that share the “Sallie Mae,” “SLM,” or “SMB” name, such as SLM Education Services, LLC; SMB Business Development, Inc.; SMB Shared Services, Inc.; SMB IT, Inc.; SMB Education Funding, LLC; and SLM Funding Solutions, LLC.</li>
-              </ul>
-            </div>
+        </div>
+        <div className="flex border-b border-gray-200">
+          <div className="p-4 font-bold w-64 text-gray-800">Nonaffiliates</div>
+          <div className="p-4 flex-1 leading-relaxed">
+            Companies not related by common ownership or control. They can be financial and nonfinancial companies.
+            <ul className="mt-2 pl-2">
+              <li className="flex gap-4">
+                <span className="font-bold">■</span> 
+                <em>Nonaffiliates we share with can include service providers such as data processors and companies that are involved in promoting or marketing our own products.</em>
+              </li>
+            </ul>
           </div>
-          <div className="flex border-b border-gray-400">
-            <div className="w-64 bg-gray-100 p-4 font-bold text-gray-600 text-[11px] border-r border-gray-400 leading-tight">Nonaffiliates</div>
-            <div className="flex-1 p-4">
-              <p className="mb-2">Companies not related by common ownership or control. They can be financial and nonfinancial companies.</p>
-              <ul className="list-disc ml-5 space-y-1">
-                <li>Nonaffiliates we share with can include service providers such as data processors and companies that are involved in promoting or marketing our own products.</li>
-              </ul>
-            </div>
+        </div>
+        <div className="flex">
+          <div className="p-4 font-bold w-64 text-gray-800">Joint marketing</div>
+          <div className="p-4 flex-1 leading-relaxed">
+            A formal agreement between nonaffiliated financial companies that together market financial products or services to you.
+            <ul className="mt-2 pl-2">
+              <li className="flex gap-4">
+                <span className="font-bold">■</span> 
+                <em>Our joint marketing partners include financial institutions such as companies that provide credit products and insurance companies.</em>
+              </li>
+            </ul>
           </div>
-          <div className="flex border-b border-gray-400">
-            <div className="w-64 bg-gray-100 p-4 font-bold text-gray-600 text-[11px] border-r border-gray-400 leading-tight">Joint marketing</div>
-            <div className="flex-1 p-4">
-              <p className="mb-2">A formal agreement between nonaffiliated financial companies that together market financial products or services to you.</p>
-              <ul className="list-disc ml-5 space-y-1">
-                <li>Our joint marketing partners include financial institutions such as companies that provide credit products and insurance companies.</li>
-              </ul>
-            </div>
-          </div>
+        </div>
 
-          <div className="bg-gray-400 p-1 flex">
-            <div className="w-64 bg-gray-100 p-2 font-bold text-gray-600 border-r border-gray-400 uppercase text-[10px]">Other important information</div>
-            <div className="flex-1 bg-white"></div>
-          </div>
-          <div className="p-4 space-y-4">
-            <p><strong>Vermont residents:</strong> We will not share personal information about you with nonaffiliates other than as permitted by law. We also will not share information about your creditworthiness with our affiliates without your consent.</p>
-            <p><strong>California residents:</strong> We will share your personal information only as permitted by law. We will not disclose your personal information with nonaffiliates for their marketing purposes, unless you authorize us to do so. We will not disclose your personal information with joint marketing partners or our affiliates for their marketing purposes, unless we notify you in advance and allow you to opt-out and prevent this type of disclosure.</p>
-          </div>
+        <div className="bg-gray-400 text-white p-3 font-bold text-base uppercase">Other important information</div>
+        <div className="p-6 space-y-4 text-[13.5px] leading-relaxed">
+          <p><strong>Vermont residents:</strong> We will not share personal information about you with nonaffiliates other than as permitted by law. We also will not share information about your creditworthiness with our affiliates without your consent.</p>
+          <p><strong>California residents:</strong> We will share your personal information only as permitted by law. We will not disclose your personal information with nonaffiliates for their marketing purposes, unless you authorize us to do so. We will not disclose your personal information with joint marketing partners or our affiliates for their marketing purposes, unless we notify you in advance and allow you to opt-out and prevent this type of disclosure.</p>
         </div>
       </div>
     </div>

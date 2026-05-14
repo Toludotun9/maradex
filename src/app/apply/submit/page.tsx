@@ -309,9 +309,9 @@ export default function SubmitDisclosurePage() {
 
         {/* Final Acknowledgment Box (Only show on final step) */}
         {subStep === 2 && (
-          <div className="w-full mt-12 bg-white border-2 border-secondary-blue rounded-[24px] p-10 shadow-sm animate-in fade-in zoom-in-95 duration-500">
+          <div className="w-full mt-10 bg-white border-2 border-secondary-blue rounded-[12px] p-10 shadow-sm animate-in fade-in zoom-in-95 duration-500">
             <h4 className="text-xl font-bold text-gray-900 mb-6">By clicking the “Agree and submit” button below:</h4>
-            <div className="space-y-6 text-[15px] text-gray-600 leading-relaxed">
+            <div className="space-y-5 text-[15px] text-gray-600 leading-relaxed">
               <p>
                 You certify that the information in this application is true and complete to the best of your knowledge.
               </p>
@@ -326,7 +326,7 @@ export default function SubmitDisclosurePage() {
               </p>
               <p className="pt-2">
                 For important information, including how to make payments and how payments are allocated and applied, visit:{' '}
-                <a href="https://www.SallieMae.com/allocation" target="_blank" rel="noopener noreferrer" className="text-secondary-blue font-bold underline">
+                <a href="https://www.SallieMae.com/allocation" target="_blank" rel="noopener noreferrer" className="text-[#005DAA] font-bold underline">
                   www.SallieMae.com/allocation
                 </a>.
               </p>
@@ -334,18 +334,18 @@ export default function SubmitDisclosurePage() {
           </div>
         )}
 
-        <div className="w-full flex flex-col md:flex-row items-center justify-end gap-4 mt-16">
+        <div className="w-full flex justify-end gap-3 mt-12 pb-10">
           <button 
             onClick={handleBack}
             disabled={isLoading || isContinuing}
-            className="w-full md:w-32 h-12 rounded-full border border-gray-400 bg-[#E6F9F4] text-secondary-blue font-bold text-[15px] hover:bg-emerald-50 transition-colors"
+            className="px-10 h-11 rounded-full border border-gray-900 bg-[#D4F1E9] text-gray-900 font-bold text-[14px] hover:bg-[#c2e7dd] transition-colors"
           >
             Back
           </button>
           <button 
             onClick={handleAgreeAndSubmit}
             disabled={isLoading || isContinuing}
-            className="w-full md:w-48 h-12 rounded-full bg-[#1D4469] text-white font-bold text-[15px] shadow-lg hover:bg-[#153452] transition-all"
+            className="px-10 h-11 rounded-full bg-[#1D4469] text-white font-bold text-[14px] shadow-sm hover:bg-[#153452] transition-all"
           >
             {isContinuing ? 'Submitting...' : 'Agree and submit'}
           </button>
