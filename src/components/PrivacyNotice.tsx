@@ -12,124 +12,146 @@ const PrivacyNotice = () => {
           </svg>
         </div>
         <div className="text-right text-[10px] text-gray-400 font-bold uppercase">
-          rev. 12/2025
+    <div className="p-8 text-[13px] text-gray-700 leading-relaxed font-sans bg-white">
+      {/* Header Section */}
+      <div className="flex justify-between items-start mb-10">
+        <div className="flex items-center gap-2">
+          <div className="text-3xl font-black text-gray-900 tracking-tighter">
+            sallie mae<span className="text-[10px] align-top">®</span>
+          </div>
+        </div>
+        <div className="text-right">
+          <p className="text-[11px] text-gray-400">rev. 12/2025</p>
         </div>
       </div>
 
-      <div className="border border-gray-400 mb-8 overflow-hidden">
-        <div className="flex bg-gray-600 text-white p-4 items-center">
-          <h4 className="text-2xl font-bold tracking-widest mr-6">FACTS</h4>
-          <h5 className="text-sm font-bold uppercase">WHAT DOES SALLIE MAE BANK DO WITH YOUR PERSONAL INFORMATION?</h5>
+      {/* FACTS Table */}
+      <div className="border-[1.5px] border-gray-400 mb-8">
+        <div className="flex border-b-[1.5px] border-gray-400">
+          <div className="bg-gray-500 text-white p-4 font-bold text-2xl w-40 flex items-center justify-center">
+            FACTS
+          </div>
+          <div className="p-4 flex-1 flex items-center">
+            <h4 className="text-lg font-bold text-gray-900 uppercase">WHAT DOES SALLIE MAE BANK DO WITH YOUR PERSONAL INFORMATION?</h4>
+          </div>
         </div>
 
-        <div className="flex border-b border-gray-400">
-          <div className="w-24 bg-gray-100 p-4 font-bold text-gray-600 text-sm border-r border-gray-400">Why?</div>
-          <div className="flex-1 p-4">
+        <div className="flex border-b-[1.5px] border-gray-400 min-h-[80px]">
+          <div className="bg-gray-300 text-white p-4 font-bold text-xl w-40 flex items-center justify-center italic">
+            Why?
+          </div>
+          <div className="p-4 flex-1 text-[13.5px] leading-relaxed">
             Financial companies choose how they share your personal information. Federal law gives consumers the right to limit some but not all sharing. Federal law also requires us to tell you how we collect, share, and protect your personal information. Please read this notice carefully to understand what we do.
           </div>
         </div>
 
-        <div className="flex border-b border-gray-400">
-          <div className="w-24 bg-gray-100 p-4 font-bold text-gray-600 text-sm border-r border-gray-400">What?</div>
-          <div className="flex-1 p-4">
-            <p className="mb-2">The types of personal information we collect and share depend on the product or service you have with us. This information can include:</p>
-            <ul className="list-disc ml-5 space-y-1">
-              <li>Social Security number and income</li>
-              <li>Account balances and payment history</li>
-              <li>Transaction history and credit history</li>
+        <div className="flex border-b-[1.5px] border-gray-400 min-h-[80px]">
+          <div className="bg-gray-300 text-white p-4 font-bold text-xl w-40 flex items-center justify-center italic">
+            What?
+          </div>
+          <div className="p-4 flex-1 text-[13.5px] leading-relaxed">
+            The types of personal information we collect and share depend on the product or service you have with us. This information can include:
+            <ul className="mt-2 space-y-1 list-none pl-2">
+              <li className="flex gap-4">
+                <span className="text-gray-900 font-bold">■</span> Social Security number and income
+              </li>
+              <li className="flex gap-4">
+                <span className="text-gray-900 font-bold">■</span> Account balances and payment history
+              </li>
+              <li className="flex gap-4">
+                <span className="text-gray-900 font-bold">■</span> Transaction history and credit history
+              </li>
             </ul>
           </div>
         </div>
 
-        <div className="flex">
-          <div className="w-24 bg-gray-100 p-4 font-bold text-gray-600 text-sm border-r border-gray-400">How?</div>
-          <div className="flex-1 p-4">
+        <div className="flex min-h-[80px]">
+          <div className="bg-gray-300 text-white p-4 font-bold text-xl w-40 flex items-center justify-center italic">
+            How?
+          </div>
+          <div className="p-4 flex-1 text-[13.5px] leading-relaxed">
             All financial companies need to share customers' personal information to run their everyday business. In the section below, we list the reasons financial companies can share their customers' personal information; the reasons Sallie Mae Bank chooses to share; and whether you can limit this sharing.
           </div>
         </div>
       </div>
 
-      <table className="w-full border-collapse border border-gray-400 text-xs mb-8">
+      {/* Sharing Table */}
+      <table className="w-full border-collapse border-[1.5px] border-gray-400 text-[13px] mb-8">
         <thead>
-          <tr className="bg-gray-100 text-gray-600">
-            <th className="border border-gray-400 p-3 text-left w-1/2">Reasons we can share your personal information</th>
-            <th className="border border-gray-400 p-3 text-center">Does Sallie Mae Bank share?</th>
-            <th className="border border-gray-400 p-3 text-center">Can you limit this sharing?</th>
+          <tr className="bg-gray-300">
+            <th className="border-[1.5px] border-gray-400 p-3 text-left font-bold text-white w-[50%]">Reasons we can share your personal information</th>
+            <th className="border-[1.5px] border-gray-400 p-3 text-center font-bold text-white">Does Sallie Mae Bank share?</th>
+            <th className="border-[1.5px] border-gray-400 p-3 text-center font-bold text-white">Can you limit this sharing?</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="text-gray-800">
           <tr>
-            <td className="border border-gray-400 p-3">
+            <td className="border-[1.5px] border-gray-400 p-4">
               <strong>For our everyday business purposes –</strong><br/>
               such as to process your transactions, maintain your account(s), respond to court orders and legal investigations, or report to credit bureaus
             </td>
-            <td className="border border-gray-400 p-3 text-center">Yes</td>
-            <td className="border border-gray-400 p-3 text-center">No</td>
+            <td className="border-[1.5px] border-gray-400 p-4 text-center">Yes</td>
+            <td className="border-[1.5px] border-gray-400 p-4 text-center">No</td>
           </tr>
           <tr>
-            <td className="border border-gray-400 p-3">
-              <strong>For our marketing purposes –</strong><br/>
-              to offer our products and services to you
+            <td className="border-[1.5px] border-gray-400 p-4">
+              <strong>For our marketing purposes –</strong> to offer our products and services to you
             </td>
-            <td className="border border-gray-400 p-3 text-center">Yes</td>
-            <td className="border border-gray-400 p-3 text-center">No</td>
+            <td className="border-[1.5px] border-gray-400 p-4 text-center">Yes</td>
+            <td className="border-[1.5px] border-gray-400 p-4 text-center">No</td>
           </tr>
           <tr>
-            <td className="border border-gray-400 p-3">
+            <td className="border-[1.5px] border-gray-400 p-4">
               <strong>For joint marketing with other financial companies</strong>
             </td>
-            <td className="border border-gray-400 p-3 text-center">Yes</td>
-            <td className="border border-gray-400 p-3 text-center">No</td>
+            <td className="border-[1.5px] border-gray-400 p-4 text-center">Yes</td>
+            <td className="border-[1.5px] border-gray-400 p-4 text-center">No</td>
           </tr>
           <tr>
-            <td className="border border-gray-400 p-3">
-              <strong>For our affiliates’ everyday business purposes –</strong><br/>
-              information about your transactions and experiences
+            <td className="border-[1.5px] border-gray-400 p-4">
+              <strong>For our affiliates’ everyday business purposes –</strong> information about your transactions and experiences
             </td>
-            <td className="border border-gray-400 p-3 text-center">Yes</td>
-            <td className="border border-gray-400 p-3 text-center">No</td>
+            <td className="border-[1.5px] border-gray-400 p-4 text-center">Yes</td>
+            <td className="border-[1.5px] border-gray-400 p-4 text-center">No</td>
           </tr>
           <tr>
-            <td className="border border-gray-400 p-3">
-              <strong>For our affiliates’ everyday business purposes –</strong><br/>
-              information about your creditworthiness
+            <td className="border-[1.5px] border-gray-400 p-4">
+              <strong>For our affiliates’ everyday business purposes –</strong> information about your creditworthiness
             </td>
-            <td className="border border-gray-400 p-3 text-center">Yes</td>
-            <td className="border border-gray-400 p-3 text-center">Yes</td>
+            <td className="border-[1.5px] border-gray-400 p-4 text-center">Yes</td>
+            <td className="border-[1.5px] border-gray-400 p-4 text-center">Yes</td>
           </tr>
           <tr>
-            <td className="border border-gray-400 p-3">
+            <td className="border-[1.5px] border-gray-400 p-4">
               <strong>For our affiliates to market to you</strong>
             </td>
-            <td className="border border-gray-400 p-3 text-center">Yes</td>
-            <td className="border border-gray-400 p-3 text-center">Yes</td>
+            <td className="border-[1.5px] border-gray-400 p-4 text-center">Yes</td>
+            <td className="border-[1.5px] border-gray-400 p-4 text-center">Yes</td>
           </tr>
           <tr>
-            <td className="border border-gray-400 p-3">
+            <td className="border-[1.5px] border-gray-400 p-4">
               <strong>For nonaffiliates to market to you</strong>
             </td>
-            <td className="border border-gray-400 p-3 text-center">No</td>
-            <td className="border border-gray-400 p-3 text-center">We don't share</td>
+            <td className="border-[1.5px] border-gray-400 p-4 text-center">No</td>
+            <td className="border-[1.5px] border-gray-400 p-4 text-center">We don’t share</td>
           </tr>
         </tbody>
       </table>
 
-      <div className="border border-gray-400 mb-8">
-        <div className="flex border-b border-gray-400">
-          <div className="w-32 bg-gray-100 p-4 font-bold text-gray-600 text-sm border-r border-gray-400 leading-tight">To limit our sharing</div>
-          <div className="flex-1 p-4">
-            <ul className="list-disc ml-5 space-y-2">
-              <li>Call toll free <strong>1-855-582-1928</strong> – to select your choices</li>
-            </ul>
-            <p className="mt-3 font-bold">Please note:</p>
-            <p>If you are a <em>new</em> customer, we can begin sharing your information 30 days from the date we sent this notice. When you are <em>no longer</em> our customer, we continue to share your information as described in this notice.</p>
-            <p className="mt-3">To limit sharing you can call us toll free Monday–Friday 8am–8pm ET.</p>
+      {/* Opt-out Section */}
+      <div className="border-[1.5px] border-gray-400 mb-8">
+        <div className="flex border-b-[1.5px] border-gray-400">
+          <div className="bg-gray-400 text-white p-4 font-bold text-lg w-40 flex items-center justify-center text-center leading-tight">
+            To limit our sharing
           </div>
-        </div>
-        <div className="flex">
-          <div className="w-32 bg-gray-100 p-4 font-bold text-gray-600 text-sm border-r border-gray-400">Questions?</div>
-          <div className="flex-1 p-4">
-            Call toll free <strong>1-855-582-1928</strong> or go to <span className="underline font-bold text-blue-700">www.SallieMae.com/legal/privacy</span>
+          <div className="p-4 flex-1 text-[13.5px] leading-relaxed">
+            <ul className="list-none pl-2 mb-2">
+              <li className="flex gap-4">
+                <span className="text-gray-900 font-bold">■</span> Call toll free 1-855-582-1928 – to select your choices
+              </li>
+            </ul>
+            <p className="font-bold mb-1">Please note:</p>
+            <p>If you are a <em>new</em> customer, we can begin sharing your information 30 days from the date we sent this notice. When you are <em>no longer</em> our customer, we continue to share your information as described in this notice.</p>
           </div>
         </div>
       </div>
