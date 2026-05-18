@@ -120,7 +120,7 @@ export default function Home() {
             className={`
               px-10 py-3.5 rounded-full text-[15.5px] font-bold transition-all duration-300 w-full sm:w-auto min-w-[160px] text-center outline-none select-none
               ${applicantType 
-                ? 'bg-[#0084c9] hover:bg-[#0070ab] text-white cursor-pointer shadow-lg shadow-blue-500/15' 
+                ? 'bg-[#10365c] hover:bg-[#0b2744] text-white cursor-pointer shadow-lg shadow-blue-900/15' 
                 : 'bg-[#d1d5db] text-[#9ca3af] cursor-not-allowed'
               }
             `}
