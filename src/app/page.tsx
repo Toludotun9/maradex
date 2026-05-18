@@ -122,6 +122,15 @@ export default function Home() {
             Continue
           </button>
         </div>
+
+        {/* Brand Footer Links matching Sallie Mae exactly */}
+        <div className="w-full flex items-center justify-start gap-4 mt-16 text-xs font-bold text-[#004b87] select-none z-10 border-t border-gray-200/20 pt-6">
+          <a href="#" className="underline hover:text-[#003360] transition-colors">Terms of use</a>
+          <span className="text-gray-300 font-light">|</span>
+          <a href="#" className="underline hover:text-[#003360] transition-colors">Privacy policy</a>
+          <span className="text-gray-300 font-light">|</span>
+          <a href="#" className="underline hover:text-[#003360] transition-colors">Website feedback</a>
+        </div>
       </div>
     </div>
   );

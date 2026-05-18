@@ -13,11 +13,11 @@ const Header = () => {
         {/* Brand Logo matching Sallie Mae branding perfectly */}
         <div className="flex-none pr-6">
           <span 
-            className="text-[28px] font-bold tracking-tight text-[#130c4e] lowercase select-none"
+            className="text-[28px] font-bold tracking-tight text-[#13325b] lowercase select-none"
             style={{ fontFamily: 'Georgia, serif' }}
           >
             sall
-            <span className="relative inline-block text-[#130c4e]">
+            <span className="relative inline-block text-[#13325b]">
               ı
               <span className="absolute top-[2px] left-[1px] w-[5.5px] h-[5.5px] bg-[#e20074] rounded-full"></span>
             </span>
