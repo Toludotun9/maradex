@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import PersonalInfoForm from '@/components/PersonalInfoForm';
 import { useAppContext } from '@/context/AppContext';
@@ -8,6 +8,10 @@ import { useAppContext } from '@/context/AppContext';
 export default function PersonalInfoPage() {
   const router = useRouter();
   const { setCurrentStep, saveApplication } = useAppContext();
+
+  useEffect(() => {
+    setCurrentStep(0);
+  }, [setCurrentStep]);
 
   const handleContinue = async () => {
     const result = await saveApplication();

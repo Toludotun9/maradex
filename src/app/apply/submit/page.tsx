@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { MousePointerClick, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
 import SolicitationDisclosure from '@/components/SolicitationDisclosure';
@@ -10,6 +10,10 @@ import { useAppContext } from '@/context/AppContext';
 export default function SubmitDisclosurePage() {
   const router = useRouter();
   const { saveApplication, setCurrentStep, isLoading } = useAppContext();
+
+  useEffect(() => {
+    setCurrentStep(4);
+  }, [setCurrentStep]);
   
   const [isContinuing, setIsContinuing] = useState(false);
   const [expandedSections, setExpandedSections] = useState({

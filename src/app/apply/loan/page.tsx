@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, Suspense } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import LoanInfoForm from '@/components/LoanInfoForm';
 import LoanPeriodForm from '@/components/LoanPeriodForm';
@@ -10,6 +10,10 @@ function LoanInfoContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { setCurrentStep, saveApplication } = useAppContext();
+
+  useEffect(() => {
+    setCurrentStep(1);
+  }, [setCurrentStep]);
   
   const initialSubStep = parseInt(searchParams.get('substep') || '0');
   const [subStep, setSubStep] = useState(initialSubStep);

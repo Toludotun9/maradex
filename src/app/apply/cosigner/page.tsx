@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Users, UserPlus, UserCheck } from 'lucide-react';
 import Button from '@/components/Button';
@@ -10,6 +10,10 @@ import { useAppContext } from '@/context/AppContext';
 export default function AddCosignerPage() {
   const router = useRouter();
   const { formData, updateFormData, saveApplication, setCurrentStep, isLoading } = useAppContext();
+
+  useEffect(() => {
+    setCurrentStep(2);
+  }, [setCurrentStep]);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSaved, setIsSaved] = useState(false);

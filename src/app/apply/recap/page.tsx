@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { ClipboardCheck, ExternalLink } from 'lucide-react';
 import Button from '@/components/Button';
@@ -9,6 +9,10 @@ import { useAppContext } from '@/context/AppContext';
 export default function RecapPage() {
   const router = useRouter();
   const { formData, saveApplication, setCurrentStep, isLoading } = useAppContext();
+
+  useEffect(() => {
+    setCurrentStep(4);
+  }, [setCurrentStep]);
   
   const [showSsn, setShowSsn] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
