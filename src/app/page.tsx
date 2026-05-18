@@ -1,13 +1,17 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import SelectionCard from '@/components/SelectionCard';
 import { useAppContext } from '@/context/AppContext';
 
 export default function Home() {
   const router = useRouter();
-  const { applicantType, setApplicantType } = useAppContext();
+  const { applicantType, setApplicantType, setCurrentStep } = useAppContext();
+
+  useEffect(() => {
+    setCurrentStep(0);
+  }, [setCurrentStep]);
 
   const handleContinue = () => {
     if (applicantType) {
