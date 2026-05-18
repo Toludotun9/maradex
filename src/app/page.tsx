@@ -107,17 +107,7 @@ export default function Home() {
         </div>
 
         {/* Bottom Navigation Row */}
-        <div className="w-full flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 z-10">
-          <button
-            onClick={() => router.push('/resume')}
-            className="text-[14px] font-bold text-[#004b87] hover:text-[#003360] transition-colors underline flex items-center gap-1.5"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14" />
-            </svg>
-            Continue where you left off
-          </button>
-
+        <div className="w-full flex justify-end items-center mt-8 z-10">
           <button
             onClick={handleContinue}
             disabled={!applicantType}
