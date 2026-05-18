@@ -2,6 +2,24 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 
+const US_STATES = [
+  "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", 
+  "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", 
+  "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", 
+  "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", 
+  "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", 
+  "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", 
+  "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", 
+  "Wisconsin", "Wyoming"
+];
+
+const getValidState = (inputState: string): string | null => {
+  if (!inputState) return null;
+  const normalized = inputState.trim().toLowerCase();
+  const matched = US_STATES.find(s => s.toLowerCase() === normalized);
+  return matched || null;
+};
+
 interface SchoolAutocompleteProps {
   label: string;
   name: string;
@@ -39,23 +57,28 @@ const SchoolAutocomplete: React.FC<SchoolAutocompleteProps> = ({
   }, []);
 
   const searchSchools = async (query: string) => {
-    if (!query && !stateFilter) {
+    const validState = getValidState(stateFilter);
+    if (!query && !validState) {
       setSuggestions([]);
       return;
     }
 
     setIsLoading(true);
     try {
-      // Hipolabs API
-      let url = `http://universities.hipolabs.com/search?country=United+States`;
-      if (stateFilter) url += `&state-province=${encodeURIComponent(stateFilter)}`;
-      if (query) url += `&name=${encodeURIComponent(query)}`;
+      // Use HTTPS to prevent any mixed content security blocking
+      let url = `https://universities.hipolabs.com/search?country=United+States`;
+      if (validState) {
+        url += `&state-province=${encodeURIComponent(validState)}`;
+      }
+      if (query) {
+        url += `&name=${encodeURIComponent(query)}`;
+      }
 
       const response = await fetch(url);
       if (!response.ok) throw new Error('API error');
       
       const data = await response.json();
-      // Extract unique names and limit to 10
+      // Extract unique names and limit to 20 suggestions
       const names = Array.from(new Set(data.map((s: any) => s.name))) as string[];
       setSuggestions(names.slice(0, 20));
       setShowDropdown(true);
@@ -69,11 +92,14 @@ const SchoolAutocomplete: React.FC<SchoolAutocompleteProps> = ({
 
   // Debounced search
   useEffect(() => {
-    if (value.length >= 2 || (stateFilter && value.length === 0)) {
+    const validState = getValidState(stateFilter);
+    if (value.length >= 1 || (validState && value.length === 0)) {
        const timer = setTimeout(() => {
           searchSchools(value);
        }, 300);
        return () => clearTimeout(timer);
+    } else {
+      setSuggestions([]);
     }
   }, [value, stateFilter]);
 
@@ -95,6 +121,20 @@ const SchoolAutocomplete: React.FC<SchoolAutocompleteProps> = ({
           placeholder={placeholder}
           value={value}
           onChange={onChange}
+          onFocus={() => {
+            if (stateFilter) {
+              setShowDropdown(true);
+              const validState = getValidState(stateFilter);
+              if (validState && suggestions.length === 0) {
+                searchSchools(value);
+              }
+            }
+          }}
+          onClick={() => {
+            if (stateFilter) {
+              setShowDropdown(true);
+            }
+          }}
           autoComplete="off"
           disabled={!stateFilter}
           className={`
