@@ -3,7 +3,6 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import SelectionCard from '@/components/SelectionCard';
-import Button from '@/components/Button';
 import { useAppContext } from '@/context/AppContext';
 
 export default function Home() {
@@ -11,74 +10,123 @@ export default function Home() {
   const { applicantType, setApplicantType } = useAppContext();
 
   const handleContinue = () => {
-    router.push('/apply/personal');
+    if (applicantType) {
+      router.push('/apply/personal');
+    }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center flex-1 py-16 px-8 md:px-20">
-      <div className="w-full flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-500">
-        <h1 className="text-5xl md:text-4xl font-bold text-blue-900 mb-12 leading-[1.1] text-left">
-          Start by telling us <span className="text-blue-500">who's applying.</span>
+    <div className="relative flex flex-col justify-center items-center flex-grow bg-gradient-to-br from-[#d9f2fd] via-[#f7fbfe] to-[#e4fcf5] min-h-[calc(100vh-73px)] w-full py-16 px-6 md:px-16 overflow-hidden">
+      {/* High-Fidelity Swirling Background Waves/Ribbons */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 select-none">
+        <svg className="absolute w-[180%] h-[180%] -top-[40%] -left-[40%] text-white/50 opacity-70" viewBox="0 0 1000 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+          {/* Wave Path 1 */}
+          <path 
+            d="M-50,600 C150,450 300,750 550,600 C800,450 850,850 1050,600 C1150,480 1200,600 1300,500" 
+            stroke="url(#wave-grad-1)" 
+            strokeWidth="50" 
+            strokeLinecap="round" 
+          />
+          {/* Wave Path 2 */}
+          <path 
+            d="M-100,500 C100,350 250,650 500,500 C750,350 800,750 1000,500 C1100,380 1150,500 1250,400" 
+            stroke="url(#wave-grad-2)" 
+            strokeWidth="35" 
+            strokeLinecap="round" 
+          />
+          <defs>
+            <linearGradient id="wave-grad-1" x1="0" y1="0" x2="1000" y2="1000" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.85" />
+              <stop offset="40%" stopColor="#f0f9ff" stopOpacity="0.45" />
+              <stop offset="70%" stopColor="#e0f2fe" stopOpacity="0.55" />
+              <stop offset="100%" stopColor="#ffffff" stopOpacity="0.9" />
+            </linearGradient>
+            <linearGradient id="wave-grad-2" x1="0" y1="0" x2="1000" y2="1000" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.75" />
+              <stop offset="50%" stopColor="#e2f9f3" stopOpacity="0.35" />
+              <stop offset="100%" stopColor="#f0f9ff" stopOpacity="0.8" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <div className="w-full flex flex-col justify-center items-center max-w-[950px] animate-in fade-in slide-in-from-bottom-4 duration-500 z-10">
+        {/* Main Header styled exactly like the screenshot */}
+        <h1 className="w-full text-[40px] md:text-5xl font-extrabold text-[#13325b] mb-10 tracking-tight text-left leading-[1.15] z-10">
+          Start by telling us <span className="text-[#0084c9]">who's applying.</span>
         </h1>
 
-        <div className="flex flex-col md:flex-row gap-6 bg-white rounded-lg p-10 shadow-xl shadow-black/5 border border-gray-200">
-          <div className="flex-1">
+        {/* Unified white card box */}
+        <div className="w-full bg-white rounded-2xl p-8 md:p-10 border border-gray-100/50 shadow-2xl shadow-blue-900/5 flex flex-col md:flex-row gap-6 z-10">
+          {/* Student selection card */}
+          <div className="flex-grow flex-1">
             <SelectionCard
               title="Student"
               description="I'm attending school or plan to soon."
               isActive={applicantType === 'student'}
               onClick={() => setApplicantType('student')}
               icon={
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M2 10l10-5 10 5-10 5-10-5z" />
-                  <path d="M6 12v5c3 3 9 3 12 0v-5" />
-                  <path d="M22 10v6" />
-                  <circle cx="12" cy="13" r="2" />
-                  <path d="M8 19a4 4 0 0 1 8 0" />
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  {/* Mortarboard Graduation Cap (Pink/Red outline) */}
+                  <path d="M24 6L40 13L24 20L8 13L24 6Z" stroke="#e20074" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M14 15.6V23C14 28 18.5 31 24 31C29.5 31 34 28 34 23V15.6" stroke="#004b87" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M38 13.8V23.5" stroke="#e20074" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                  {/* User Shoulder Outline (Blue) */}
+                  <path d="M12 42C12 36.5 17.4 35 24 35C30.6 35 36 36.5 36 42" stroke="#004b87" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                  {/* User Head Outline (Blue) */}
+                  <circle cx="24" cy="25" r="5" stroke="#004b87" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               }
             />
           </div>
 
-          <div className="flex-1">
+          {/* Cosigner selection card */}
+          <div className="flex-grow flex-1">
             <SelectionCard
               title="Cosigner"
               description="I'll share financial responsibility for this loan with a student."
               isActive={applicantType === 'cosigner'}
               onClick={() => setApplicantType('cosigner')}
               icon={
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-                  <g stroke="#EF4444">
-                    <path d="M14 18a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3" />
-                    <circle cx="9" cy="11" r="2.5" />
-                  </g>
-                  <g stroke={applicantType === 'cosigner' ? 'white' : '#1e3a8a'}>
-                    <path d="M20 21a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3" />
-                    <circle cx="15" cy="14" r="2.5" />
-                  </g>
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  {/* Left Back Avatar (Pink/Red Outline) */}
+                  <circle cx="18" cy="20" r="6" stroke="#e20074" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M6 36C6 30 11.5 28 18 28C21 28 23.5 28.5 25 29.5" stroke="#e20074" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                  
+                  {/* Right Front Avatar (Blue Outline) */}
+                  <circle cx="30" cy="24" r="6" stroke="#004b87" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="white" />
+                  <path d="M19 40C19 34 24.5 32 30 32C35.5 32 41 34 41 40" stroke="#004b87" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="white" />
                 </svg>
               }
             />
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mt-12 pt-6 border-t border-gray-100">
+        {/* Bottom Navigation Row */}
+        <div className="w-full flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 z-10">
           <button
             onClick={() => router.push('/resume')}
-            className="flex items-center gap-2 text-sm text-secondary-blue font-bold hover:text-primary-blue transition-colors group"
+            className="text-[14px] font-bold text-[#004b87] hover:text-[#003360] transition-colors underline flex items-center gap-1.5"
           >
-            <svg className="w-4 h-4 text-accent-blue group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14" />
             </svg>
-            <span>Continue where you left off</span>
+            Continue where you left off
           </button>
 
-          <Button
-            className="w-full sm:w-auto min-w-[200px]"
+          <button
             onClick={handleContinue}
+            disabled={!applicantType}
+            className={`
+              px-10 py-3.5 rounded-full text-[15.5px] font-bold transition-all duration-300 w-full sm:w-auto min-w-[160px] text-center outline-none select-none
+              ${applicantType 
+                ? 'bg-[#0084c9] hover:bg-[#0070ab] text-white cursor-pointer shadow-lg shadow-blue-500/15' 
+                : 'bg-[#d1d5db] text-[#9ca3af] cursor-not-allowed'
+              }
+            `}
           >
             Continue
-          </Button>
+          </button>
         </div>
       </div>
     </div>

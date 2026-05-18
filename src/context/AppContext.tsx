@@ -77,7 +77,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [applicantType, setApplicantType] = useState<'student' | 'cosigner' | null>('student');
+  const [applicantType, setApplicantType] = useState<'student' | 'cosigner' | null>(null);
   const [loanId, setLoanId] = useState<string | null>(null);
   const [secretToken, setSecretToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);

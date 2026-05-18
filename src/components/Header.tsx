@@ -9,9 +9,9 @@ const Header = () => {
 
   return (
     <header className="w-full bg-white py-4 border-b border-gray-200 sticky top-0 z-[100] shadow-sm">
-      <div className="max-w-[1200px] mx-auto flex items-center justify-between px-8 lg:px-4">
+      <div className="max-w-[1250px] mx-auto flex items-center justify-between px-6 lg:px-8">
         {/* Brand Logo matching Sallie Mae branding perfectly */}
-        <div className="flex-none pr-8">
+        <div className="flex-none pr-6">
           <span 
             className="text-[28px] font-bold tracking-tight text-[#130c4e] lowercase select-none"
             style={{ fontFamily: 'Georgia, serif' }}
@@ -27,6 +27,19 @@ const Header = () => {
         
         {/* Connected Progress Stepper */}
         <ProgressStepper currentStep={currentStep} />
+
+        {/* Customer Support Call Us Link */}
+        <div className="flex items-center gap-1.5 flex-none pl-6 select-none">
+          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-50/50 border border-blue-100/50">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#004b87" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              <path d="M14 9.5a2.5 2.5 0 0 0-4 0" />
+            </svg>
+          </div>
+          <a href="tel:1-800-4-SALLIE" className="text-[13.5px] font-extrabold text-[#004b87] underline hover:text-[#003360] transition-colors whitespace-nowrap">
+            Call us
+          </a>
+        </div>
       </div>
     </header>
   );

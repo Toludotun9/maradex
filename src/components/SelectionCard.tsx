@@ -19,20 +19,27 @@ const SelectionCard: React.FC<SelectionCardProps> = ({
 }) => {
   return (
     <button 
+      type="button"
       className={`
-        flex items-start gap-4 p-6 rounded border transition-all duration-200 w-full h-full text-left cursor-pointer
-        ${isActive ? 'bg-sallie-blue border-transparent' : 'bg-white border-sallie-blue hover:bg-slate-50'}
+        flex items-center gap-6 p-8 rounded-xl border transition-all duration-300 w-full text-left cursor-pointer outline-none min-h-[140px]
+        ${isActive 
+          ? 'bg-[#f0f9ff]/70 border-[#0084c9] border-2 shadow-md shadow-blue-500/5' 
+          : 'bg-white border-[#cdd6e2] hover:bg-slate-50/50 hover:border-slate-400'
+        }
       `}
       onClick={onClick}
     >
-      <div className={`flex-none w-10 h-10 flex items-center justify-center transition-colors duration-200 ${isActive ? 'text-white' : 'text-secondary-blue'}`}>
+      {/* Icon Area */}
+      <div className="flex-none w-14 h-14 flex items-center justify-center">
         {icon}
       </div>
-      <div className="flex-1">
-        <h3 className={`text-2xl font-bold mb-2 leading-tight ${isActive ? 'text-white' : 'text-secondary-blue'}`}>
+
+      {/* Text Area */}
+      <div className="flex-grow">
+        <h3 className="text-xl font-extrabold text-[#13325b] mb-1 tracking-tight">
           {title}
         </h3>
-        <p className={`text-lg font-medium leading-normal ${isActive ? 'text-white' : 'text-gray-800'}`}>
+        <p className="text-[14.5px] font-medium text-[#556b82] leading-relaxed">
           {description}
         </p>
       </div>
