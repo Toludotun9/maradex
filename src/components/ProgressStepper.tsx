@@ -1,7 +1,7 @@
 import React from 'react';
 
 const steps = [
-  'Personal Info',
+  'Personal info',
   'Loan info',
   'Add cosigner',
   'Finalize',
@@ -9,38 +9,70 @@ const steps = [
   'Results'
 ];
 
-const ProgressStepper = ({ currentStep = 0 }) => {
+interface ProgressStepperProps {
+  currentStep?: number;
+}
+
+const ProgressStepper: React.FC<ProgressStepperProps> = ({ currentStep = 0 }) => {
   return (
-    <nav className="hidden md:flex items-center gap-0 flex-1 justify-center max-w-[800px]">
-      {steps.map((step, index) => (
-        <div 
-          key={step} 
-          className="flex flex-col items-center relative flex-1 group"
-        >
-          {/* Indicator */}
-          <div className={`
-            w-3.5 h-3.5 rounded-full border-2 mb-2 z-10 flex items-center justify-center transition-all duration-300
-            ${index === currentStep ? 'border-accent-blue bg-white shadow-[0_0_0_4px_rgba(0,163,224,0.2)]' : ''}
-            ${index < currentStep ? 'border-accent-blue bg-accent-blue' : 'border-gray-300 bg-white'}
-          `}>
-            {index < currentStep && (
-              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-            )}
-          </div>
-          
-          {/* Label */}
-          <span className={`text-[10px] uppercase tracking-wider font-semibold whitespace-nowrap ${index === currentStep ? 'text-secondary-blue font-bold' : 'text-gray-500'}`}>
-            {step}
-          </span>
-          
-          {/* Line */}
-          {index < steps.length - 1 && (
-            <div className={`absolute top-[7px] left-1/2 w-full h-[2px] -z-0 ${index < currentStep ? 'bg-accent-blue' : 'bg-gray-300'}`} />
-          )}
-        </div>
-      ))}
+    <nav className="flex items-center w-full max-w-[850px] mx-auto py-2">
+      <div className="flex items-center justify-between w-full relative">
+        {steps.map((step, index) => {
+          const isCompleted = index < currentStep;
+          const isCurrent = index === currentStep;
+          const isFuture = index > currentStep;
+
+          return (
+            <div 
+              key={step} 
+              className="flex flex-col items-center flex-1 relative group"
+            >
+              {/* Left Connector Line */}
+              {index > 0 && (
+                <div 
+                  className={`
+                    absolute top-[8px] right-1/2 w-1/2 h-[3px] -z-0 transition-colors duration-300
+                    ${index <= currentStep ? 'bg-[#004b87]' : 'bg-[#e5e7eb]'}
+                  `}
+                />
+              )}
+
+              {/* Right Connector Line */}
+              {index < steps.length - 1 && (
+                <div 
+                  className={`
+                    absolute top-[8px] left-1/2 w-1/2 h-[3px] -z-0 transition-colors duration-300
+                    ${index < currentStep ? 'bg-[#004b87]' : 'bg-[#e5e7eb]'}
+                  `}
+                />
+              )}
+
+              {/* Indicator (Circle) */}
+              <div 
+                className={`
+                  rounded-full flex items-center justify-center transition-all duration-300 z-10
+                  ${isCompleted ? 'w-4 h-4 bg-[#004b87]' : ''}
+                  ${isCurrent ? 'w-5 h-5 bg-white border-[4px] border-[#0084c9]' : ''}
+                  ${isFuture ? 'w-4 h-4 bg-white border-[2px] border-gray-200' : ''}
+                `}
+                style={isCurrent ? { transform: 'translateY(-2px)' } : undefined}
+              />
+              
+              {/* Label */}
+              <span 
+                className={`
+                  text-[12px] mt-2 whitespace-nowrap transition-colors duration-300
+                  ${isCompleted ? 'text-[#004b87] font-medium' : ''}
+                  ${isCurrent ? 'text-[#0084c9] font-bold' : ''}
+                  ${isFuture ? 'text-gray-400 font-medium' : ''}
+                `}
+              >
+                {step}
+              </span>
+            </div>
+          );
+        })}
+      </div>
     </nav>
   );
 };
