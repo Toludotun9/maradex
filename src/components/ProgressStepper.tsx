@@ -14,9 +14,31 @@ interface ProgressStepperProps {
 }
 
 const ProgressStepper: React.FC<ProgressStepperProps> = ({ currentStep = 0 }) => {
+  // 6 steps means 6 columns. The center of each column is spaced at 16.66% increments.
+  // The first circle center is at 8.33% (half of 16.66%).
+  // The last circle center is at 91.67% (100% - 8.33%).
+  // The total track span is 83.34% (91.67% - 8.33%).
+  const activePercentage = (currentStep / (steps.length - 1)) * 100;
+  const activeWidth = activePercentage * 0.8334;
+
   return (
-    <nav className="flex items-center w-full max-w-[850px] mx-auto py-2">
-      <div className="flex items-center justify-between w-full relative">
+    <nav className="flex items-center w-full max-w-[850px] mx-auto py-2 relative">
+      {/* 100% Continuous Grey Background Track */}
+      <div 
+        className="absolute top-[16px] h-[3px] bg-[#e5e7eb] rounded-full z-0" 
+        style={{ left: '8.33%', right: '8.33%' }}
+      />
+
+      {/* 100% Continuous Active Blue Track */}
+      <div 
+        className="absolute top-[16px] h-[3px] bg-[#004b87] rounded-full z-0 transition-all duration-500 ease-in-out" 
+        style={{ 
+          left: '8.33%', 
+          width: `${activeWidth}%`
+        }}
+      />
+
+      <div className="flex items-center justify-between w-full relative z-10">
         {steps.map((step, index) => {
           const isCompleted = index < currentStep;
           const isCurrent = index === currentStep;
@@ -25,29 +47,9 @@ const ProgressStepper: React.FC<ProgressStepperProps> = ({ currentStep = 0 }) =>
           return (
             <div 
               key={step} 
-              className="flex flex-col items-center flex-1 relative group"
+              className="flex flex-col items-center flex-1 relative"
             >
-              {/* Left Connector Line */}
-              {index > 0 && (
-                <div 
-                  className={`
-                    absolute top-[8px] right-1/2 w-1/2 h-[3px] -z-0 transition-colors duration-300
-                    ${index <= currentStep ? 'bg-[#004b87]' : 'bg-[#e5e7eb]'}
-                  `}
-                />
-              )}
-
-              {/* Right Connector Line */}
-              {index < steps.length - 1 && (
-                <div 
-                  className={`
-                    absolute top-[8px] left-1/2 w-1/2 h-[3px] -z-0 transition-colors duration-300
-                    ${index < currentStep ? 'bg-[#004b87]' : 'bg-[#e5e7eb]'}
-                  `}
-                />
-              )}
-
-              {/* Indicator (Circle) */}
+              {/* Indicator (Circle) with white backgrounds to cover the continuous track underneath */}
               <div 
                 className={`
                   rounded-full flex items-center justify-center transition-all duration-300 z-10
