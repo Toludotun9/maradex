@@ -131,7 +131,7 @@ const PersonalInfoForm = ({
         </div>
       </div>
 
-      <h1 className="text-5xl md:text-4xl font-bold text-primary-blue mb-4">
+      <h1 className="text-3xl md:text-5xl font-bold text-primary-blue mb-4">
         Tell us about <span className="text-accent-blue">yourself.</span>
       </h1>
       <p className="text-xl text-gray-600 mb-10">We'll need a little bit of info about you for your application.</p>

@@ -118,7 +118,7 @@ export default function RecapPage() {
           </div>
         </div>
 
-        <h1 className="text-5xl md:text-5xl font-bold text-primary-blue mb-4 leading-tight">
+        <h1 className="text-3xl md:text-5xl font-bold text-primary-blue mb-4 leading-tight">
           Let’s take a moment to <span className="text-accent-blue">recap.</span>
         </h1>
         <p className="text-lg text-gray-600 mb-10 font-medium">

@@ -171,7 +171,7 @@ export default function FinalizePage() {
           </div>
         </div>
 
-        <h1 className="text-5xl md:text-5xl font-bold text-primary-blue mb-4 leading-tight">
+        <h1 className="text-3xl md:text-5xl font-bold text-primary-blue mb-4 leading-tight">
           Tell us about <span className="text-accent-blue">your employment and income.</span>
         </h1>
 

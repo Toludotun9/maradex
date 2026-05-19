@@ -63,7 +63,7 @@ const ProgressStepper: React.FC<ProgressStepperProps> = ({ currentStep = 0 }) =>
               {/* Label */}
               <span 
                 className={`
-                  text-[12px] mt-2 whitespace-nowrap transition-colors duration-300
+                  text-[10px] sm:text-[11px] md:text-[12px] mt-2 whitespace-nowrap sm:whitespace-normal md:whitespace-nowrap text-center transition-colors duration-300
                   ${isCompleted ? 'text-[#004b87] font-medium' : ''}
                   ${isCurrent ? 'text-[#0084c9] font-bold' : ''}
                   ${isFuture ? 'text-gray-400 font-medium' : ''}

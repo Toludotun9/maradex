@@ -92,7 +92,7 @@ export default function AddCosignerPage() {
           </div>
         </div>
 
-        <h1 className="text-5xl md:text-4xl font-bold text-primary-blue mb-4 leading-tight max-w-2xl">
+        <h1 className="text-3xl md:text-5xl font-bold text-primary-blue mb-4 leading-tight max-w-2xl">
           You might benefit from <span className="text-accent-blue">adding a cosigner.</span>
         </h1>
         <p className="text-base text-gray-600 mb-8 leading-relaxed font-medium max-w-2xl">

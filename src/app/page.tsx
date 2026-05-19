@@ -56,7 +56,7 @@ export default function Home() {
 
       <div className="w-full flex flex-col justify-center items-center max-w-[950px] animate-in fade-in slide-in-from-bottom-4 duration-500 z-10">
         {/* Main Header styled exactly like the screenshot */}
-        <h1 className="w-full text-[40px] md:text-5xl font-extrabold text-[#13325b] mb-10 tracking-tight text-left leading-[1.15] z-10">
+        <h1 className="w-full text-3xl md:text-5xl font-extrabold text-[#13325b] mb-10 tracking-tight text-left leading-[1.15] z-10">
           Start by telling us <span className="text-[#0084c9]">who's applying.</span>
         </h1>
 

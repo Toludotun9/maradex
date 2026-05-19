@@ -43,7 +43,7 @@ const SelectionCard: React.FC<SelectionCardProps> = ({
       <div className="flex-grow">
         <h3 
           className={`
-            text-xl font-extrabold mb-1 tracking-tight transition-colors duration-300
+            text-lg md:text-xl font-extrabold mb-1 tracking-tight transition-colors duration-300
             ${isActive ? 'text-white' : 'text-[#13325b]'}
           `}
         >
@@ -51,7 +51,7 @@ const SelectionCard: React.FC<SelectionCardProps> = ({
         </h3>
         <p 
           className={`
-            text-[14.5px] font-medium leading-relaxed transition-colors duration-300
+            text-[13px] md:text-[14.5px] font-medium leading-relaxed transition-colors duration-300
             ${isActive ? 'text-white/90' : 'text-[#556b82]'}
           `}
         >

@@ -218,7 +218,7 @@ const LoanPeriodForm = ({
         </div>
       </div>
 
-      <h1 className="text-5xl md:text-4xl font-bold text-primary-blue mb-4 leading-tight">
+      <h1 className="text-3xl md:text-5xl font-bold text-primary-blue mb-4 leading-tight">
         Let’s figure out <span className="text-accent-blue">how much to borrow.</span>
       </h1>
 

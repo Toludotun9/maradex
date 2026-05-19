@@ -13,7 +13,7 @@ const Header = () => {
         {/* Brand Logo matching Sallie Mae branding perfectly */}
         <div className="flex-none pr-6">
           <span 
-            className="text-[28px] font-bold tracking-tight text-[#13325b] lowercase select-none"
+            className="text-[22px] md:text-[28px] font-bold tracking-tight text-[#13325b] lowercase select-none"
             style={{ fontFamily: 'Georgia, serif' }}
           >
             sall
@@ -36,7 +36,7 @@ const Header = () => {
               <path d="M14 9.5a2.5 2.5 0 0 0-4 0" />
             </svg>
           </div>
-          <a href="tel:1-800-4-SALLIE" className="text-[13.5px] font-extrabold text-[#004b87] underline hover:text-[#003360] transition-colors whitespace-nowrap">
+          <a href="tel:1-800-4-SALLIE" className="text-[12px] md:text-[13.5px] font-extrabold text-[#004b87] underline hover:text-[#003360] transition-colors whitespace-nowrap">
             Call us
           </a>
         </div>
