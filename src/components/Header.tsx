@@ -25,18 +25,34 @@ const Header = () => {
           </span>
         </div>
         
-        {/* Connected Progress Stepper */}
-        <ProgressStepper currentStep={currentStep} />
+        {/* Mobile View Progress (Hidden on Desktop) */}
+        <div className="flex sm:hidden items-center justify-center flex-grow">
+          <button className="flex items-center gap-2 text-[#004b87] hover:text-[#003360] transition-colors select-none">
+            <span className="text-[13px] font-medium">View progress</span>
+            <div className="flex items-center">
+              <div className="w-[5px] h-[5px] rounded-full bg-[#004b87]"></div>
+              <div className="w-1.5 h-[1.5px] bg-[#004b87]"></div>
+              <div className="w-[5px] h-[5px] rounded-full bg-[#004b87]"></div>
+              <div className="w-1.5 h-[1.5px] bg-[#004b87]"></div>
+              <div className="w-[5px] h-[5px] rounded-full bg-[#004b87]"></div>
+            </div>
+          </button>
+        </div>
+
+        {/* Connected Progress Stepper (Hidden on Mobile) */}
+        <div className="hidden sm:block w-full">
+          <ProgressStepper currentStep={currentStep} />
+        </div>
 
         {/* Customer Support Call Us Link */}
-        <div className="flex items-center gap-1.5 flex-none pl-6 select-none">
-          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-50/50 border border-blue-100/50">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#004b87" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <div className="flex items-center gap-1.5 flex-none pl-2 sm:pl-6 select-none">
+          <a href="tel:1-800-4-SALLIE" className="flex items-center justify-center w-8 h-8 sm:w-8 sm:h-8 rounded-lg bg-transparent sm:bg-blue-50/50 sm:border sm:border-blue-100/50">
+            <svg width="20" height="20" className="sm:w-[18px] sm:h-[18px]" viewBox="0 0 24 24" fill="none" stroke="#004b87" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
               <path d="M14 9.5a2.5 2.5 0 0 0-4 0" />
             </svg>
-          </div>
-          <a href="tel:1-800-4-SALLIE" className="text-[12px] md:text-[13.5px] font-extrabold text-[#004b87] underline hover:text-[#003360] transition-colors whitespace-nowrap">
+          </a>
+          <a href="tel:1-800-4-SALLIE" className="hidden sm:block text-[12px] md:text-[13.5px] font-extrabold text-[#004b87] underline hover:text-[#003360] transition-colors whitespace-nowrap">
             Call us
           </a>
         </div>
