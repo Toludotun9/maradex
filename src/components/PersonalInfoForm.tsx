@@ -282,7 +282,7 @@ const PersonalInfoForm = ({
 
       {/* Identity Verification Section */}
       {formData.citizenshipStatus && (
-        <div className="mt-10 bg-white rounded-lg p-10 shadow-xl border border-gray-200 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="mt-10 bg-white rounded-lg p-5 sm:p-10 shadow-xl border border-gray-200 animate-in fade-in slide-in-from-bottom-4 duration-500">
           <h2 className="text-2xl font-bold text-primary-blue mb-4">Let's verify your identity.</h2>
           <p className="text-gray-600 mb-10 font-medium leading-relaxed">
             It's required by federal law that we obtain, verify, and record information that identifies you when you apply for a loan. This includes your name, address, and date of birth. We may also request a copy of your driver's license or other ID.
@@ -290,7 +290,7 @@ const PersonalInfoForm = ({
 
           <div className="mb-10">
             <label className="text-sm font-bold text-primary-blue mb-2 block">Date of birth</label>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-row flex-nowrap items-center gap-2 sm:gap-3">
               <input
                 ref={dobMonthRef}
                 name="dobMonth"
@@ -298,9 +298,9 @@ const PersonalInfoForm = ({
                 maxLength={2}
                 value={formData.dobMonth}
                 onChange={handleChange}
-                className={`w-16 px-3 py-3 rounded border transition-all text-center text-gray-700 outline-none ${isInvalidDOB() ? 'border-red-600' : 'border-gray-300 focus:border-secondary-blue'}`}
+                className={`w-14 sm:w-16 px-2 sm:px-3 py-3 rounded border transition-all text-center text-gray-700 outline-none ${isInvalidDOB() ? 'border-red-600' : 'border-gray-300 focus:border-secondary-blue'}`}
               />
-              <span className="text-xl text-gray-400">/</span>
+              <span className="text-lg sm:text-xl text-gray-400">/</span>
               <input
                 ref={dobDayRef}
                 name="dobDay"
@@ -308,9 +308,9 @@ const PersonalInfoForm = ({
                 maxLength={2}
                 value={formData.dobDay}
                 onChange={handleChange}
-                className={`w-16 px-3 py-3 rounded border transition-all text-center text-gray-700 outline-none ${isInvalidDOB() ? 'border-red-600' : 'border-gray-300 focus:border-secondary-blue'}`}
+                className={`w-14 sm:w-16 px-2 sm:px-3 py-3 rounded border transition-all text-center text-gray-700 outline-none ${isInvalidDOB() ? 'border-red-600' : 'border-gray-300 focus:border-secondary-blue'}`}
               />
-              <span className="text-xl text-gray-400">/</span>
+              <span className="text-lg sm:text-xl text-gray-400">/</span>
               <input
                 ref={dobYearRef}
                 name="dobYear"
@@ -318,7 +318,7 @@ const PersonalInfoForm = ({
                 maxLength={4}
                 value={formData.dobYear}
                 onChange={handleChange}
-                className={`w-28 px-3 py-3 rounded border transition-all text-center text-gray-700 outline-none ${isInvalidDOB() ? 'border-red-600' : 'border-gray-300 focus:border-secondary-blue'}`}
+                className={`w-24 sm:w-28 px-2 sm:px-3 py-3 rounded border transition-all text-center text-gray-700 outline-none ${isInvalidDOB() ? 'border-red-600' : 'border-gray-300 focus:border-secondary-blue'}`}
               />
             </div>
             {isInvalidDOB() && (
