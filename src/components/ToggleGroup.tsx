@@ -35,7 +35,7 @@ const ToggleGroup: React.FC<ToggleGroupProps> = ({
         </label>
       )}
       <div className={`
-        flex rounded overflow-hidden 
+        flex flex-col sm:flex-row rounded overflow-hidden 
         ${error ? 'border-red-600' : (isProgram ? 'border border-gray-300' : 'border border-secondary-blue')} 
         ${fullWidth ? 'w-full' : 'w-fit min-w-[220px]'}
         border
@@ -51,7 +51,7 @@ const ToggleGroup: React.FC<ToggleGroupProps> = ({
               ${value === opt.value 
                 ? (isProgram ? 'bg-blue-50 border-b-[6px] border-b-secondary-blue -mb-[0px]' : 'bg-secondary-blue text-white') 
                 : (isProgram ? 'bg-white text-primary-blue hover:bg-slate-50' : 'bg-white text-secondary-blue hover:bg-slate-50')}
-              ${index < options.length - 1 ? (isProgram ? (error ? 'border-r border-red-600' : 'border-r border-gray-300') : (error ? 'border-r border-red-600' : 'border-r border-secondary-blue')) : ''}
+              ${index < options.length - 1 ? (isProgram ? (error ? 'border-b sm:border-b-0 sm:border-r border-red-600' : 'border-b sm:border-b-0 sm:border-r border-gray-300') : (error ? 'border-b sm:border-b-0 sm:border-r border-red-600' : 'border-b sm:border-b-0 sm:border-r border-secondary-blue')) : ''}
               ${isProgram ? 'font-bold text-xs' : 'font-bold text-sm'}
             `}
           >
