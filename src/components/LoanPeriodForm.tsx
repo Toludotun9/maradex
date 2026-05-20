@@ -380,8 +380,10 @@ const LoanPeriodForm = ({
         </div>
       </div>
 
-      {/* Second Card: Dynamic Cost of Attendance */}
-      <div className="mt-8 bg-white rounded-lg p-5 sm:p-10 shadow-xl border border-gray-200 animate-in fade-in slide-in-from-top-4 duration-500">
+      {formData.loanAcademicPeriod && (
+        <>
+          {/* Second Card: Dynamic Cost of Attendance */}
+          <div className="mt-8 bg-white rounded-lg p-5 sm:p-10 shadow-xl border border-gray-200 animate-in fade-in slide-in-from-top-4 duration-500">
         <h3 className="text-2xl font-bold text-primary-blue mb-3">
           Next, tell us your cost of attendance.
         </h3>
@@ -402,7 +404,7 @@ const LoanPeriodForm = ({
             <input
               name="loanCostOfAttendance"
               type="text"
-              value={formData.loanCostOfAttendance || costEstimate.toString()}
+              value={formData.loanCostOfAttendance}
               onChange={(e) => {
                 // allow numeric digits only
                 const val = e.target.value.replace(/\D/g, '');
@@ -515,7 +517,7 @@ const LoanPeriodForm = ({
               name="loanAmountRequested"
               type="text"
               disabled={useCalculatedNeed}
-              value={activeRequestedAmount}
+              value={useCalculatedNeed ? calculatedNeed.toString() : formData.loanAmountRequested}
               onChange={(e) => {
                 const val = e.target.value.replace(/\D/g, '');
                 handleChange({ loanAmountRequested: val });
@@ -567,6 +569,8 @@ const LoanPeriodForm = ({
           </p>
         </div>
       </div>
+        </>
+      )}
 
       {/* Navigation Actions Footer */}
       <div className="flex flex-col md:flex-row items-center justify-end gap-8 mt-12 pt-8 border-t border-gray-100">

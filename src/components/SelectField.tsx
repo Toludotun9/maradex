@@ -38,7 +38,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
           value={value}
           onChange={onChange}
           className={`
-            w-full px-4 py-3 rounded border outline-none appearance-none transition-all text-gray-700 bg-white
+            w-full pl-4 pr-12 py-3 rounded border outline-none appearance-none transition-all text-gray-700 bg-white
             ${error ? 'border-red-600 focus:ring-1 focus:ring-red-600' : 'border-gray-300 focus:border-secondary-blue focus:ring-1 focus:ring-secondary-blue'}
           `}
         >
