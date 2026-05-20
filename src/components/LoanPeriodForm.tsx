@@ -6,21 +6,81 @@ import Button from './Button';
 import SelectField from './SelectField';
 import { useAppContext } from '@/context/AppContext';
 
+const getTermDates = (year: number) => {
+  const getNthWeekday = (y: number, month: number, dayOfWeek: number, n: number) => {
+    let count = 0;
+    const date = new Date(y, month, 1);
+    while (date.getMonth() === month) {
+      if (date.getDay() === dayOfWeek) {
+        count++;
+        if (count === n) {
+          return date;
+        }
+      }
+      date.setDate(date.getDate() + 1);
+    }
+    return new Date(y, month, 1);
+  };
+
+  const format = (d: Date) => {
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    const yyyy = d.getFullYear();
+    return `${mm}/${dd}/${yyyy}`;
+  };
+
+  const springStart = getNthWeekday(year, 0, 1, 2);
+  const springEnd = getNthWeekday(year, 4, 6, 1);
+
+  const summerStart = getNthWeekday(year, 4, 1, 2);
+  const summerEnd = new Date(summerStart);
+  summerEnd.setDate(summerEnd.getDate() + 13 * 7 + 5);
+
+  const fallStart = getNthWeekday(year, 7, 1, 4);
+  const fallEnd = getNthWeekday(year, 11, 6, 2);
+
+  return {
+    springStart: format(springStart),
+    springEnd: format(springEnd),
+    summerStart: format(summerStart),
+    summerEnd: format(summerEnd),
+    fallStart: format(fallStart),
+    fallEnd: format(fallEnd),
+  };
+};
+
+const isSingleSemester = (period: string) => {
+  const p = period.toLowerCase();
+  if (p.includes('only')) return true;
+  if (p === 'custom') return true;
+  const underscoreCount = (p.match(/_/g) || []).length;
+  if (underscoreCount === 1 && (p.startsWith('fall_') || p.startsWith('summer_') || p.startsWith('spring_'))) {
+    return true;
+  }
+  return false;
+};
+
 const getFallbackPeriods = () => {
   const currentYear = new Date().getFullYear();
+  const prevYear = currentYear - 1;
   const nextYear = currentYear + 1;
-  const afterNextYear = currentYear + 2;
+
+  const termsPrev = getTermDates(prevYear);
+  const termsCurrent = getTermDates(currentYear);
+  const termsNext = getTermDates(nextYear);
+
   return [
-    { label: `Spring Only ${currentYear}: 01/12/${currentYear} - 05/02/${currentYear}`, value: `spring_only_${currentYear}` },
-    { label: `Summer Only ${currentYear}: 05/11/${currentYear} - 08/15/${currentYear}`, value: `summer_only_${currentYear}` },
-    { label: `Summer/Fall/Spring ${currentYear}-${nextYear}: 05/11/${currentYear} - 05/01/${nextYear}`, value: `summer_fall_spring_${currentYear}_${nextYear}` },
-    { label: `Fall/Spring ${currentYear}-${nextYear}: 08/24/${currentYear} - 05/01/${nextYear}`, value: `fall_spring_${currentYear}_${nextYear}` },
-    { label: `Summer/Fall ${currentYear}: 05/11/${currentYear} - 12/12/${currentYear}`, value: `summer_fall_${currentYear}` },
-    { label: `Fall Only ${currentYear}: 08/24/${currentYear} - 12/12/${currentYear}`, value: `fall_only_${currentYear}` },
-    { label: `Spring Only ${nextYear}: 01/11/${nextYear} - 05/01/${nextYear}`, value: `spring_only_${nextYear}` },
-    { label: `Summer Only ${nextYear}: 05/10/${nextYear} - 08/14/${nextYear}`, value: `summer_only_${nextYear}` },
-    { label: `Fall Only ${nextYear}: 08/23/${nextYear} - 12/11/${nextYear}`, value: `fall_only_${nextYear}` },
-    { label: `Fall/Spring ${nextYear}-${afterNextYear}: 08/23/${nextYear} - 04/29/${afterNextYear}`, value: `fall_spring_${nextYear}_${afterNextYear}` },
+    { label: `Spring Only ${currentYear}: ${termsCurrent.springStart} - ${termsCurrent.springEnd}`, value: `spring_only_${currentYear}` },
+    { label: `Summer Only ${currentYear}: ${termsCurrent.summerStart} - ${termsCurrent.summerEnd}`, value: `summer_only_${currentYear}` },
+    { label: `Summer/Fall/Spring ${currentYear}-${nextYear}: ${termsCurrent.summerStart} - ${termsNext.springEnd}`, value: `summer_fall_spring_${currentYear}_${nextYear}` },
+    { label: `Fall/Spring ${currentYear}-${nextYear}: ${termsCurrent.fallStart} - ${termsNext.springEnd}`, value: `fall_spring_${currentYear}_${nextYear}` },
+    { label: `Summer/Fall ${currentYear}: ${termsCurrent.summerStart} - ${termsCurrent.fallEnd}`, value: `summer_fall_${currentYear}` },
+    { label: `Fall/Spring ${prevYear}-${currentYear}: ${termsPrev.fallStart} - ${termsCurrent.springEnd}`, value: `fall_spring_${prevYear}_${currentYear}` },
+    { label: `Fall Only ${currentYear}: ${termsCurrent.fallStart} - ${termsCurrent.fallEnd}`, value: `fall_only_${currentYear}` },
+    { label: `Fall ${prevYear}: ${termsPrev.fallStart} - ${termsPrev.fallEnd}`, value: `fall_${prevYear}` },
+    { label: `Summer ${prevYear}: ${termsPrev.summerStart} - ${termsPrev.summerEnd}`, value: `summer_${prevYear}` },
+    { label: `Summer/Fall ${prevYear}: ${termsPrev.summerStart} - ${termsPrev.fallEnd}`, value: `summer_fall_${prevYear}` },
+    { label: `Summer/Fall/Spring ${prevYear}-${currentYear}: ${termsPrev.summerStart} - ${termsCurrent.springEnd}`, value: `summer_fall_spring_${prevYear}_${currentYear}` },
     { label: 'Custom academic loan period', value: 'custom' }
   ];
 };
@@ -70,7 +130,7 @@ const LoanPeriodForm = ({
               // Calculate correct cost based on academic period
               const currentPeriod = formData.loanAcademicPeriod || '';
               let initialCost = data.costOfAttendance;
-              if (currentPeriod && (currentPeriod.toLowerCase().includes('only') || currentPeriod === 'custom')) {
+              if (currentPeriod && isSingleSemester(currentPeriod)) {
                 initialCost = Math.round(data.costOfAttendance / 2);
               }
               
@@ -254,7 +314,7 @@ const LoanPeriodForm = ({
               let updatedCost = costEstimate;
               
               // Calculate correct cost: divide by 2 if single semester or custom
-              if (selectedPeriod && (selectedPeriod.toLowerCase().includes('only') || selectedPeriod === 'custom')) {
+              if (selectedPeriod && isSingleSemester(selectedPeriod)) {
                 updatedCost = Math.round(costEstimate / 2);
               }
 

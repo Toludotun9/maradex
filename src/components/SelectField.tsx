@@ -150,7 +150,16 @@ const SelectField: React.FC<SelectFieldProps> = ({
                 role="option"
                 aria-selected={isSelected}
               >
-                <span className="pr-4 leading-snug">{opt.label}</span>
+                <span className="pr-4 leading-snug flex flex-col">
+                  {opt.label.includes(':') ? (
+                    <>
+                      <span className="font-semibold text-gray-950">{opt.label.split(':')[0].trim()}:</span>
+                      <span className="text-xs text-gray-500 mt-0.5">{opt.label.split(':')[1].trim()}</span>
+                    </>
+                  ) : (
+                    <span>{opt.label}</span>
+                  )}
+                </span>
                 {isSelected && (
                   <svg className="w-4 h-4 text-secondary-blue flex-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
