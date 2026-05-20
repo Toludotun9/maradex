@@ -52,14 +52,14 @@ export default function SubmitDisclosurePage() {
   const renderSection = (id: keyof typeof expandedSections, title: string, subtext: string, content: React.ReactNode) => {
     const isExpanded = expandedSections[id];
     return (
-      <div className="w-full bg-white rounded-[32px] shadow-2xl border border-slate-100 overflow-hidden mb-8">
-        <div className="p-12 md:p-16">
-          <div className="flex justify-between items-start mb-6">
+      <div className="w-full bg-white rounded-[24px] md:rounded-[32px] shadow-2xl border border-slate-100 overflow-hidden mb-8">
+        <div className="p-6 md:p-16">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 mb-6">
             <div className="flex-1">
               <h3 className="text-xl font-bold text-gray-900 mb-2">{title}</h3>
-              <p className="text-[15px] text-gray-600 mb-8">{subtext}</p>
+              <p className="text-[15px] text-gray-600 mb-4 md:mb-8">{subtext}</p>
             </div>
-            <button className="flex items-center gap-2 text-[15px] font-bold text-secondary-blue hover:text-primary-blue transition-colors group">
+            <button className="flex items-center gap-2 text-[15px] font-bold text-secondary-blue hover:text-primary-blue transition-colors group self-start">
               <span className="border-b-2 border-secondary-blue/30 group-hover:border-primary-blue">View/Download</span>
               <ExternalLink className="w-4 h-4" />
             </button>
@@ -96,7 +96,7 @@ export default function SubmitDisclosurePage() {
   };
 
   const consentContent = (
-    <div className="p-10 text-[14px] text-gray-800 leading-[1.6] font-sans">
+    <div className="p-4 sm:p-8 md:p-10 text-[14px] text-gray-800 leading-[1.6] font-sans">
       <div className="flex justify-end mb-8">
         <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Revision 09/2025</span>
       </div>
@@ -205,15 +205,15 @@ export default function SubmitDisclosurePage() {
         </svg>
       </div>
 
-      <div className="flex flex-col items-center justify-center pt-24 pb-16 px-8 md:px-20 w-full max-w-6xl mx-auto relative z-0">
+      <div className="flex flex-col items-center justify-center pt-16 md:pt-24 pb-16 px-4 md:px-20 w-full max-w-6xl mx-auto relative z-0">
         <div className="w-full text-left mb-12">
           <div className="text-secondary-blue mb-6 drop-shadow-sm">
             <MousePointerClick className="w-10 h-10" />
           </div>
-          <h1 className="text-6xl md:text-7xl font-bold text-primary-blue mb-6 tracking-tight leading-[1.1]">
+          <h1 className="text-4xl md:text-7xl font-bold text-primary-blue mb-6 tracking-tight leading-[1.1]">
             Your application is <span className="text-accent-blue">ready to go!</span>
           </h1>
-          <p className="text-2xl text-gray-600 font-medium max-w-2xl leading-relaxed">
+          <p className="text-xl md:text-2xl text-gray-600 font-medium max-w-2xl leading-relaxed">
             We just need you to take a look at a couple of documents before you submit.
           </p>
         </div>
@@ -243,7 +243,7 @@ export default function SubmitDisclosurePage() {
         )}
 
         {/* Final Acknowledgment Box */}
-        <div className="w-full mt-10 bg-white border-2 border-secondary-blue rounded-[12px] p-10 shadow-sm animate-in fade-in zoom-in-95 duration-500">
+        <div className="w-full mt-10 bg-white border-2 border-secondary-blue rounded-[12px] p-6 sm:p-10 shadow-sm animate-in fade-in zoom-in-95 duration-500">
           <h4 className="text-xl font-bold text-gray-900 mb-6">By clicking the “Agree and submit” button below:</h4>
           <div className="space-y-5 text-[15px] text-gray-600 leading-relaxed">
             <p>
@@ -267,18 +267,18 @@ export default function SubmitDisclosurePage() {
           </div>
         </div>
 
-        <div className="w-full flex justify-end gap-3 mt-12 pb-10">
+        <div className="w-full flex flex-col sm:flex-row justify-end gap-3 mt-12 pb-10">
           <button 
             onClick={handleBack}
             disabled={isLoading || isContinuing}
-            className="px-10 h-11 rounded-full border border-gray-900 bg-[#D4F1E9] text-gray-900 font-bold text-[14px] hover:bg-[#c2e7dd] transition-colors"
+            className="w-full sm:w-auto px-10 h-11 rounded-full border border-gray-900 bg-[#D4F1E9] text-gray-900 font-bold text-[14px] hover:bg-[#c2e7dd] transition-colors"
           >
             Back
           </button>
           <button 
             onClick={handleAgreeAndSubmit}
             disabled={isLoading || isContinuing}
-            className="px-10 h-11 rounded-full bg-[#1D4469] text-white font-bold text-[14px] shadow-sm hover:bg-[#153452] transition-all"
+            className="w-full sm:w-auto px-10 h-11 rounded-full bg-[#1D4469] text-white font-bold text-[14px] shadow-sm hover:bg-[#153452] transition-all"
           >
             {isContinuing ? 'Submitting...' : 'Agree and submit'}
           </button>

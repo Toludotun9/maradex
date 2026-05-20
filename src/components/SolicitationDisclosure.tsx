@@ -4,7 +4,7 @@ import React from 'react';
 
 const SolicitationDisclosure = () => {
   return (
-    <div className="p-10 text-[13px] text-gray-700 leading-relaxed overflow-y-auto max-h-[850px] font-sans bg-white">
+    <div className="p-4 sm:p-8 md:p-10 text-[13px] text-gray-700 leading-relaxed overflow-y-auto max-h-[850px] font-sans bg-white">
       {/* Page 1 */}
       <div className="mb-16">
         <div className="text-center mb-4">
@@ -27,15 +27,15 @@ const SolicitationDisclosure = () => {
 
         <h5 className="text-2xl font-bold text-gray-900 mb-8 border-b border-gray-100 pb-2">Loan Interest Rate & Fees</h5>
 
-        <div className="flex flex-col md:flex-row gap-10 mb-10">
-          <div className="bg-gray-100 p-8 rounded-lg flex-1 border border-gray-200">
+        <div className="flex flex-col md:flex-row gap-6 md:gap-10 mb-10">
+          <div className="bg-gray-100 p-4 sm:p-8 rounded-lg flex-1 border border-gray-200">
             <p className="text-[15px] mb-6 text-gray-800">Your <strong>starting interest rate</strong> will be between</p>
-            <div className="flex items-center justify-center gap-4 mb-6">
-              <div className="bg-white border-2 border-gray-300 px-8 py-4 text-3xl font-bold text-gray-900 shadow-sm">
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 mb-6">
+              <div className="bg-white border-2 border-gray-300 px-4 sm:px-8 py-3 sm:py-4 text-2xl sm:text-3xl font-bold text-gray-900 shadow-sm">
                 4.000<span className="text-base align-top ml-0.5 font-semibold">%</span>
               </div>
-              <span className="font-bold text-gray-400 text-lg italic">and</span>
-              <div className="bg-white border-2 border-gray-300 px-8 py-4 text-3xl font-bold text-gray-900 shadow-sm">
+              <span className="font-bold text-gray-400 text-[14px] sm:text-lg italic">and</span>
+              <div className="bg-white border-2 border-gray-300 px-4 sm:px-8 py-3 sm:py-4 text-2xl sm:text-3xl font-bold text-gray-900 shadow-sm">
                 17.420<span className="text-base align-top ml-0.5 font-semibold">%</span>
               </div>
             </div>
@@ -321,15 +321,15 @@ const SolicitationDisclosure = () => {
 
         <h5 className="text-2xl font-bold text-gray-900 mb-8 border-b border-gray-100 pb-2">Loan Interest Rate & Fees</h5>
 
-        <div className="flex flex-col md:flex-row gap-10 mb-12">
-          <div className="bg-gray-100 p-8 rounded-lg flex-1 border border-gray-200">
+        <div className="flex flex-col md:flex-row gap-6 md:gap-10 mb-12">
+          <div className="bg-gray-100 p-4 sm:p-8 rounded-lg flex-1 border border-gray-200">
             <p className="text-[15px] mb-6 text-gray-800">Your <strong>interest rate</strong> will be between</p>
-            <div className="flex items-center justify-center gap-4 mb-6">
-              <div className="bg-white border-2 border-gray-300 px-8 py-4 text-3xl font-bold text-gray-900 shadow-sm">
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 mb-6">
+              <div className="bg-white border-2 border-gray-300 px-4 sm:px-8 py-3 sm:py-4 text-2xl sm:text-3xl font-bold text-gray-900 shadow-sm">
                 3.200<span className="text-base align-top ml-0.5 font-semibold">%</span>
               </div>
-              <span className="font-bold text-gray-400 text-lg italic">and</span>
-              <div className="bg-white border-2 border-gray-300 px-8 py-4 text-3xl font-bold text-gray-900 shadow-sm">
+              <span className="font-bold text-gray-400 text-[14px] sm:text-lg italic">and</span>
+              <div className="bg-white border-2 border-gray-300 px-4 sm:px-8 py-3 sm:py-4 text-2xl sm:text-3xl font-bold text-gray-900 shadow-sm">
                 18.550<span className="text-base align-top ml-0.5 font-semibold">%</span>
               </div>
             </div>

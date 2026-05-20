@@ -4,7 +4,7 @@ import React from 'react';
 
 const PrivacyNotice = () => {
   return (
-    <div className="p-8 text-[13px] text-gray-700 leading-relaxed font-sans bg-white">
+    <div className="p-4 sm:p-6 md:p-8 text-[13px] text-gray-700 leading-relaxed font-sans bg-white">
       {/* Header Section */}
       <div className="flex justify-between items-start mb-10">
         <div className="flex items-center gap-2">
@@ -19,8 +19,8 @@ const PrivacyNotice = () => {
 
       {/* FACTS Table */}
       <div className="border-[1.5px] border-gray-400 mb-8">
-        <div className="flex border-b-[1.5px] border-gray-400">
-          <div className="bg-gray-500 text-white p-4 font-bold text-2xl w-40 flex items-center justify-center">
+        <div className="flex flex-col sm:flex-row border-b-[1.5px] border-gray-400">
+          <div className="bg-gray-500 text-white p-4 font-bold text-2xl w-full sm:w-40 flex items-center justify-center">
             FACTS
           </div>
           <div className="p-4 flex-1 flex items-center">
@@ -28,8 +28,8 @@ const PrivacyNotice = () => {
           </div>
         </div>
 
-        <div className="flex border-b-[1.5px] border-gray-400 min-h-[80px]">
-          <div className="bg-gray-300 text-white p-4 font-bold text-xl w-40 flex items-center justify-center italic">
+        <div className="flex flex-col sm:flex-row border-b-[1.5px] border-gray-400 min-h-[80px]">
+          <div className="bg-gray-300 text-white p-4 font-bold text-xl w-full sm:w-40 flex items-center justify-center italic">
             Why?
           </div>
           <div className="p-4 flex-1 text-[13.5px] leading-relaxed">
@@ -37,8 +37,8 @@ const PrivacyNotice = () => {
           </div>
         </div>
 
-        <div className="flex border-b-[1.5px] border-gray-400 min-h-[80px]">
-          <div className="bg-gray-300 text-white p-4 font-bold text-xl w-40 flex items-center justify-center italic">
+        <div className="flex flex-col sm:flex-row border-b-[1.5px] border-gray-400 min-h-[80px]">
+          <div className="bg-gray-300 text-white p-4 font-bold text-xl w-full sm:w-40 flex items-center justify-center italic">
             What?
           </div>
           <div className="p-4 flex-1 text-[13.5px] leading-relaxed">
@@ -57,8 +57,8 @@ const PrivacyNotice = () => {
           </div>
         </div>
 
-        <div className="flex min-h-[80px]">
-          <div className="bg-gray-300 text-white p-4 font-bold text-xl w-40 flex items-center justify-center italic">
+        <div className="flex flex-col sm:flex-row min-h-[80px]">
+          <div className="bg-gray-300 text-white p-4 font-bold text-xl w-full sm:w-40 flex items-center justify-center italic">
             How?
           </div>
           <div className="p-4 flex-1 text-[13.5px] leading-relaxed">
@@ -68,72 +68,74 @@ const PrivacyNotice = () => {
       </div>
 
       {/* Sharing Table */}
-      <table className="w-full border-collapse border-[1.5px] border-gray-400 text-[13px] mb-8">
-        <thead>
-          <tr className="bg-gray-300">
-            <th className="border-[1.5px] border-gray-400 p-3 text-left font-bold text-white w-[50%]">Reasons we can share your personal information</th>
-            <th className="border-[1.5px] border-gray-400 p-3 text-center font-bold text-white">Does Sallie Mae Bank share?</th>
-            <th className="border-[1.5px] border-gray-400 p-3 text-center font-bold text-white">Can you limit this sharing?</th>
-          </tr>
-        </thead>
-        <tbody className="text-gray-800">
-          <tr>
-            <td className="border-[1.5px] border-gray-400 p-4">
-              <strong>For our everyday business purposes –</strong><br/>
-              such as to process your transactions, maintain your account(s), respond to court orders and legal investigations, or report to credit bureaus
-            </td>
-            <td className="border-[1.5px] border-gray-400 p-4 text-center">Yes</td>
-            <td className="border-[1.5px] border-gray-400 p-4 text-center">No</td>
-          </tr>
-          <tr>
-            <td className="border-[1.5px] border-gray-400 p-4">
-              <strong>For our marketing purposes –</strong> to offer our products and services to you
-            </td>
-            <td className="border-[1.5px] border-gray-400 p-4 text-center">Yes</td>
-            <td className="border-[1.5px] border-gray-400 p-4 text-center">No</td>
-          </tr>
-          <tr>
-            <td className="border-[1.5px] border-gray-400 p-4">
-              <strong>For joint marketing with other financial companies</strong>
-            </td>
-            <td className="border-[1.5px] border-gray-400 p-4 text-center">Yes</td>
-            <td className="border-[1.5px] border-gray-400 p-4 text-center">No</td>
-          </tr>
-          <tr>
-            <td className="border-[1.5px] border-gray-400 p-4">
-              <strong>For our affiliates’ everyday business purposes –</strong> information about your transactions and experiences
-            </td>
-            <td className="border-[1.5px] border-gray-400 p-4 text-center">Yes</td>
-            <td className="border-[1.5px] border-gray-400 p-4 text-center">No</td>
-          </tr>
-          <tr>
-            <td className="border-[1.5px] border-gray-400 p-4">
-              <strong>For our affiliates’ everyday business purposes –</strong> information about your creditworthiness
-            </td>
-            <td className="border-[1.5px] border-gray-400 p-4 text-center">Yes</td>
-            <td className="border-[1.5px] border-gray-400 p-4 text-center">Yes</td>
-          </tr>
-          <tr>
-            <td className="border-[1.5px] border-gray-400 p-4">
-              <strong>For our affiliates to market to you</strong>
-            </td>
-            <td className="border-[1.5px] border-gray-400 p-4 text-center">Yes</td>
-            <td className="border-[1.5px] border-gray-400 p-4 text-center">Yes</td>
-          </tr>
-          <tr>
-            <td className="border-[1.5px] border-gray-400 p-4">
-              <strong>For nonaffiliates to market to you</strong>
-            </td>
-            <td className="border-[1.5px] border-gray-400 p-4 text-center">No</td>
-            <td className="border-[1.5px] border-gray-400 p-4 text-center">We don’t share</td>
-          </tr>
-        </tbody>
-      </table>
+      <div className="overflow-x-auto shadow-sm">
+        <table className="w-full border-collapse border-[1.5px] border-gray-400 text-[13px] mb-8 min-w-[600px]">
+          <thead>
+            <tr className="bg-gray-300">
+              <th className="border-[1.5px] border-gray-400 p-3 text-left font-bold text-white w-[50%]">Reasons we can share your personal information</th>
+              <th className="border-[1.5px] border-gray-400 p-3 text-center font-bold text-white">Does Sallie Mae Bank share?</th>
+              <th className="border-[1.5px] border-gray-400 p-3 text-center font-bold text-white">Can you limit this sharing?</th>
+            </tr>
+          </thead>
+          <tbody className="text-gray-800">
+            <tr>
+              <td className="border-[1.5px] border-gray-400 p-4">
+                <strong>For our everyday business purposes –</strong><br/>
+                such as to process your transactions, maintain your account(s), respond to court orders and legal investigations, or report to credit bureaus
+              </td>
+              <td className="border-[1.5px] border-gray-400 p-4 text-center">Yes</td>
+              <td className="border-[1.5px] border-gray-400 p-4 text-center">No</td>
+            </tr>
+            <tr>
+              <td className="border-[1.5px] border-gray-400 p-4">
+                <strong>For our marketing purposes –</strong> to offer our products and services to you
+              </td>
+              <td className="border-[1.5px] border-gray-400 p-4 text-center">Yes</td>
+              <td className="border-[1.5px] border-gray-400 p-4 text-center">No</td>
+            </tr>
+            <tr>
+              <td className="border-[1.5px] border-gray-400 p-4">
+                <strong>For joint marketing with other financial companies</strong>
+              </td>
+              <td className="border-[1.5px] border-gray-400 p-4 text-center">Yes</td>
+              <td className="border-[1.5px] border-gray-400 p-4 text-center">No</td>
+            </tr>
+            <tr>
+              <td className="border-[1.5px] border-gray-400 p-4">
+                <strong>For our affiliates’ everyday business purposes –</strong> information about your transactions and experiences
+              </td>
+              <td className="border-[1.5px] border-gray-400 p-4 text-center">Yes</td>
+              <td className="border-[1.5px] border-gray-400 p-4 text-center">No</td>
+            </tr>
+            <tr>
+              <td className="border-[1.5px] border-gray-400 p-4">
+                <strong>For our affiliates’ everyday business purposes –</strong> information about your creditworthiness
+              </td>
+              <td className="border-[1.5px] border-gray-400 p-4 text-center">Yes</td>
+              <td className="border-[1.5px] border-gray-400 p-4 text-center">Yes</td>
+            </tr>
+            <tr>
+              <td className="border-[1.5px] border-gray-400 p-4">
+                <strong>For our affiliates to market to you</strong>
+              </td>
+              <td className="border-[1.5px] border-gray-400 p-4 text-center">Yes</td>
+              <td className="border-[1.5px] border-gray-400 p-4 text-center">Yes</td>
+            </tr>
+            <tr>
+              <td className="border-[1.5px] border-gray-400 p-4">
+                <strong>For nonaffiliates to market to you</strong>
+              </td>
+              <td className="border-[1.5px] border-gray-400 p-4 text-center">No</td>
+              <td className="border-[1.5px] border-gray-400 p-4 text-center">We don’t share</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       {/* Opt-out Section */}
       <div className="border-[1.5px] border-gray-400 mb-8">
-        <div className="flex border-b-[1.5px] border-gray-400">
-          <div className="bg-gray-400 text-white p-4 font-bold text-lg w-40 flex items-center justify-center text-center leading-tight">
+        <div className="flex flex-col sm:flex-row border-b-[1.5px] border-gray-400">
+          <div className="bg-gray-400 text-white p-4 font-bold text-lg w-full sm:w-40 flex items-center justify-center text-center leading-tight">
             To limit our sharing
           </div>
           <div className="p-4 flex-1 text-[13.5px] leading-relaxed">
@@ -147,8 +149,8 @@ const PrivacyNotice = () => {
             <p className="mt-2">To limit sharing you can call us toll free Monday-Friday 8am-8pm ET.</p>
           </div>
         </div>
-        <div className="flex">
-          <div className="bg-gray-400 text-white p-4 font-bold text-lg w-40 flex items-center justify-center">
+        <div className="flex flex-col sm:flex-row">
+          <div className="bg-gray-400 text-white p-4 font-bold text-lg w-full sm:w-40 flex items-center justify-center">
             Questions?
           </div>
           <div className="p-4 flex-1 text-[13.5px] leading-relaxed flex items-center">
@@ -160,20 +162,20 @@ const PrivacyNotice = () => {
       {/* Who We Are Table */}
       <div className="border-[1.5px] border-gray-400 mb-8">
         <div className="bg-gray-400 text-white p-3 font-bold text-base uppercase">Who we are</div>
-        <div className="flex border-b border-gray-200">
-          <div className="p-4 font-bold w-64 text-gray-800">Who is providing this notice?</div>
+        <div className="flex flex-col md:flex-row border-b border-gray-200">
+          <div className="p-4 font-bold w-full md:w-64 text-gray-800">Who is providing this notice?</div>
           <div className="p-4 flex-1">Sallie Mae Bank</div>
         </div>
 
         <div className="bg-gray-400 text-white p-3 font-bold text-base uppercase">What we do</div>
-        <div className="flex border-b border-gray-200">
-          <div className="p-4 font-bold w-64 text-gray-800">How does Sallie Mae Bank protect my personal information?</div>
+        <div className="flex flex-col md:flex-row border-b border-gray-200">
+          <div className="p-4 font-bold w-full md:w-64 text-gray-800">How does Sallie Mae Bank protect my personal information?</div>
           <div className="p-4 flex-1 leading-relaxed">
             To protect your personal information from unauthorized access and use, we use security measures that comply with federal law. These measures include computer safeguards and secured files and buildings.
           </div>
         </div>
-        <div className="flex border-b border-gray-200">
-          <div className="p-4 font-bold w-64 text-gray-800">How does Sallie Mae Bank collect my personal information?</div>
+        <div className="flex flex-col md:flex-row border-b border-gray-200">
+          <div className="p-4 font-bold w-full md:w-64 text-gray-800">How does Sallie Mae Bank collect my personal information?</div>
           <div className="p-4 flex-1 leading-relaxed">
             We collect your personal information, for example, when you:
             <ul className="mt-2 space-y-2 pl-2">
@@ -184,8 +186,8 @@ const PrivacyNotice = () => {
             We also collect your personal information from others, such as credit bureaus, affiliates, or other companies.
           </div>
         </div>
-        <div className="flex border-b border-gray-200">
-          <div className="p-4 font-bold w-64 text-gray-800">Why can’t I limit all sharing?</div>
+        <div className="flex flex-col md:flex-row border-b border-gray-200">
+          <div className="p-4 font-bold w-full md:w-64 text-gray-800">Why can’t I limit all sharing?</div>
           <div className="p-4 flex-1 leading-relaxed">
             Federal law gives you the right to limit only
             <ul className="mt-2 space-y-2 pl-2">
@@ -196,14 +198,14 @@ const PrivacyNotice = () => {
             State laws and individual companies may give you additional rights to limit sharing. See below for more on your rights under state law.
           </div>
         </div>
-        <div className="flex">
-          <div className="p-4 font-bold w-64 text-gray-800">What happens when I limit sharing for an account I hold jointly with someone else?</div>
+        <div className="flex flex-col md:flex-row">
+          <div className="p-4 font-bold w-full md:w-64 text-gray-800">What happens when I limit sharing for an account I hold jointly with someone else?</div>
           <div className="p-4 flex-1">Your choices will apply to everyone on your account.</div>
         </div>
 
         <div className="bg-gray-400 text-white p-3 font-bold text-base uppercase">Definitions</div>
-        <div className="flex border-b border-gray-200">
-          <div className="p-4 font-bold w-64 text-gray-800">Affiliates</div>
+        <div className="flex flex-col md:flex-row border-b border-gray-200">
+          <div className="p-4 font-bold w-full md:w-64 text-gray-800">Affiliates</div>
           <div className="p-4 flex-1 leading-relaxed">
             Companies related by common ownership or control. They can be financial and nonfinancial companies.
             <ul className="mt-2 pl-2">
@@ -214,8 +216,8 @@ const PrivacyNotice = () => {
             </ul>
           </div>
         </div>
-        <div className="flex border-b border-gray-200">
-          <div className="p-4 font-bold w-64 text-gray-800">Nonaffiliates</div>
+        <div className="flex flex-col md:flex-row border-b border-gray-200">
+          <div className="p-4 font-bold w-full md:w-64 text-gray-800">Nonaffiliates</div>
           <div className="p-4 flex-1 leading-relaxed">
             Companies not related by common ownership or control. They can be financial and nonfinancial companies.
             <ul className="mt-2 pl-2">
@@ -226,8 +228,8 @@ const PrivacyNotice = () => {
             </ul>
           </div>
         </div>
-        <div className="flex">
-          <div className="p-4 font-bold w-64 text-gray-800">Joint marketing</div>
+        <div className="flex flex-col md:flex-row">
+          <div className="p-4 font-bold w-full md:w-64 text-gray-800">Joint marketing</div>
           <div className="p-4 flex-1 leading-relaxed">
             A formal agreement between nonaffiliated financial companies that together market financial products or services to you.
             <ul className="mt-2 pl-2">
