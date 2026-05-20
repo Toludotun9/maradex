@@ -82,16 +82,6 @@ export default function AddCosignerPage() {
   return (
     <div className="flex flex-col items-center justify-center flex-1 py-16 px-8 md:px-20 w-full">
       <div className="w-full animate-in fade-in slide-in-from-right-4 duration-500">
-        {/* Premium Header Layout */}
-        <div className="flex items-center gap-4 mb-6">
-          <div className="p-3 bg-blue-100 rounded-full text-secondary-blue relative">
-            <Users className="w-7 h-7" />
-            <div className="absolute -bottom-1 -right-1 bg-accent-blue text-white w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold border border-white">
-              +
-            </div>
-          </div>
-        </div>
-
         <h1 className="text-3xl md:text-5xl font-bold text-primary-blue mb-4 leading-tight max-w-2xl">
           You might benefit from <span className="text-accent-blue">adding a cosigner.</span>
         </h1>
@@ -100,7 +90,7 @@ export default function AddCosignerPage() {
         </p>
 
         {/* Primary Selection Card */}
-        <div className="bg-white rounded-lg p-10 shadow-xl border border-gray-200 mb-8">
+        <div className="bg-white rounded-lg p-5 sm:p-10 shadow-xl border border-gray-200 mb-8">
           <h3 className="text-2xl font-bold text-primary-blue mb-3">
             Would you like to apply with a cosigner?
           </h3>
@@ -180,7 +170,7 @@ export default function AddCosignerPage() {
 
         {/* Secondary Card: Code Delivery Options (Visible if 'yes' is selected) */}
         {formData.hasCosigner === 'yes' && (
-          <div className="bg-white rounded-lg p-10 shadow-xl border border-gray-200 animate-in fade-in slide-in-from-top-4 duration-500 mb-8">
+          <div className="bg-white rounded-lg p-5 sm:p-10 shadow-xl border border-gray-200 animate-in fade-in slide-in-from-top-4 duration-500 mb-8">
             <h3 className="text-2xl font-bold text-primary-blue mb-3">
               How would you like Maradex to provide your cosigner’s access code?
             </h3>

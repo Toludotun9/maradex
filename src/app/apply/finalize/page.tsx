@@ -165,17 +165,11 @@ export default function FinalizePage() {
   return (
     <div className="flex flex-col items-center justify-center flex-1 py-16 px-8 md:px-20 w-full max-w-5xl mx-auto">
       <div className="w-full animate-in fade-in slide-in-from-right-4 duration-500">
-        <div className="flex items-center gap-4 mb-6">
-          <div className="p-3 bg-blue-100 rounded-full text-secondary-blue">
-            <FileText className="w-7 h-7" />
-          </div>
-        </div>
-
         <h1 className="text-3xl md:text-5xl font-bold text-primary-blue mb-4 leading-tight">
           Tell us about <span className="text-accent-blue">your employment and income.</span>
         </h1>
 
-        <div className="bg-white rounded-lg p-10 shadow-xl border border-gray-200 mt-8">
+        <div className="bg-white rounded-lg p-5 sm:p-10 shadow-xl border border-gray-200 mt-8">
           <h3 className="text-xl font-bold text-primary-blue mb-2">Your employment status.</h3>
           <p className="text-sm text-gray-600 mb-6 font-medium">
             Select your employment status and enter your income. You may be asked to provide documentation to verify your income.

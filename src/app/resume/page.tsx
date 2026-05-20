@@ -38,16 +38,7 @@ export default function ResumeApplicationPage() {
 
   return (
     <div className="flex flex-col items-center justify-center flex-1 py-16 px-8 md:px-20 max-w-xl mx-auto w-full">
-      <div className="w-full bg-white rounded-lg p-10 shadow-xl border border-gray-200 animate-in fade-in slide-in-from-bottom-4 duration-500">
-        <div className="flex items-center gap-4 mb-6">
-          <div className="p-3 bg-blue-100 rounded-full text-secondary-blue">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-            </svg>
-          </div>
-        </div>
-
+      <div className="w-full bg-white rounded-lg p-5 sm:p-10 shadow-xl border border-gray-200 animate-in fade-in slide-in-from-bottom-4 duration-500">
         <h1 className="text-3xl font-bold text-primary-blue mb-3">
           Continue your <span className="text-accent-blue">application.</span>
         </h1>

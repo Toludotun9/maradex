@@ -112,12 +112,6 @@ export default function RecapPage() {
   return (
     <div className="flex flex-col items-center justify-center flex-1 py-16 px-8 md:px-20 w-full max-w-5xl mx-auto">
       <div className="w-full animate-in fade-in slide-in-from-right-4 duration-500">
-        <div className="flex items-center gap-4 mb-6">
-          <div className="p-3 bg-blue-100 rounded-full text-secondary-blue">
-            <ClipboardCheck className="w-7 h-7" />
-          </div>
-        </div>
-
         <h1 className="text-3xl md:text-5xl font-bold text-primary-blue mb-4 leading-tight">
           Let’s take a moment to <span className="text-accent-blue">recap.</span>
         </h1>
@@ -126,7 +120,7 @@ export default function RecapPage() {
         </p>
 
         <div className="bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden">
-          <div className="p-10">
+          <div className="p-5 sm:p-10">
             {/* Personal Info Section */}
             <SectionTitle title="Your personal info" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12">

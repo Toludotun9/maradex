@@ -122,15 +122,6 @@ const PersonalInfoForm = ({
 
   return (
     <div className="w-full mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div className="flex items-center gap-4 mb-6">
-        <div className="p-3 bg-blue-100 rounded-full text-secondary-blue">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z" />
-            <path d="M6 12v5c3 3 9 3 12 0v-5" />
-          </svg>
-        </div>
-      </div>
-
       <h1 className="text-3xl md:text-5xl font-bold text-primary-blue mb-4">
         Tell us about <span className="text-accent-blue">yourself.</span>
       </h1>
