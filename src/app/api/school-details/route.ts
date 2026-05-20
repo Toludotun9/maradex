@@ -29,15 +29,18 @@ export async function GET(request: Request) {
   // 2. Generate dynamic Academic Periods
   const currentYear = new Date().getFullYear();
   const nextYear = currentYear + 1;
+  const afterNextYear = currentYear + 2;
   const academicPeriods = [
     { label: `Spring Only ${currentYear}: 01/12/${currentYear} - 05/02/${currentYear}`, value: `spring_only_${currentYear}` },
     { label: `Summer Only ${currentYear}: 05/11/${currentYear} - 08/15/${currentYear}`, value: `summer_only_${currentYear}` },
     { label: `Summer/Fall/Spring ${currentYear}-${nextYear}: 05/11/${currentYear} - 05/01/${nextYear}`, value: `summer_fall_spring_${currentYear}_${nextYear}` },
     { label: `Fall/Spring ${currentYear}-${nextYear}: 08/24/${currentYear} - 05/01/${nextYear}`, value: `fall_spring_${currentYear}_${nextYear}` },
     { label: `Summer/Fall ${currentYear}: 05/11/${currentYear} - 12/12/${currentYear}`, value: `summer_fall_${currentYear}` },
-    { label: `Fall/Spring ${currentYear - 1}-${currentYear}: 08/25/${currentYear - 1} - 05/02/${currentYear}`, value: `fall_spring_${currentYear - 1}_${currentYear}` },
     { label: `Fall Only ${currentYear}: 08/24/${currentYear} - 12/12/${currentYear}`, value: `fall_only_${currentYear}` },
-    { label: `Fall ${currentYear - 1}: 08/25/${currentYear - 1} - 12/13/${currentYear - 1}`, value: `fall_${currentYear - 1}` },
+    { label: `Spring Only ${nextYear}: 01/11/${nextYear} - 05/01/${nextYear}`, value: `spring_only_${nextYear}` },
+    { label: `Summer Only ${nextYear}: 05/10/${nextYear} - 08/14/${nextYear}`, value: `summer_only_${nextYear}` },
+    { label: `Fall Only ${nextYear}: 08/23/${nextYear} - 12/11/${nextYear}`, value: `fall_only_${nextYear}` },
+    { label: `Fall/Spring ${nextYear}-${afterNextYear}: 08/23/${nextYear} - 04/29/${afterNextYear}`, value: `fall_spring_${nextYear}_${afterNextYear}` },
     { label: 'Custom academic loan period', value: 'custom' }
   ];
 

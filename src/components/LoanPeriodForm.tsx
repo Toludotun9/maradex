@@ -6,17 +6,24 @@ import Button from './Button';
 import SelectField from './SelectField';
 import { useAppContext } from '@/context/AppContext';
 
-const fallbackPeriods = [
-  { label: 'Spring Only 2026: 01/12/2026 - 05/02/2026', value: 'spring_only_2026' },
-  { label: 'Summer Only 2026: 05/11/2026 - 08/15/2026', value: 'summer_only_2026' },
-  { label: 'Summer/Fall/Spring 2026-2027: 05/11/2026 - 05/01/2027', value: 'summer_fall_spring_2026_2027' },
-  { label: 'Fall/Spring 2026-2027: 08/24/2026 - 05/01/2027', value: 'fall_spring_2026_2027' },
-  { label: 'Summer/Fall 2026: 05/11/2026 - 12/12/2026', value: 'summer_fall_2026' },
-  { label: 'Fall/Spring 2025-2026: 08/25/2025 - 05/02/2026', value: 'fall_spring_2025_2026' },
-  { label: 'Fall Only 2026: 08/24/2026 - 12/12/2026', value: 'fall_only_2026' },
-  { label: 'Fall 2025: 08/25/2025 - 12/13/2025', value: 'fall_2025' },
-  { label: 'Custom academic loan period', value: 'custom' }
-];
+const getFallbackPeriods = () => {
+  const currentYear = new Date().getFullYear();
+  const nextYear = currentYear + 1;
+  const afterNextYear = currentYear + 2;
+  return [
+    { label: `Spring Only ${currentYear}: 01/12/${currentYear} - 05/02/${currentYear}`, value: `spring_only_${currentYear}` },
+    { label: `Summer Only ${currentYear}: 05/11/${currentYear} - 08/15/${currentYear}`, value: `summer_only_${currentYear}` },
+    { label: `Summer/Fall/Spring ${currentYear}-${nextYear}: 05/11/${currentYear} - 05/01/${nextYear}`, value: `summer_fall_spring_${currentYear}_${nextYear}` },
+    { label: `Fall/Spring ${currentYear}-${nextYear}: 08/24/${currentYear} - 05/01/${nextYear}`, value: `fall_spring_${currentYear}_${nextYear}` },
+    { label: `Summer/Fall ${currentYear}: 05/11/${currentYear} - 12/12/${currentYear}`, value: `summer_fall_${currentYear}` },
+    { label: `Fall Only ${currentYear}: 08/24/${currentYear} - 12/12/${currentYear}`, value: `fall_only_${currentYear}` },
+    { label: `Spring Only ${nextYear}: 01/11/${nextYear} - 05/01/${nextYear}`, value: `spring_only_${nextYear}` },
+    { label: `Summer Only ${nextYear}: 05/10/${nextYear} - 08/14/${nextYear}`, value: `summer_only_${nextYear}` },
+    { label: `Fall Only ${nextYear}: 08/23/${nextYear} - 12/11/${nextYear}`, value: `fall_only_${nextYear}` },
+    { label: `Fall/Spring ${nextYear}-${afterNextYear}: 08/23/${nextYear} - 04/29/${afterNextYear}`, value: `fall_spring_${nextYear}_${afterNextYear}` },
+    { label: 'Custom academic loan period', value: 'custom' }
+  ];
+};
 
 const LoanPeriodForm = ({
   onBack,
@@ -59,8 +66,15 @@ const LoanPeriodForm = ({
             }
             if (data.costOfAttendance) {
               setCostEstimate(data.costOfAttendance);
-              // Ensure the state captures the API value directly
-              updateFormData({ loanCostOfAttendance: data.costOfAttendance.toString() });
+              
+              // Calculate correct cost based on academic period
+              const currentPeriod = formData.loanAcademicPeriod || '';
+              let initialCost = data.costOfAttendance;
+              if (currentPeriod && (currentPeriod.toLowerCase().includes('only') || currentPeriod === 'custom')) {
+                initialCost = Math.round(data.costOfAttendance / 2);
+              }
+              
+              updateFormData({ loanCostOfAttendance: initialCost.toString() });
             }
             if (data.costDetails && data.costDetails.description) {
               setCostText(data.costDetails.description);
@@ -197,7 +211,7 @@ const LoanPeriodForm = ({
     setErrors(newErrors);
   };
 
-  const activePeriods = fetchedPeriods.length > 0 ? fetchedPeriods : fallbackPeriods;
+  const activePeriods = fetchedPeriods.length > 0 ? fetchedPeriods : getFallbackPeriods();
 
   // Derive final real-time budget calculations for UI displays
   const parsedCost = parseInt(formData.loanCostOfAttendance) || costEstimate || 0;
@@ -236,10 +250,19 @@ const LoanPeriodForm = ({
             error={errors.loanAcademicPeriod}
             options={activePeriods}
             onChange={(e) => {
+              const selectedPeriod = e.target.value;
+              let updatedCost = costEstimate;
+              
+              // Calculate correct cost: divide by 2 if single semester or custom
+              if (selectedPeriod && (selectedPeriod.toLowerCase().includes('only') || selectedPeriod === 'custom')) {
+                updatedCost = Math.round(costEstimate / 2);
+              }
+
               handleChange({ 
-                loanAcademicPeriod: e.target.value,
+                loanAcademicPeriod: selectedPeriod,
+                loanCostOfAttendance: updatedCost.toString(),
                 // Clear out sub-fields if non-custom selected
-                ...(e.target.value !== 'custom' ? {
+                ...(selectedPeriod !== 'custom' ? {
                   loanStartMonth: '',
                   loanStartYear: '',
                   loanEndMonth: '',
