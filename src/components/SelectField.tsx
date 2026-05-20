@@ -126,16 +126,11 @@ const SelectField: React.FC<SelectFieldProps> = ({
             <button
               type="button"
               onClick={() => handleSelect('')}
-              className={`w-full text-left px-4 py-3 text-sm text-gray-500 hover:bg-gray-50 transition-colors flex items-center justify-between border-b border-gray-100 cursor-pointer ${!value ? 'bg-blue-50/50 text-secondary-blue font-bold' : ''}`}
+              className={`w-full text-left px-4 py-3 text-sm text-gray-500 hover:bg-gray-100 transition-colors cursor-pointer border-b border-gray-100 focus:outline-none focus:bg-blue-50/50 focus:ring-2 focus:ring-secondary-blue/50 relative focus:z-10 ${!value ? 'bg-blue-50/50 text-secondary-blue font-medium' : ''}`}
               role="option"
               aria-selected={!value}
             >
               <span>{placeholder}</span>
-              {!value && (
-                <svg className="w-4 h-4 text-secondary-blue flex-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-              )}
             </button>
           )}
           
@@ -146,25 +141,11 @@ const SelectField: React.FC<SelectFieldProps> = ({
                 key={opt.value}
                 type="button"
                 onClick={() => handleSelect(opt.value)}
-                className={`w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between border-b border-gray-50 last:border-b-0 cursor-pointer ${isSelected ? 'bg-blue-50/50 text-secondary-blue font-bold' : ''}`}
+                className={`w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer border-b border-gray-50 last:border-b-0 focus:outline-none focus:bg-blue-50/50 focus:ring-2 focus:ring-secondary-blue/50 relative focus:z-10 ${isSelected ? 'bg-blue-50/50 text-secondary-blue font-medium' : ''}`}
                 role="option"
                 aria-selected={isSelected}
               >
-                <span className="pr-4 leading-snug flex flex-col">
-                  {opt.label.includes(':') ? (
-                    <>
-                      <span className="font-semibold text-gray-950">{opt.label.split(':')[0].trim()}:</span>
-                      <span className="text-xs text-gray-500 mt-0.5">{opt.label.split(':')[1].trim()}</span>
-                    </>
-                  ) : (
-                    <span>{opt.label}</span>
-                  )}
-                </span>
-                {isSelected && (
-                  <svg className="w-4 h-4 text-secondary-blue flex-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                )}
+                <span className="leading-snug">{opt.label}</span>
               </button>
             );
           })}
