@@ -166,18 +166,15 @@ const LoanInfoForm = ({
 
   return (
     <div className="w-full mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div className="flex items-center gap-4 mb-6">
-        <div className="p-3 bg-blue-100 rounded-full text-secondary-blue">
-          <GraduationCap className="w-6 h-6" />
-        </div>
-      </div>
-
       <h1 className="text-3xl md:text-5xl font-bold text-primary-blue mb-4">
-        Tell us about <span className="text-accent-blue">your studies.</span>
+        Tell us about your <span className="text-accent-blue">studies.</span>
       </h1>
       <p className="text-xl text-gray-600 mb-10">This will help us figure out the best loan for you.</p>
 
-      <div className="bg-white rounded-lg p-10 shadow-xl border border-gray-200">
+      <div className="bg-white rounded-lg p-5 sm:p-10 shadow-xl border border-gray-200">
+        <h2 className="text-[17px] font-bold text-black leading-snug mb-6">
+          What type of program do you need a loan for?
+        </h2>
         <ToggleGroup
           name="loanProgramType"
           value={formData.loanProgramType}
@@ -288,7 +285,7 @@ const LoanInfoForm = ({
       </div>
       
       {((formData.loanProgramType === 'bar') || (formData.loanDegreeType)) && (
-        <div className="mt-10 bg-white rounded-lg p-10 shadow-xl border border-gray-200 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="mt-10 bg-white rounded-lg p-5 sm:p-10 shadow-xl border border-gray-200 animate-in fade-in slide-in-from-bottom-4 duration-500">
           <h3 className="text-2xl font-bold text-primary-blue mb-8">
             {formData.loanProgramType === 'bar' 
               ? 'Where do you attend law school?' 

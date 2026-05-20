@@ -208,22 +208,12 @@ const LoanPeriodForm = ({
 
   return (
     <div className="w-full mx-auto animate-in fade-in slide-in-from-right-4 duration-500">
-      {/* Premium Circular Wallet Icon Header */}
-      <div className="flex items-center gap-4 mb-6">
-        <div className="p-3 bg-blue-100 rounded-full text-secondary-blue relative">
-          <Wallet className="w-7 h-7" />
-          <div className="absolute -bottom-1 -right-1 bg-accent-blue text-white w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold border border-white">
-            $
-          </div>
-        </div>
-      </div>
-
       <h1 className="text-3xl md:text-5xl font-bold text-primary-blue mb-4 leading-tight">
         Let’s figure out <span className="text-accent-blue">how much to borrow.</span>
       </h1>
 
       {/* First Card: Academic Period Selection */}
-      <div className="mt-8 bg-white rounded-lg p-10 shadow-xl border border-gray-200">
+      <div className="mt-8 bg-white rounded-lg p-5 sm:p-10 shadow-xl border border-gray-200">
         <h3 className="text-2xl font-bold text-primary-blue mb-3">
           First, are you borrowing for a semester or the full academic year?
         </h3>
@@ -368,7 +358,7 @@ const LoanPeriodForm = ({
       </div>
 
       {/* Second Card: Dynamic Cost of Attendance */}
-      <div className="mt-8 bg-white rounded-lg p-10 shadow-xl border border-gray-200 animate-in fade-in slide-in-from-top-4 duration-500">
+      <div className="mt-8 bg-white rounded-lg p-5 sm:p-10 shadow-xl border border-gray-200 animate-in fade-in slide-in-from-top-4 duration-500">
         <h3 className="text-2xl font-bold text-primary-blue mb-3">
           Next, tell us your cost of attendance.
         </h3>
@@ -411,7 +401,7 @@ const LoanPeriodForm = ({
       </div>
 
       {/* Third Card: Financial Aid Factor */}
-      <div className="mt-8 bg-white rounded-lg p-10 shadow-xl border border-gray-200 animate-in fade-in slide-in-from-top-4 duration-500">
+      <div className="mt-8 bg-white rounded-lg p-5 sm:p-10 shadow-xl border border-gray-200 animate-in fade-in slide-in-from-top-4 duration-500">
         <h3 className="text-2xl font-bold text-primary-blue mb-3">
           Now, let’s factor in your financial aid.
         </h3>
@@ -454,7 +444,7 @@ const LoanPeriodForm = ({
       </div>
 
       {/* Fourth Card: Calculated Financial Need Preview */}
-      <div className="mt-8 bg-white rounded-lg p-10 shadow-xl border-2 border-secondary-blue animate-in fade-in slide-in-from-top-4 duration-500">
+      <div className="mt-8 bg-white rounded-lg p-5 sm:p-10 shadow-xl border-2 border-secondary-blue animate-in fade-in slide-in-from-top-4 duration-500">
         <h3 className="text-2xl font-bold text-primary-blue mb-6">
           This is how much you may need to borrow.
         </h3>
@@ -487,7 +477,7 @@ const LoanPeriodForm = ({
       </div>
 
       {/* Fifth Card: Final Requested Loan Amount */}
-      <div className="mt-8 bg-white rounded-lg p-10 shadow-xl border border-gray-200 animate-in fade-in slide-in-from-top-4 duration-500">
+      <div className="mt-8 bg-white rounded-lg p-5 sm:p-10 shadow-xl border border-gray-200 animate-in fade-in slide-in-from-top-4 duration-500">
         <h3 className="text-2xl font-bold text-primary-blue mb-3">
           Finally, let’s decide on the amount of the loan request.
         </h3>

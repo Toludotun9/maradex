@@ -136,7 +136,7 @@ const PersonalInfoForm = ({
       </h1>
       <p className="text-xl text-gray-600 mb-10">We'll need a little bit of info about you for your application.</p>
 
-      <div className="bg-white rounded-lg p-10 shadow-xl border border-gray-200">
+      <div className="bg-white rounded-lg p-5 sm:p-10 shadow-xl border border-gray-200">
         <h2 className="text-xl font-bold text-primary-blue mb-8">Let's start with the basics.</h2>
 
         {/* Name and Email Section */}
@@ -245,7 +245,7 @@ const PersonalInfoForm = ({
 
       {/* Citizenship Section in a separate card */}
       {formData.canText && (
-        <div className="mt-10 bg-white rounded-lg p-10 shadow-xl border border-gray-200 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="mt-10 bg-white rounded-lg p-5 sm:p-10 shadow-xl border border-gray-200 animate-in fade-in slide-in-from-bottom-4 duration-500">
           <h2 className="text-2xl font-bold text-primary-blue mb-2">What's your citizenship status?</h2>
           <p className="text-gray-600 mb-8 font-medium">This will help us make sure we get everything we need to process your application.</p>
           
@@ -384,7 +384,7 @@ const PersonalInfoForm = ({
       {/* Address Card - Shows only after ITIN/SSN is complete */}
       {((formData.citizenshipStatus !== 'non-us-citizen' && formData.ssn.replace(/\D/g, '').length === 9) || 
         (formData.citizenshipStatus === 'non-us-citizen' && (formData.hasSsn === 'no' || (formData.hasSsn === 'yes' && formData.ssn.replace(/\D/g, '').length === 9)))) && (
-        <div className="mt-10 bg-white rounded-lg p-10 shadow-xl border border-gray-200 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="mt-10 bg-white rounded-lg p-5 sm:p-10 shadow-xl border border-gray-200 animate-in fade-in slide-in-from-bottom-4 duration-500">
           <h2 className="text-2xl font-bold text-primary-blue mb-8">What's your home address?</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">

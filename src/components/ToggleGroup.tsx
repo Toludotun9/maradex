@@ -27,17 +27,6 @@ const ToggleGroup: React.FC<ToggleGroupProps> = ({
 }) => {
   const isProgram = variant === 'program';
 
-  const getProgramBorders = (index: number, total: number, hasError: boolean) => {
-    const color = hasError ? 'border-red-600' : 'border-gray-300';
-    if (total === 4) {
-      if (index === 0) return `border-r border-b ${color} sm:border-b-0 sm:border-r`;
-      if (index === 1) return `border-b ${color} sm:border-b-0 sm:border-r border-r-0`;
-      if (index === 2) return `border-r ${color} sm:border-b-0 sm:border-r`;
-      if (index === 3) return `border-b-0 border-r-0 sm:border-b-0 sm:border-r-0`;
-    }
-    return index < total - 1 ? `border-b sm:border-b-0 sm:border-r ${color}` : '';
-  };
-
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
       {label && (
@@ -46,9 +35,8 @@ const ToggleGroup: React.FC<ToggleGroupProps> = ({
         </label>
       )}
       <div className={`
-        ${isProgram ? 'grid grid-cols-2 sm:flex sm:flex-row' : 'flex flex-col sm:flex-row'}
-        rounded overflow-hidden 
-        ${error ? 'border-red-600' : (isProgram ? 'border border-gray-300' : 'border border-secondary-blue')} 
+        flex flex-col sm:flex-row rounded overflow-hidden 
+        ${error ? 'border-red-600' : (isProgram ? 'border border-secondary-blue' : 'border border-secondary-blue')} 
         ${fullWidth ? 'w-full' : 'w-fit min-w-[220px]'}
         border
       `}>
@@ -58,24 +46,30 @@ const ToggleGroup: React.FC<ToggleGroupProps> = ({
             type="button"
             onClick={() => onChange(opt.value)}
             className={`
-              flex-1 transition-all text-center flex flex-col items-center justify-center
-              ${isProgram ? 'py-6 px-4 gap-3' : (opt.icon ? 'py-5 px-3 gap-2' : 'py-4 px-4')}
-              ${value === opt.value 
-                ? (isProgram ? 'bg-blue-50 border-b-[6px] border-b-secondary-blue -mb-[0px]' : 'bg-secondary-blue text-white') 
-                : (isProgram ? 'bg-white text-primary-blue hover:bg-slate-50' : 'bg-white text-secondary-blue hover:bg-slate-50')}
+              flex-1 transition-all
               ${isProgram 
-                ? getProgramBorders(index, options.length, !!error)
-                : (index < options.length - 1 ? (error ? 'border-b sm:border-b-0 sm:border-r border-red-600' : 'border-b sm:border-b-0 sm:border-r border-secondary-blue') : '')
+                ? 'flex flex-row items-center justify-start py-4 px-6 gap-4 text-left sm:flex-col sm:items-center sm:justify-center sm:py-6 sm:px-4 sm:gap-3 sm:text-center' 
+                : (opt.icon ? 'flex flex-col items-center justify-center py-5 px-3 gap-2 text-center' : 'flex flex-col items-center justify-center py-4 px-4 text-center')
               }
-              ${isProgram ? 'font-bold text-xs' : 'font-bold text-sm'}
+              ${value === opt.value 
+                ? (isProgram ? 'bg-blue-50 border-b-[4px] sm:border-b-[6px] border-b-secondary-blue -mb-[0px]' : 'bg-secondary-blue text-white') 
+                : (isProgram ? 'bg-white text-primary-blue hover:bg-slate-50' : 'bg-white text-secondary-blue hover:bg-slate-50')}
+              ${index < options.length - 1 
+                ? (error 
+                  ? 'border-b sm:border-b-0 sm:border-r border-red-600' 
+                  : (isProgram ? 'border-b sm:border-b-0 sm:border-r border-gray-300' : 'border-b sm:border-b-0 sm:border-r border-secondary-blue')
+                ) 
+                : ''
+              }
+              ${isProgram ? 'font-bold text-sm sm:text-xs md:text-sm' : 'font-bold text-sm'}
             `}
           >
             {opt.icon && (
-              <div className={`flex items-center justify-center ${isProgram ? 'h-10' : 'h-8'}`}>
+              <div className={`flex items-center justify-center ${isProgram ? 'h-8 sm:h-10' : 'h-8'}`}>
                 {opt.icon}
               </div>
             )}
-            <span className={isProgram && value === opt.value ? 'text-secondary-blue' : ''}>
+            <span className={isProgram && value === opt.value ? 'text-secondary-blue font-bold text-sm sm:text-xs md:text-sm' : ''}>
               {opt.label}
             </span>
           </button>
