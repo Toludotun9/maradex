@@ -9,7 +9,7 @@ import { useAppContext } from '@/context/AppContext';
 
 export default function SubmitDisclosurePage() {
   const router = useRouter();
-  const { saveApplication, setCurrentStep, isLoading } = useAppContext();
+  const { saveApplication, setCurrentStep, isLoading, setIsPageTransitioning } = useAppContext();
 
   useEffect(() => {
     setCurrentStep(4);
@@ -27,20 +27,20 @@ export default function SubmitDisclosurePage() {
   };
 
   const handleAgreeAndSubmit = async () => {
-    setIsContinuing(true);
+    setIsPageTransitioning(true);
     try {
       const result = await saveApplication({ status: 'submitted' });
       if (result.success) {
         setCurrentStep(5);
         router.push('/apply/results');
       } else {
+        setIsPageTransitioning(false);
         alert('Failed to submit application. Please try again.');
       }
     } catch (error) {
       console.error('Error submitting application:', error);
+      setIsPageTransitioning(false);
       alert('An unexpected error occurred. Please try again.');
-    } finally {
-      setIsContinuing(false);
     }
   };
 

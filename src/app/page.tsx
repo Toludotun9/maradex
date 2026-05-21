@@ -7,7 +7,7 @@ import { useAppContext } from '@/context/AppContext';
 
 export default function Home() {
   const router = useRouter();
-  const { applicantType, setApplicantType, setCurrentStep } = useAppContext();
+  const { applicantType, setApplicantType, setCurrentStep, setIsPageTransitioning } = useAppContext();
 
   useEffect(() => {
     setCurrentStep(0);
@@ -15,6 +15,7 @@ export default function Home() {
 
   const handleContinue = () => {
     if (applicantType) {
+      setIsPageTransitioning(true);
       router.push('/apply/personal');
     }
   };

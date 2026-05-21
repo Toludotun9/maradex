@@ -10,7 +10,7 @@ import { useAppContext } from '@/context/AppContext';
 
 export default function FinalizePage() {
   const router = useRouter();
-  const { formData, updateFormData, saveApplication, setCurrentStep, isLoading } = useAppContext();
+  const { formData, updateFormData, saveApplication, setCurrentStep, isLoading, setIsPageTransitioning } = useAppContext();
 
   useEffect(() => {
     setCurrentStep(3);
@@ -62,14 +62,14 @@ export default function FinalizePage() {
       return;
     }
 
-    setIsContinuing(true);
+    setIsPageTransitioning(true);
     const result = await saveApplication();
-    setIsContinuing(false);
 
     if (result.success) {
       setCurrentStep(4);
       router.push('/apply/recap');
     } else {
+      setIsPageTransitioning(false);
       alert('Failed to save progress. Please try again.');
     }
   };

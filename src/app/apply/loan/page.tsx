@@ -9,7 +9,7 @@ import { useAppContext } from '@/context/AppContext';
 function LoanInfoContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { setCurrentStep, saveApplication } = useAppContext();
+  const { setCurrentStep, saveApplication, setIsPageTransitioning } = useAppContext();
 
   useEffect(() => {
     setCurrentStep(1);
@@ -19,9 +19,12 @@ function LoanInfoContent() {
   const [subStep, setSubStep] = useState(initialSubStep);
 
   const handleInfoContinue = () => {
-    // Scroll to top smoothly when switching sub-steps
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    setSubStep(1);
+    setIsPageTransitioning(true);
+    setTimeout(() => {
+      window.scrollTo({ top: 0 });
+      setSubStep(1);
+      setIsPageTransitioning(false);
+    }, 800);
   };
 
   const handlePeriodBack = () => {
@@ -30,11 +33,13 @@ function LoanInfoContent() {
   };
 
   const handleFinalContinue = async () => {
+    setIsPageTransitioning(true);
     const result = await saveApplication();
     if (result.success) {
       setCurrentStep(2); // Move to Add Cosigner step
       router.push('/apply/cosigner');
     } else {
+      setIsPageTransitioning(false);
       alert('Failed to save your application. Please try again.');
     }
   };

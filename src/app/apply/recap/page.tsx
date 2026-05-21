@@ -8,7 +8,7 @@ import { useAppContext } from '@/context/AppContext';
 
 export default function RecapPage() {
   const router = useRouter();
-  const { formData, saveApplication, setCurrentStep, isLoading } = useAppContext();
+  const { formData, saveApplication, setCurrentStep, isLoading, setIsPageTransitioning } = useAppContext();
 
   useEffect(() => {
     setCurrentStep(4);
@@ -19,14 +19,14 @@ export default function RecapPage() {
   const [isContinuing, setIsContinuing] = useState(false);
 
   const handleContinue = async () => {
-    setIsContinuing(true);
+    setIsPageTransitioning(true);
     const result = await saveApplication();
-    setIsContinuing(false);
 
     if (result.success) {
       setCurrentStep(4);
       router.push('/apply/submit');
     } else {
+      setIsPageTransitioning(false);
       alert('Failed to save progress. Please try again.');
     }
   };

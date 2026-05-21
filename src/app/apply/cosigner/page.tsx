@@ -9,7 +9,7 @@ import { useAppContext } from '@/context/AppContext';
 
 export default function AddCosignerPage() {
   const router = useRouter();
-  const { formData, updateFormData, saveApplication, setCurrentStep, isLoading } = useAppContext();
+  const { formData, updateFormData, saveApplication, setCurrentStep, isLoading, setIsPageTransitioning } = useAppContext();
 
   useEffect(() => {
     setCurrentStep(2);
@@ -53,15 +53,15 @@ export default function AddCosignerPage() {
       return;
     }
 
-    setIsContinuing(true);
+    setIsPageTransitioning(true);
     const result = await saveApplication();
-    setIsContinuing(false);
 
     if (result.success) {
       // Progress forward to Finalize step layout sequence
       setCurrentStep(3);
       router.push('/apply/finalize');
     } else {
+      setIsPageTransitioning(false);
       alert('Failed to save progress. Please try again.');
     }
   };

@@ -7,18 +7,20 @@ import { useAppContext } from '@/context/AppContext';
 
 export default function PersonalInfoPage() {
   const router = useRouter();
-  const { setCurrentStep, saveApplication } = useAppContext();
+  const { setCurrentStep, saveApplication, setIsPageTransitioning } = useAppContext();
 
   useEffect(() => {
     setCurrentStep(0);
   }, [setCurrentStep]);
 
   const handleContinue = async () => {
+    setIsPageTransitioning(true);
     const result = await saveApplication();
     if (result.success) {
       setCurrentStep(1); // Move to Loan Info step on the stepper
       router.push('/apply/loan');
     } else {
+      setIsPageTransitioning(false);
       alert('Failed to save your application. Please try again.');
     }
   };
