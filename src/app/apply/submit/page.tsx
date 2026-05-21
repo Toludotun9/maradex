@@ -49,6 +49,78 @@ export default function SubmitDisclosurePage() {
     router.push('/apply/recap');
   };
 
+  const handleViewDownload = (id: keyof typeof expandedSections, title: string) => {
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      alert('Pop-up blocked. Please allow popups to view or download the document.');
+      return;
+    }
+
+    const contentElement = document.getElementById(`document-content-${id}`);
+    if (!contentElement) {
+      alert('Document content not found.');
+      return;
+    }
+
+    const contentHtml = contentElement.innerHTML;
+
+    let styleTags = '';
+    document.querySelectorAll('style, link[rel="stylesheet"]').forEach((style) => {
+      styleTags += style.outerHTML;
+    });
+
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>${title}</title>
+          ${styleTags}
+          <style>
+            body {
+              padding: 40px;
+              background: white;
+              color: black;
+              font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            }
+            .max-h-\\[1200px\\] {
+              max-height: none !important;
+            }
+            .max-h-\\[500px\\] {
+              max-height: none !important;
+            }
+            .overflow-y-auto {
+              overflow: visible !important;
+            }
+            @media print {
+              .no-print {
+                display: none !important;
+              }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="no-print" style="margin-bottom: 20px; padding: 12px 20px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-family: sans-serif;">
+            <span style="color: #334155;">Document: <strong style="color: #0f172a;">${title}</strong></span>
+            <button onclick="window.print()" style="padding: 8px 18px; background: #004B8D; color: white; border: none; border-radius: 9999px; font-weight: bold; cursor: pointer; font-size: 13px; transition: background 0.2s;">
+              Print / Save PDF
+            </button>
+          </div>
+          <div style="max-width: 900px; margin: 0 auto;">
+            ${contentHtml}
+          </div>
+          <script>
+            window.onload = function() {
+              setTimeout(function() {
+                window.print();
+              }, 400);
+            };
+          </script>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+  };
+
   const renderSection = (id: keyof typeof expandedSections, title: string, subtext: string, content: React.ReactNode) => {
     const isExpanded = expandedSections[id];
     return (
@@ -59,7 +131,10 @@ export default function SubmitDisclosurePage() {
               <h3 className="text-xl font-bold text-gray-900 mb-2">{title}</h3>
               <p className="text-[15px] text-gray-600 mb-4 md:mb-8">{subtext}</p>
             </div>
-            <button className="flex items-center gap-2 text-[15px] font-bold text-secondary-blue hover:text-primary-blue transition-colors group self-start">
+            <button 
+              onClick={() => handleViewDownload(id, title)}
+              className="flex items-center gap-2 text-[15px] font-bold text-secondary-blue hover:text-primary-blue transition-colors group self-start"
+            >
               <span className="border-b-2 border-secondary-blue/30 group-hover:border-primary-blue">View/Download</span>
               <ExternalLink className="w-4 h-4" />
             </button>
@@ -69,7 +144,7 @@ export default function SubmitDisclosurePage() {
             relative border border-slate-200 rounded-lg bg-white transition-all duration-500 overflow-hidden shadow-sm
             ${isExpanded ? 'max-h-[10000px]' : 'max-h-[500px]'}
           `}>
-            <div className="overflow-y-auto max-h-[1200px]">
+            <div id={`document-content-${id}`} className="overflow-y-auto max-h-[1200px]">
               {content}
             </div>
 

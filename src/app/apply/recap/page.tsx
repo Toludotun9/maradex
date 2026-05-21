@@ -224,8 +224,8 @@ export default function RecapPage() {
                     value={
                       <div className="space-y-1">
                         <p className="uppercase">{formData.loanSchoolName}</p>
-                        <p>{formData.loanMajor}</p>
-                        <p>{formData.loanYearOfStudy}</p>
+                        <p className="uppercase">{formData.loanMajor}</p>
+                        <p className="uppercase">{formData.loanYearOfStudy}</p>
                       </div>
                     } 
                     onEdit={() => navigateTo('/apply/loan?substep=0', 1)}
