@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 
 interface FormData {
@@ -71,6 +72,8 @@ interface AppContextType {
   saveApplication: (overrides?: any) => Promise<{ success: boolean; error?: any }>;
   restoreApplication: (email: string, accessCode: string) => Promise<{ success: boolean; error?: string }>;
   isLoading: boolean;
+  isPageTransitioning: boolean;
+  setIsPageTransitioning: (val: boolean) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -81,6 +84,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [loanId, setLoanId] = useState<string | null>(null);
   const [secretToken, setSecretToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isPageTransitioning, setIsPageTransitioning] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setIsPageTransitioning(false);
+  }, [pathname]);
   const [formData, setFormData] = useState<FormData>({
     firstName: '',
     middleInitial: '',
@@ -476,7 +485,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       secretToken,
       saveApplication,
       restoreApplication,
-      isLoading
+      isLoading,
+      isPageTransitioning,
+      setIsPageTransitioning
     }}>
       {children}
     </AppContext.Provider>
