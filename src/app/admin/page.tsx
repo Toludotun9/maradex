@@ -614,7 +614,7 @@ export default function AdminPage() {
                   <div className="bg-[#f0f4f8] rounded-xl p-4 border border-blue-50">
                     <div className="flex justify-between items-center mb-3">
                       <span className="font-bold text-gray-700 text-xs flex items-center gap-1.5">
-                        <FileText className="w-3.5 h-3.5 text-secondary-blue" /> State-Issued ID
+                        <FileText className="w-3.5 h-3.5 text-secondary-blue" /> Government-Issued ID
                       </span>
                       {stateIdSignedUrl && (
                         <a 
@@ -646,7 +646,7 @@ export default function AdminPage() {
                           <div className="bg-white border rounded-lg overflow-hidden flex items-center justify-center max-h-[140px] shadow-inner">
                             <img 
                               src={stateIdSignedUrl} 
-                              alt="State ID Upload" 
+                              alt="Government-Issued ID Upload" 
                               className="max-h-[140px] w-auto object-contain cursor-pointer"
                               onClick={() => window.open(stateIdSignedUrl, '_blank')}
                             />

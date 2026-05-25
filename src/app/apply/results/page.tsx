@@ -157,7 +157,7 @@ export default function DocumentUploadPage() {
 
     } catch (err: any) {
       console.error(`Upload error for ${type} ID:`, err);
-      setErrorMsg(err.message || `Failed to upload ${type === 'student' ? 'Student' : 'State'} ID. Please try again.`);
+      setErrorMsg(err.message || `Failed to upload ${type === 'student' ? 'Student' : 'Government'} ID. Please try again.`);
       setPreview(null);
       setDocUrl(null);
     } finally {
@@ -269,7 +269,7 @@ export default function DocumentUploadPage() {
             </h1>
             
             <p className="text-base sm:text-lg text-gray-600 mb-8 leading-relaxed font-medium">
-              Thank you for verifying your identity. We have received your student ID and state-issued photo ID. 
+              Thank you for verifying your identity. We have received your student ID and government-issued photo ID. 
               Our admin review team will verify them shortly.
             </p>
 
@@ -312,7 +312,7 @@ export default function DocumentUploadPage() {
               Verify <span className="text-accent-blue">your identity.</span>
             </h1>
             <p className="text-lg text-gray-600 mb-10 font-medium max-w-2xl leading-relaxed">
-              To complete your student loan submission, we require you to upload high-quality copies of your student ID and a state-issued photo ID.
+              To complete your student loan submission, we require you to upload high-quality copies of your student ID and a government-issued photo ID.
             </p>
 
             {errorMsg && (
@@ -411,7 +411,7 @@ export default function DocumentUploadPage() {
                     <FileText className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-extrabold text-primary-blue text-lg">State-Issued ID</h3>
+                    <h3 className="font-extrabold text-primary-blue text-lg">Government-Issued ID</h3>
                     <p className="text-xs text-gray-500">Government identity verification</p>
                   </div>
                 </div>
@@ -471,7 +471,7 @@ export default function DocumentUploadPage() {
                     
                     {/* Delete Footer */}
                     <div className="p-3 bg-white border-t border-gray-100 flex justify-between items-center">
-                      <span className="text-xs text-gray-500 font-medium">State-Issued ID document</span>
+                      <span className="text-xs text-gray-500 font-medium">Government-Issued ID document</span>
                       <button 
                         onClick={() => handleDeleteFile('state')}
                         className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg transition-colors flex items-center gap-1 text-xs font-bold"
