@@ -472,6 +472,23 @@ export default function DocumentUploadPage() {
     return isNaN(num) ? '$0' : `$${num.toLocaleString()}`;
   };
 
+  const getDisplayLoanAmount = () => {
+    const cost = parseInt(formData.loanCostOfAttendance || '0');
+    const aid = parseInt(formData.loanFinancialAid || '0');
+    const calculatedNeed = Math.max(0, cost - aid);
+    const useCalc = formData.loanUseCalculatedNeed !== undefined ? formData.loanUseCalculatedNeed : true;
+    
+    if (useCalc && calculatedNeed > 0) {
+      return formatCurrency(calculatedNeed);
+    }
+    
+    if (formData.loanAmountRequested) {
+      return formatCurrency(formData.loanAmountRequested);
+    }
+    
+    return formatCurrency(16284);
+  };
+
   const isSubmitDisabled = !studentIdUrl && (!govFrontUrl || !govBackUrl);
 
   if (isLoading) {
@@ -547,7 +564,7 @@ export default function DocumentUploadPage() {
           </div>
           
           <h1 className="text-2xl md:text-3.5xl font-extrabold text-primary-blue mb-8 tracking-tight leading-[1.2] max-w-2xl">
-            Your Student Loan Application Is Approved. You'll be Eligible for <span className="text-secondary-blue">{formatCurrency(formData.loanAmountRequested || 16284)}</span> loan.
+            Your Student Loan Application Is Approved. You'll be Eligible for <span className="text-secondary-blue">{getDisplayLoanAmount()}</span> loan.
           </h1>
 
           <div className="w-full bg-[#F3F9FE] border border-blue-100 rounded-2xl p-6 sm:p-8 text-left space-y-4 shadow-sm mb-8">
