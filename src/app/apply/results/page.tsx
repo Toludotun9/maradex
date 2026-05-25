@@ -560,6 +560,9 @@ export default function DocumentUploadPage() {
             <p className="text-[14.5px] text-gray-700 leading-relaxed font-medium">
               We appreciate the opportunity to support your educational pursuits.
             </p>
+            <p className="text-[11.5px] text-gray-400 border-t border-gray-200/50 pt-4 mt-2">
+              * Based on approved Sallie Mae undergraduate loans over a 12-month period during the last academic year
+            </p>
           </div>
 
           <Button 
