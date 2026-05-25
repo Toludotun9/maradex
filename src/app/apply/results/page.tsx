@@ -744,13 +744,13 @@ export default function DocumentUploadPage() {
               <div className="flex bg-slate-100 p-1 rounded-xl self-start sm:self-auto border border-slate-200/55">
                 <button
                   onClick={() => handleIdTypeChange('drivers_license')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all ${govIdType === 'drivers_license' ? 'bg-white text-primary-blue shadow-sm' : 'text-gray-500 hover:text-gray-800'}`}
+                  className={`px-4 py-2 rounded-lg text-xs font-extrabold whitespace-nowrap transition-all ${govIdType === 'drivers_license' ? 'bg-white text-primary-blue shadow-sm' : 'text-gray-500 hover:text-gray-800'}`}
                 >
                   License
                 </button>
                 <button
                   onClick={() => handleIdTypeChange('state_id')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all ${govIdType === 'state_id' ? 'bg-white text-primary-blue shadow-sm' : 'text-gray-500 hover:text-gray-800'}`}
+                  className={`px-4 py-2 rounded-lg text-xs font-extrabold whitespace-nowrap transition-all ${govIdType === 'state_id' ? 'bg-white text-primary-blue shadow-sm' : 'text-gray-500 hover:text-gray-800'}`}
                 >
                   State ID
                 </button>
