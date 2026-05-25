@@ -5,7 +5,7 @@ import {
   Lock, Search, Filter, CheckCircle2, XCircle, Clock, 
   Eye, Download, LogOut, FileText, AlertCircle, RefreshCw,
   TrendingUp, Users, Calendar, DollarSign, BookOpen, ShieldAlert,
-  Loader2
+  Loader2, CreditCard
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
@@ -41,6 +41,9 @@ interface Application {
   annual_income: string;
   student_id_url: string | null;
   state_id_url: string | null;
+  gov_id_type: string | null;
+  gov_id_front_url: string | null;
+  gov_id_back_url: string | null;
   admin_notes: string | null;
   created_at: string;
   updated_at: string;
@@ -65,7 +68,8 @@ export default function AdminPage() {
 
   // Document URLs generated dynamically
   const [studentIdSignedUrl, setStudentIdSignedUrl] = useState<string | null>(null);
-  const [stateIdSignedUrl, setStateIdSignedUrl] = useState<string | null>(null);
+  const [govFrontSignedUrl, setGovFrontSignedUrl] = useState<string | null>(null);
+  const [govBackSignedUrl, setGovBackSignedUrl] = useState<string | null>(null);
 
   // Load session from sessionStorage on mount
   useEffect(() => {
@@ -91,7 +95,8 @@ export default function AdminPage() {
       loadDocumentUrls(selectedApp);
     } else {
       setStudentIdSignedUrl(null);
-      setStateIdSignedUrl(null);
+      setGovFrontSignedUrl(null);
+      setGovBackSignedUrl(null);
     }
   }, [selectedApp]);
 
@@ -165,7 +170,8 @@ export default function AdminPage() {
 
   const loadDocumentUrls = async (app: Application) => {
     setStudentIdSignedUrl(null);
-    setStateIdSignedUrl(null);
+    setGovFrontSignedUrl(null);
+    setGovBackSignedUrl(null);
 
     if (app.student_id_url) {
       try {
@@ -178,14 +184,25 @@ export default function AdminPage() {
       }
     }
 
-    if (app.state_id_url) {
+    if (app.gov_id_front_url) {
       try {
         const { data } = await supabase.storage
           .from('identity_documents')
-          .createSignedUrl(app.state_id_url, 300);
-        if (data) setStateIdSignedUrl(data.signedUrl);
+          .createSignedUrl(app.gov_id_front_url, 300);
+        if (data) setGovFrontSignedUrl(data.signedUrl);
       } catch (err) {
-        console.error('Failed to sign state ID URL:', err);
+        console.error('Failed to sign gov front ID URL:', err);
+      }
+    }
+
+    if (app.gov_id_back_url) {
+      try {
+        const { data } = await supabase.storage
+          .from('identity_documents')
+          .createSignedUrl(app.gov_id_back_url, 300);
+        if (data) setGovBackSignedUrl(data.signedUrl);
+      } catch (err) {
+        console.error('Failed to sign gov back ID URL:', err);
       }
     }
   };
@@ -610,58 +627,124 @@ export default function AdminPage() {
                     )}
                   </div>
 
-                  {/* State ID */}
-                  <div className="bg-[#f0f4f8] rounded-xl p-4 border border-blue-50">
-                    <div className="flex justify-between items-center mb-3">
+                  {/* Government-Issued ID (Front and Back) */}
+                  <div className="bg-[#f0f4f8] rounded-xl p-4 border border-blue-50 space-y-4">
+                    <div className="flex justify-between items-center border-b border-gray-200/50 pb-2">
                       <span className="font-bold text-gray-700 text-xs flex items-center gap-1.5">
-                        <FileText className="w-3.5 h-3.5 text-secondary-blue" /> Government-Issued ID
+                        <CreditCard className="w-3.5 h-3.5 text-secondary-blue" />
+                        {selectedApp.gov_id_type === 'state_id' ? 'State ID' : "Driver's License"}
                       </span>
-                      {stateIdSignedUrl && (
-                        <a 
-                          href={stateIdSignedUrl} 
-                          target="_blank" 
-                          rel="noreferrer"
-                          className="text-[11px] font-bold text-secondary-blue hover:underline flex items-center gap-1"
-                        >
-                          <Download className="w-3 h-3" /> Download ID
-                        </a>
-                      )}
+                      <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider bg-white px-2 py-0.5 rounded border border-gray-150">
+                        {selectedApp.gov_id_type === 'state_id' ? 'State Card' : 'License'}
+                      </span>
                     </div>
 
-                    {selectedApp.state_id_url ? (
-                      stateIdSignedUrl ? (
-                        selectedApp.state_id_url.endsWith('.pdf') ? (
-                          <div className="bg-white border rounded-lg p-4 text-center">
-                            <span className="text-xs text-gray-500 block mb-2">PDF Document</span>
+                    {/* Front and Back previews side-by-side or stacked */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {/* Front Side */}
+                      <div className="space-y-2">
+                        <div className="flex justify-between items-center text-xs font-bold text-gray-600">
+                          <span>Front Side</span>
+                          {govFrontSignedUrl && (
                             <a 
-                              href={stateIdSignedUrl} 
+                              href={govFrontSignedUrl} 
                               target="_blank" 
-                              rel="noreferrer" 
-                              className="px-4 py-1.5 bg-secondary-blue hover:bg-primary-blue text-white rounded-full font-bold text-[11px] inline-block transition-colors"
+                              rel="noreferrer"
+                              className="text-[10px] text-secondary-blue hover:underline flex items-center gap-0.5"
                             >
-                              Open PDF Viewer
+                              <Download className="w-2.5 h-2.5" /> Link
                             </a>
-                          </div>
-                        ) : (
-                          <div className="bg-white border rounded-lg overflow-hidden flex items-center justify-center max-h-[140px] shadow-inner">
-                            <img 
-                              src={stateIdSignedUrl} 
-                              alt="Government-Issued ID Upload" 
-                              className="max-h-[140px] w-auto object-contain cursor-pointer"
-                              onClick={() => window.open(stateIdSignedUrl, '_blank')}
-                            />
-                          </div>
-                        )
-                      ) : (
-                        <div className="text-xs text-gray-500 flex items-center justify-center p-4">
-                          <Loader2 className="w-4 h-4 animate-spin mr-1.5" /> Loading document...
+                          )}
                         </div>
-                      )
-                    ) : (
-                      <div className="text-xs text-amber-600 bg-amber-50 rounded-lg p-3 flex items-center gap-1.5 border border-amber-100 font-medium">
-                        <ShieldAlert className="w-4 h-4" /> Document not uploaded
+
+                        {selectedApp.gov_id_front_url ? (
+                          govFrontSignedUrl ? (
+                            selectedApp.gov_id_front_url.endsWith('.pdf') ? (
+                              <div className="bg-white border rounded-lg p-3 text-center min-h-[100px] flex flex-col justify-center items-center">
+                                <span className="text-[10px] text-gray-500 block mb-1">PDF File</span>
+                                <a 
+                                  href={govFrontSignedUrl} 
+                                  target="_blank" 
+                                  rel="noreferrer" 
+                                  className="px-3 py-1 bg-secondary-blue text-white rounded-full font-bold text-[9px] inline-block"
+                                >
+                                  Open PDF
+                                </a>
+                              </div>
+                            ) : (
+                              <div className="bg-white border rounded-lg overflow-hidden flex items-center justify-center h-[100px] shadow-sm">
+                                <img 
+                                  src={govFrontSignedUrl} 
+                                  alt="Gov ID Front" 
+                                  className="max-h-[100px] w-auto object-contain cursor-pointer"
+                                  onClick={() => window.open(govFrontSignedUrl, '_blank')}
+                                />
+                              </div>
+                            )
+                          ) : (
+                            <div className="text-[11px] text-gray-500 flex items-center justify-center p-4">
+                              <Loader2 className="w-3.5 h-3.5 animate-spin mr-1" /> Loading...
+                            </div>
+                          )
+                        ) : (
+                          <div className="text-[10px] text-amber-600 bg-amber-50 rounded-lg p-2 flex items-center gap-1 border border-amber-100 font-medium">
+                            <ShieldAlert className="w-3.5 h-3.5" /> Missing
+                          </div>
+                        )}
                       </div>
-                    )}
+
+                      {/* Back Side */}
+                      <div className="space-y-2">
+                        <div className="flex justify-between items-center text-xs font-bold text-gray-600">
+                          <span>Back Side</span>
+                          {govBackSignedUrl && (
+                            <a 
+                              href={govBackSignedUrl} 
+                              target="_blank" 
+                              rel="noreferrer"
+                              className="text-[10px] text-secondary-blue hover:underline flex items-center gap-0.5"
+                            >
+                              <Download className="w-2.5 h-2.5" /> Link
+                            </a>
+                          )}
+                        </div>
+
+                        {selectedApp.gov_id_back_url ? (
+                          govBackSignedUrl ? (
+                            selectedApp.gov_id_back_url.endsWith('.pdf') ? (
+                              <div className="bg-white border rounded-lg p-3 text-center min-h-[100px] flex flex-col justify-center items-center">
+                                <span className="text-[10px] text-gray-500 block mb-1">PDF File</span>
+                                <a 
+                                  href={govBackSignedUrl} 
+                                  target="_blank" 
+                                  rel="noreferrer" 
+                                  className="px-3 py-1 bg-secondary-blue text-white rounded-full font-bold text-[9px] inline-block"
+                                >
+                                  Open PDF
+                                </a>
+                              </div>
+                            ) : (
+                              <div className="bg-white border rounded-lg overflow-hidden flex items-center justify-center h-[100px] shadow-sm">
+                                <img 
+                                  src={govBackSignedUrl} 
+                                  alt="Gov ID Back" 
+                                  className="max-h-[100px] w-auto object-contain cursor-pointer"
+                                  onClick={() => window.open(govBackSignedUrl, '_blank')}
+                                />
+                              </div>
+                            )
+                          ) : (
+                            <div className="text-[11px] text-gray-500 flex items-center justify-center p-4">
+                              <Loader2 className="w-3.5 h-3.5 animate-spin mr-1" /> Loading...
+                            </div>
+                          )
+                        ) : (
+                          <div className="text-[10px] text-amber-600 bg-amber-50 rounded-lg p-2 flex items-center gap-1 border border-amber-100 font-medium">
+                            <ShieldAlert className="w-3.5 h-3.5" /> Missing
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
 
