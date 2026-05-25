@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { 
   Lock, Search, Filter, CheckCircle2, XCircle, Clock, 
   Eye, Download, LogOut, FileText, AlertCircle, RefreshCw,
-  TrendingUp, Users, Calendar, DollarSign, BookOpen, ShieldAlert
+  TrendingUp, Users, Calendar, DollarSign, BookOpen, ShieldAlert,
+  Loader2
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
