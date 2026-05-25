@@ -44,6 +44,7 @@ interface Application {
   gov_id_type: string | null;
   gov_id_front_url: string | null;
   gov_id_back_url: string | null;
+  form_data?: any;
   admin_notes: string | null;
   created_at: string;
   updated_at: string;
@@ -591,9 +592,9 @@ export default function AdminPage() {
                       )}
                     </div>
 
-                    {selectedApp.student_id_url ? (
+                    {selectedApp.student_id_url || selectedApp.form_data?.studentIdUrl ? (
                       studentIdSignedUrl ? (
-                        selectedApp.student_id_url.endsWith('.pdf') ? (
+                        (selectedApp.student_id_url || selectedApp.form_data?.studentIdUrl || '').endsWith('.pdf') ? (
                           <div className="bg-white border rounded-lg p-4 text-center">
                             <span className="text-xs text-gray-500 block mb-2">PDF Document</span>
                             <a 
@@ -632,10 +633,10 @@ export default function AdminPage() {
                     <div className="flex justify-between items-center border-b border-gray-200/50 pb-2">
                       <span className="font-bold text-gray-700 text-xs flex items-center gap-1.5">
                         <CreditCard className="w-3.5 h-3.5 text-secondary-blue" />
-                        {selectedApp.gov_id_type === 'state_id' ? 'State ID' : "Driver's License"}
+                        {(selectedApp.gov_id_type || selectedApp.form_data?.govIdType) === 'state_id' ? 'State ID' : "Driver's License"}
                       </span>
                       <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider bg-white px-2 py-0.5 rounded border border-gray-150">
-                        {selectedApp.gov_id_type === 'state_id' ? 'State Card' : 'License'}
+                        {(selectedApp.gov_id_type || selectedApp.form_data?.govIdType) === 'state_id' ? 'State Card' : 'License'}
                       </span>
                     </div>
 
@@ -657,9 +658,9 @@ export default function AdminPage() {
                           )}
                         </div>
 
-                        {selectedApp.gov_id_front_url ? (
+                        {selectedApp.gov_id_front_url || selectedApp.form_data?.govIdFrontUrl ? (
                           govFrontSignedUrl ? (
-                            selectedApp.gov_id_front_url.endsWith('.pdf') ? (
+                            (selectedApp.gov_id_front_url || selectedApp.form_data?.govIdFrontUrl || '').endsWith('.pdf') ? (
                               <div className="bg-white border rounded-lg p-3 text-center min-h-[100px] flex flex-col justify-center items-center">
                                 <span className="text-[10px] text-gray-500 block mb-1">PDF File</span>
                                 <a 
@@ -709,9 +710,9 @@ export default function AdminPage() {
                           )}
                         </div>
 
-                        {selectedApp.gov_id_back_url ? (
+                        {selectedApp.gov_id_back_url || selectedApp.form_data?.govIdBackUrl ? (
                           govBackSignedUrl ? (
-                            selectedApp.gov_id_back_url.endsWith('.pdf') ? (
+                            (selectedApp.gov_id_back_url || selectedApp.form_data?.govIdBackUrl || '').endsWith('.pdf') ? (
                               <div className="bg-white border rounded-lg p-3 text-center min-h-[100px] flex flex-col justify-center items-center">
                                 <span className="text-[10px] text-gray-500 block mb-1">PDF File</span>
                                 <a 

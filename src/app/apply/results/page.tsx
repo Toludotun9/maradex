@@ -68,7 +68,7 @@ export default function DocumentUploadPage() {
     try {
       const { data, error } = await supabase
         .from('loans')
-        .select('student_id_url, gov_id_type, gov_id_front_url, gov_id_back_url, status')
+        .select('student_id_url, gov_id_type, gov_id_front_url, gov_id_back_url, status, form_data')
         .eq('id', loanId)
         .single();
 
@@ -77,31 +77,35 @@ export default function DocumentUploadPage() {
       if (data) {
         setAppStatus(data.status || 'draft');
 
-        if (data.gov_id_type) {
-          setGovIdType(data.gov_id_type as GovIdType);
-        }
+        // Extract from columns or form_data fallback
+        const currentStudentIdUrl = data.student_id_url || data.form_data?.studentIdUrl;
+        const currentGovIdType = data.gov_id_type || data.form_data?.govIdType || 'drivers_license';
+        const currentGovFrontUrl = data.gov_id_front_url || data.form_data?.govIdFrontUrl;
+        const currentGovBackUrl = data.gov_id_back_url || data.form_data?.govIdBackUrl;
 
-        if (data.student_id_url) {
-          setStudentIdUrl(data.student_id_url);
+        setGovIdType(currentGovIdType as GovIdType);
+
+        if (currentStudentIdUrl) {
+          setStudentIdUrl(currentStudentIdUrl);
           const { data: signedData } = await supabase.storage
             .from('identity_documents')
-            .createSignedUrl(data.student_id_url, 3600);
+            .createSignedUrl(currentStudentIdUrl, 3600);
           if (signedData) setStudentIdPreview(signedData.signedUrl);
         }
 
-        if (data.gov_id_front_url) {
-          setGovFrontUrl(data.gov_id_front_url);
+        if (currentGovFrontUrl) {
+          setGovFrontUrl(currentGovFrontUrl);
           const { data: signedData } = await supabase.storage
             .from('identity_documents')
-            .createSignedUrl(data.gov_id_front_url, 3600);
+            .createSignedUrl(currentGovFrontUrl, 3600);
           if (signedData) setGovFrontPreview(signedData.signedUrl);
         }
 
-        if (data.gov_id_back_url) {
-          setGovBackUrl(data.gov_id_back_url);
+        if (currentGovBackUrl) {
+          setGovBackUrl(currentGovBackUrl);
           const { data: signedData } = await supabase.storage
             .from('identity_documents')
-            .createSignedUrl(data.gov_id_back_url, 3600);
+            .createSignedUrl(currentGovBackUrl, 3600);
           if (signedData) setGovBackPreview(signedData.signedUrl);
         }
       }
@@ -174,12 +178,40 @@ export default function DocumentUploadPage() {
         dbUpdateField.gov_id_type = govIdType;
       }
 
-      const { error: dbError } = await supabase
+      // Try updating specific columns first
+      let { error: dbError } = await supabase
         .from('loans')
         .update(dbUpdateField)
         .eq('id', loanId);
 
-      if (dbError) throw dbError;
+      // If column update fails (e.g. columns don't exist yet), fall back to storing in form_data JSONB object
+      if (dbError) {
+        console.warn('Column update failed, falling back to JSONB form_data storage...', dbError.message);
+        
+        // Fetch existing form_data first
+        const { data: currentLoan } = await supabase
+          .from('loans')
+          .select('form_data')
+          .eq('id', loanId)
+          .single();
+          
+        const currentFormData = currentLoan?.form_data || {};
+        
+        const updatedFormData = {
+          ...currentFormData,
+          govIdType: govIdType,
+          ...(type === 'student' ? { studentIdUrl: storagePath } : {}),
+          ...(type === 'gov_front' ? { govIdFrontUrl: storagePath } : {}),
+          ...(type === 'gov_back' ? { govIdBackUrl: storagePath } : {})
+        };
+
+        const { error: fallbackError } = await supabase
+          .from('loans')
+          .update({ form_data: updatedFormData })
+          .eq('id', loanId);
+
+        if (fallbackError) throw fallbackError;
+      }
 
       // Update state
       setDocUrl(storagePath);
@@ -247,12 +279,31 @@ export default function DocumentUploadPage() {
         type === 'student' ? { student_id_url: null } :
         type === 'gov_front' ? { gov_id_front_url: null } : { gov_id_back_url: null };
 
-      const { error: dbError } = await supabase
+      let { error: dbError } = await supabase
         .from('loans')
         .update(dbUpdateField)
         .eq('id', loanId);
 
-      if (dbError) throw dbError;
+      // Fallback for JSONB form_data
+      if (dbError) {
+        const { data: currentLoan } = await supabase
+          .from('loans')
+          .select('form_data')
+          .eq('id', loanId)
+          .single();
+          
+        const currentFormData = currentLoan?.form_data || {};
+        
+        // Remove key
+        if (type === 'student') delete currentFormData.studentIdUrl;
+        else if (type === 'gov_front') delete currentFormData.govIdFrontUrl;
+        else delete currentFormData.govIdBackUrl;
+
+        await supabase
+          .from('loans')
+          .update({ form_data: currentFormData })
+          .eq('id', loanId);
+      }
 
       // Clear states
       setFile(null);
@@ -288,10 +339,26 @@ export default function DocumentUploadPage() {
     setGovIdType(type);
     if (loanId) {
       try {
-        await supabase
+        // Try updating column
+        const { error } = await supabase
           .from('loans')
           .update({ gov_id_type: type })
           .eq('id', loanId);
+
+        // Fallback updating JSONB
+        if (error) {
+          const { data: currentLoan } = await supabase
+            .from('loans')
+            .select('form_data')
+            .eq('id', loanId)
+            .single();
+          const currentFormData = currentLoan?.form_data || {};
+          currentFormData.govIdType = type;
+          await supabase
+            .from('loans')
+            .update({ form_data: currentFormData })
+            .eq('id', loanId);
+        }
       } catch (err) {
         console.error('Failed to update ID type in DB:', err);
       }
@@ -299,8 +366,9 @@ export default function DocumentUploadPage() {
   };
 
   const handleSubmitAllDocuments = async () => {
-    if (!studentIdUrl || !govFrontUrl || !govBackUrl) {
-      setErrorMsg('Please upload all required documents (Student ID, ID Front, and ID Back) before submitting.');
+    // Must have studentId OR (govFront AND govBack)
+    if (!studentIdUrl && (!govFrontUrl || !govBackUrl)) {
+      setErrorMsg('Please upload either your Student ID or both sides of your Government ID.');
       return;
     }
 
@@ -308,10 +376,7 @@ export default function DocumentUploadPage() {
     setErrorMsg(null);
 
     try {
-      const result = await saveApplication({ 
-        status: 'pending',
-        gov_id_type: govIdType 
-      });
+      const result = await saveApplication({ status: 'pending' });
       if (result.success) {
         setAppStatus('pending');
       } else {
@@ -330,6 +395,9 @@ export default function DocumentUploadPage() {
     const num = typeof val === 'string' ? parseInt(val.replace(/\D/g, '')) : val;
     return isNaN(num) ? '$0' : `$${num.toLocaleString()}`;
   };
+
+  // Check if either Student ID is uploaded OR Gov Front & Back are uploaded
+  const isSubmitDisabled = !studentIdUrl && (!govFrontUrl || !govBackUrl);
 
   if (isLoading) {
     return (
@@ -354,7 +422,7 @@ export default function DocumentUploadPage() {
           </h1>
           
           <p className="text-base sm:text-lg text-gray-600 mb-8 leading-relaxed font-medium">
-            Thank you for verifying your identity. We have received your student ID and government-issued photo ID. 
+            Thank you for verifying your identity. We have received your verification ID documents. 
             Our admin review team is currently verifying them.
           </p>
 
@@ -474,7 +542,7 @@ export default function DocumentUploadPage() {
           Verify <span className="text-accent-blue">your identity.</span>
         </h1>
         <p className="text-lg text-gray-600 mb-10 font-medium max-w-2xl leading-relaxed">
-          To complete your student loan submission, we require you to upload high-quality copies of your student ID and both front and back sides of your government-issued ID.
+          To complete your student loan submission, we require you to upload high-quality copies of either your student ID or both front and back sides of your government-issued ID.
         </p>
 
         {errorMsg && (
@@ -495,7 +563,7 @@ export default function DocumentUploadPage() {
               </div>
               <div>
                 <h3 className="font-extrabold text-primary-blue text-lg">Student ID</h3>
-                <p className="text-xs text-gray-500">School enrollment verification</p>
+                <p className="text-xs text-gray-500 font-medium">School enrollment verification</p>
               </div>
             </div>
 
@@ -742,7 +810,7 @@ export default function DocumentUploadPage() {
             </button>
             <Button 
               onClick={handleSubmitAllDocuments}
-              disabled={!studentIdUrl || !govFrontUrl || !govBackUrl}
+              disabled={isSubmitDisabled}
               loading={isSubmittingDocs}
               className="w-full md:w-[240px] shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0"
             >
