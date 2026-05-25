@@ -536,7 +536,7 @@ export default function DocumentUploadPage() {
     );
   }
 
-  // SCREEN 2: Approved Decision (Cosigner Requirement)
+  // SCREEN 2: Approved Decision
   if (appStatus === 'approved') {
     return (
       <div className="flex flex-col items-center justify-center flex-grow py-16 px-6 md:px-20 w-full max-w-5xl mx-auto font-sans animate-in fade-in duration-700">
@@ -550,73 +550,28 @@ export default function DocumentUploadPage() {
             Your Student Loan Application Is Approved. You'll be Eligible for <span className="text-secondary-blue">{formatCurrency(formData.loanAmountRequested || 16284)}</span> loan.
           </h1>
 
-          <div className="w-full text-left">
-            <h2 className="text-xl font-extrabold text-primary-blue mb-4">
-              You'll be eligible for this loan when you add a creditworthy cosigner. Let's get started below.
-            </h2>
-
-            {inviteSentSuccessfully ? (
-              <div className="w-full bg-green-50 border border-green-200 rounded-2xl p-6 text-left mb-6 animate-in fade-in zoom-in-95 duration-300">
-                <h4 className="font-bold text-green-800 mb-1 flex items-center gap-1.5 text-[15px]">
-                  <CheckCircle2 className="w-5 h-5" /> Invitation Sent!
-                </h4>
-                <p className="text-sm text-green-700 leading-relaxed font-medium">
-                  We have emailed your cosigner at <strong>{cosignerEmail}</strong> with their unique access code. Once they complete their portion, we will reevaluate your application.
-                </p>
-              </div>
-            ) : showInviteForm ? (
-              <form onSubmit={handleSendCosignerInvite} className="w-full bg-slate-50 rounded-2xl p-6 text-left mb-6 border border-gray-200/60 animate-in slide-in-from-top-4 duration-300">
-                <h3 className="font-extrabold text-primary-blue text-sm mb-3">Invite your Cosigner</h3>
-                
-                {inviteError && (
-                  <p className="text-xs text-red-600 font-bold mb-3">{inviteError}</p>
-                )}
-
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <input 
-                    type="email"
-                    required
-                    value={cosignerEmail}
-                    onChange={(e) => setCosignerEmail(e.target.value)}
-                    placeholder="Enter cosigner's email address"
-                    className="flex-grow px-4 py-2.5 bg-white border border-gray-300 rounded-xl outline-none focus:border-secondary-blue text-sm font-medium"
-                  />
-                  <button
-                    type="submit"
-                    disabled={sendingInvite}
-                    className="px-6 py-2.5 bg-primary-blue hover:bg-secondary-blue text-white rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow-md active:scale-95 disabled:bg-gray-400"
-                  >
-                    {sendingInvite ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : 'Send Invite'}
-                  </button>
-                </div>
-              </form>
-            ) : (
-              <div className="flex justify-center mb-6">
-                <button 
-                  onClick={() => setShowInviteForm(true)}
-                  className="px-10 py-3.5 rounded-full bg-[#114b7f] text-white hover:bg-[#09355e] font-bold text-[14.5px] transition-all shadow-md hover:shadow-lg transform active:scale-95"
-                >
-                  Invite a cosigner
-                </button>
-              </div>
-            )}
-
-            <p className="text-sm text-gray-500 font-medium leading-relaxed mb-6">
-              A cosigner can be a parent, guardian, spouse, relative, friend, or other creditworthy individual who takes responsibility for the loan with you.
+          <div className="w-full bg-[#F3F9FE] border border-blue-100 rounded-2xl p-6 sm:p-8 text-left space-y-4 shadow-sm mb-8">
+            <p className="text-[14.5px] text-gray-700 leading-relaxed font-semibold">
+              Congratulation! Your Studenent loan request has been approved. Your application has succesfully passed our initial review. A final assessment wil now be conducted based on your financial profile credit history, and our internal leanding policies..
             </p>
-
-            <div className="w-full bg-[#F3F9FE] border border-blue-100 rounded-2xl p-6 sm:p-8 text-left space-y-4 shadow-sm">
-              <p className="text-[14.5px] text-gray-700 leading-relaxed font-semibold">
-                Congratulation! Your Studenent loan request has been approved. Your application has succesfully passed our initial review. A final assessment wil now be conducted based on your financial profile credit history, and our internal leanding policies..
-              </p>
-              <p className="text-[14.5px] text-gray-700 leading-relaxed font-medium">
-                Please note that additional document or paperwork may be required to complet the processing and disbursement of the loan. A loan officer will contact you shortly to provide futher details,next steps, and any outstanding requirements
-              </p>
-              <p className="text-[14.5px] text-gray-700 leading-relaxed font-medium">
-                We appreciate the opportunity to support your educational pursuits.
-              </p>
-            </div>
+            <p className="text-[14.5px] text-gray-700 leading-relaxed font-medium">
+              Please note that additional document or paperwork may be required to complet the processing and disbursement of the loan. A loan officer will contact you shortly to provide futher details,next steps, and any outstanding requirements
+            </p>
+            <p className="text-[14.5px] text-gray-700 leading-relaxed font-medium">
+              We appreciate the opportunity to support your educational pursuits.
+            </p>
           </div>
+
+          <Button 
+            onClick={() => {
+              localStorage.removeItem('maradex_loan_id');
+              localStorage.removeItem('maradex_secret_token');
+              router.push('/');
+            }}
+            className="w-full sm:w-auto px-8"
+          >
+            Back to Homepage
+          </Button>
         </div>
       </div>
     );
