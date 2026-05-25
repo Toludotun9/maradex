@@ -246,13 +246,24 @@ const LoanPeriodForm = ({
     }
 
     setIsContinuing(true);
-    await saveApplication();
+    
+    const useCalc = formData.loanUseCalculatedNeed !== undefined ? formData.loanUseCalculatedNeed : true;
+    const finalAmount = useCalc ? calculatedNeed.toString() : (formData.loanAmountRequested || calculatedNeed.toString());
+    
+    updateFormData({ loanAmountRequested: finalAmount });
+    await saveApplication({ loan_amount_requested: finalAmount });
+    
     onContinue();
     setIsContinuing(false);
   };
 
   const handleSaveLater = async () => {
-    const result = await saveApplication();
+    const useCalc = formData.loanUseCalculatedNeed !== undefined ? formData.loanUseCalculatedNeed : true;
+    const finalAmount = useCalc ? calculatedNeed.toString() : (formData.loanAmountRequested || calculatedNeed.toString());
+    
+    updateFormData({ loanAmountRequested: finalAmount });
+    
+    const result = await saveApplication({ loan_amount_requested: finalAmount });
     if (result.success) {
       setIsSaved(true);
       setTimeout(() => setIsSaved(false), 3000);
