@@ -53,6 +53,13 @@ export default function DocumentUploadPage() {
   const [appStatus, setAppStatus] = useState<string>('draft');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
+  // Cosigner Invitation states
+  const [showInviteForm, setShowInviteForm] = useState(false);
+  const [cosignerEmail, setCosignerEmail] = useState('');
+  const [inviteError, setInviteError] = useState<string | null>(null);
+  const [sendingInvite, setSendingInvite] = useState(false);
+  const [inviteSentSuccessfully, setInviteSentSuccessfully] = useState(false);
+
   const studentInputRef = useRef<HTMLInputElement>(null);
   const govFrontInputRef = useRef<HTMLInputElement>(null);
   const govBackInputRef = useRef<HTMLInputElement>(null);
@@ -107,6 +114,11 @@ export default function DocumentUploadPage() {
             .from('identity_documents')
             .createSignedUrl(currentGovBackUrl, 3600);
           if (signedData) setGovBackPreview(signedData.signedUrl);
+        }
+
+        if (data.form_data?.cosignerInviteSent) {
+          setInviteSentSuccessfully(true);
+          setCosignerEmail(data.form_data?.cosignerEmailAddress || '');
         }
       }
     } catch (err) {
@@ -184,7 +196,7 @@ export default function DocumentUploadPage() {
         .update(dbUpdateField)
         .eq('id', loanId);
 
-      // If column update fails (e.g. columns don't exist yet), fall back to storing in form_data JSONB object
+      // If column update fails, fall back to storing in form_data JSONB object
       if (dbError) {
         console.warn('Column update failed, falling back to JSONB form_data storage...', dbError.message);
         
@@ -339,13 +351,11 @@ export default function DocumentUploadPage() {
     setGovIdType(type);
     if (loanId) {
       try {
-        // Try updating column
         const { error } = await supabase
           .from('loans')
           .update({ gov_id_type: type })
           .eq('id', loanId);
 
-        // Fallback updating JSONB
         if (error) {
           const { data: currentLoan } = await supabase
             .from('loans')
@@ -365,8 +375,74 @@ export default function DocumentUploadPage() {
     }
   };
 
+  const handleSendCosignerInvite = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!cosignerEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cosignerEmail.trim())) {
+      setInviteError('Please enter a valid email address.');
+      return;
+    }
+
+    setSendingInvite(true);
+    setInviteError(null);
+
+    try {
+      const activeCosignerCode = Math.floor(100000 + Math.random() * 900000).toString();
+      
+      // Update DB
+      const { data: currentLoan, error: fetchError } = await supabase
+        .from('loans')
+        .select('form_data')
+        .eq('id', loanId)
+        .single();
+
+      if (fetchError) throw fetchError;
+      
+      const currentFormData = currentLoan?.form_data || {};
+      const updatedFormData = {
+        ...currentFormData,
+        cosignerEmailAddress: cosignerEmail.trim(),
+        cosignerAccessCode: activeCosignerCode,
+        cosignerInviteSent: true
+      };
+
+      const { error: dbError } = await supabase
+        .from('loans')
+        .update({
+          has_cosigner: true,
+          cosigner_email_address: cosignerEmail.trim(),
+          cosigner_access_code: activeCosignerCode,
+          form_data: updatedFormData
+        })
+        .eq('id', loanId);
+
+      if (dbError) throw dbError;
+
+      // Dispatch invite email API
+      const response = await fetch('/api/send-cosigner-invite', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: cosignerEmail.trim(),
+          accessCode: activeCosignerCode,
+          studentName: `${formData.firstName || ''} ${formData.lastName || ''}`.trim() || 'A student',
+          loanAmount: formatCurrency(formData.loanAmountRequested)
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to dispatch invite email.');
+      }
+
+      setInviteSentSuccessfully(true);
+    } catch (err: any) {
+      console.error('Error sending cosigner invite:', err);
+      setInviteError(err.message || 'Failed to send invitation. Please try again.');
+    } finally {
+      setSendingInvite(false);
+    }
+  };
+
   const handleSubmitAllDocuments = async () => {
-    // Must have studentId OR (govFront AND govBack)
     if (!studentIdUrl && (!govFrontUrl || !govBackUrl)) {
       setErrorMsg('Please upload either your Student ID or both sides of your Government ID.');
       return;
@@ -396,7 +472,6 @@ export default function DocumentUploadPage() {
     return isNaN(num) ? '$0' : `$${num.toLocaleString()}`;
   };
 
-  // Check if either Student ID is uploaded OR Gov Front & Back are uploaded
   const isSubmitDisabled = !studentIdUrl && (!govFrontUrl || !govBackUrl);
 
   if (isLoading) {
@@ -461,41 +536,90 @@ export default function DocumentUploadPage() {
     );
   }
 
-  // SCREEN 2: Approved Decision
+  // SCREEN 2: Approved Decision (Cosigner Requirement)
   if (appStatus === 'approved') {
     return (
       <div className="flex flex-col items-center justify-center flex-1 py-16 px-6 md:px-20 w-full max-w-5xl mx-auto font-sans">
-        <div className="bg-white rounded-3xl p-8 sm:p-16 shadow-2xl border border-gray-100 flex flex-col items-center text-center max-w-3xl mx-auto animate-in fade-in zoom-in-95 duration-500">
-          <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center text-green-500 mb-8 border border-green-100 shadow-sm">
-            <CheckCircle2 className="w-12 h-12" />
+        <div className="bg-white rounded-3xl p-8 sm:p-16 shadow-2xl border border-gray-100 flex flex-col items-center text-center max-w-2xl mx-auto animate-in fade-in zoom-in-95 duration-500">
+          <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center text-secondary-blue mb-8 border border-blue-100 shadow-sm">
+            <CheckCircle2 className="w-10 h-10" />
           </div>
           
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-primary-blue mb-8 tracking-tight leading-snug">
-            Your Student Loan Application Is Approved. You'll be Eligible for <span className="text-green-600 font-black">{formatCurrency(formData.loanAmountRequested)}</span> loan.
+          <h1 className="text-2xl md:text-3xl font-extrabold text-[#111] mb-8 tracking-tight leading-[1.2] max-w-xl">
+            You'll be eligible for this <span className="text-secondary-blue">{formatCurrency(formData.loanAmountRequested || 16284)}</span> loan when you add a creditworthy cosigner. Let's get started below.
           </h1>
+
+          {inviteSentSuccessfully ? (
+            <div className="w-full bg-green-50 border border-green-200 rounded-2xl p-6 text-left mb-8 animate-in fade-in zoom-in-95 duration-300">
+              <h4 className="font-bold text-green-800 mb-1 flex items-center gap-1.5 text-[15px]">
+                <CheckCircle2 className="w-5 h-5" /> Invitation Sent!
+              </h4>
+              <p className="text-sm text-green-700 leading-relaxed font-medium">
+                We have emailed your cosigner at <strong>{cosignerEmail}</strong> with their unique access code. Once they complete their portion, we will reevaluate your application.
+              </p>
+            </div>
+          ) : showInviteForm ? (
+            <form onSubmit={handleSendCosignerInvite} className="w-full bg-slate-50 rounded-2xl p-6 text-left mb-8 border border-gray-200/60 animate-in slide-in-from-top-4 duration-300">
+              <h3 className="font-extrabold text-primary-blue text-sm mb-3">Invite your Cosigner</h3>
+              
+              {inviteError && (
+                <p className="text-xs text-red-600 font-bold mb-3">{inviteError}</p>
+              )}
+
+              <div className="flex flex-col sm:flex-row gap-3">
+                <input 
+                  type="email"
+                  required
+                  value={cosignerEmail}
+                  onChange={(e) => setCosignerEmail(e.target.value)}
+                  placeholder="Enter cosigner's email address"
+                  className="flex-grow px-4 py-2.5 bg-white border border-gray-300 rounded-xl outline-none focus:border-secondary-blue text-sm font-medium"
+                />
+                <button
+                  type="submit"
+                  disabled={sendingInvite}
+                  className="px-6 py-2.5 bg-primary-blue hover:bg-secondary-blue text-white rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow-md active:scale-95 disabled:bg-gray-400"
+                >
+                  {sendingInvite ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : 'Send Invite'}
+                </button>
+              </div>
+            </form>
+          ) : (
+            <button 
+              onClick={() => setShowInviteForm(true)}
+              className="px-10 py-3.5 rounded-full bg-[#114b7f] text-white hover:bg-[#09355e] font-bold text-[14.5px] transition-all shadow-md hover:shadow-lg transform active:scale-95 mb-8"
+            >
+              Invite a cosigner
+            </button>
+          )}
+
+          <p className="text-sm text-gray-500 font-medium leading-relaxed mb-10 max-w-lg">
+            A cosigner can be a parent, guardian, spouse, relative, friend, or other creditworthy individual who takes responsibility for the loan with you.
+          </p>
           
-          <div className="text-[15px] text-gray-600 leading-relaxed font-medium text-left bg-slate-50 p-6 sm:p-8 rounded-2xl border border-slate-100 space-y-4 mb-8">
+          <div className="text-[14.5px] text-gray-600 leading-relaxed font-medium text-left space-y-4 mb-8">
             <p>
-              Congratulations! Your student loan request has been approved. Your application has successfully passed our initial review. A final assessment will now be conducted based on your financial profile, credit history, and our internal lending policies.
+              Having a creditworthy cosigner isn't unusual. In fact, nearly 89%* of our undergraduate borrowers have cosigners. Adding a cosigner is easy:
             </p>
-            <p>
-              Please note that additional documents or paperwork may be required to complete the processing and disbursement of the loan. A loan officer will contact you shortly to provide further details, next steps, and any outstanding requirements.
-            </p>
-            <p>
-              We appreciate the opportunity to support your educational pursuits.
-            </p>
+            <ul className="space-y-3">
+              <li className="flex items-start gap-2.5">
+                <span className="text-slate-400 mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-slate-400" />
+                <span>You don't need to start a new loan application.</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <span className="text-slate-400 mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-slate-400" />
+                <span>Invite a cosigner now and we'll send them an access code so they can submit their information.</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <span className="text-slate-400 mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-slate-400" />
+                <span>Once their information is submitted, we'll reevaluate your application.</span>
+              </li>
+            </ul>
           </div>
 
-          <Button 
-            onClick={() => {
-              localStorage.removeItem('maradex_loan_id');
-              localStorage.removeItem('maradex_secret_token');
-              router.push('/');
-            }}
-            className="w-full sm:w-auto"
-          >
-            Finish & Return Home
-          </Button>
+          <p className="text-[11px] text-gray-400 text-left w-full border-t border-gray-100 pt-6">
+            * Based on approved Sallie Mae undergraduate loans over a 12-month period during the last academic year
+          </p>
         </div>
       </div>
     );
