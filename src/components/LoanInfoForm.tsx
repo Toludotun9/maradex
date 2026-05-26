@@ -615,7 +615,17 @@ const LoanInfoForm = ({
                     { label: 'Intelligence & Homeland Security', value: 'intelligence-security' },
                     { label: 'Law Studies', value: 'law' },
                     { label: 'Liberal Arts, Gen Studies & Humanities', value: 'liberal-arts' },
-                    { label: 'Mathematics', value: 'mathematics' }
+                    { label: 'Mathematics', value: 'mathematics' },
+                    { label: 'Medical Studies', value: 'medical-studies' },
+                    { label: 'Nursing Studies', value: 'nursing-studies' },
+                    { label: 'Pharmacy & Pharmacy Tech', value: 'pharmacy' },
+                    { label: 'Psychology, Social Work & Counseling', value: 'psychology-counseling' },
+                    { label: 'Public Safety/Public Services', value: 'public-safety' },
+                    { label: 'Sports Management/Sports Medicine', value: 'sports-management' },
+                    { label: 'Trades/Technical/Career Training', value: 'trades' },
+                    { label: 'Veterinary Studies', value: 'veterinary' },
+                    { label: 'Web, Software, Game Dev/Design', value: 'web-software-game' },
+                    { label: 'Continuing Education', value: 'continuing-education' }
                   ]}
                   onChange={(e) => handleChange({ loanMajor: e.target.value })}
                   placeholder={isFetchingFields ? "Loading curriculum from API..." : "Select"}
