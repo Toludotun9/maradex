@@ -283,19 +283,28 @@ export async function GET(request: Request) {
       { label: 'Other Graduate Program', value: 'other-grad' }
     ];
   } else {
-    // Undergrad standard premium programs tailored to the school
+    // Undergrad standard programs matching the exact screenshot requirements
     fieldsOfStudy = [
-      { label: 'Computer Science & Engineering', value: 'cs' },
-      { label: 'Business Administration & Finance', value: 'business' },
-      { label: 'Mechanical Engineering', value: 'mech-eng' },
-      { label: 'Electrical Engineering', value: 'ee' },
-      { label: 'Biology / Pre-Med', value: 'biology' },
-      { label: 'Nursing', value: 'nursing' },
-      { label: 'Psychology', value: 'psychology' },
-      { label: 'Economics', value: 'economics' },
-      { label: 'Political Science', value: 'polisci' },
-      { label: 'English Literature', value: 'english' },
-      { label: 'Undeclared / General Studies', value: 'undeclared' }
+      { label: 'Undeclared', value: 'undeclared' },
+      { label: 'Agriculture & Natural Resources', value: 'agriculture' },
+      { label: 'Architecture, Planning & Preservation', value: 'architecture' },
+      { label: 'Arts, Media & Film', value: 'arts' },
+      { label: 'Aviation & Airline Programs', value: 'aviation' },
+      { label: 'Behavioral & Social Sciences/Public Policy', value: 'behavioral-sciences' },
+      { label: 'Biology, Chemistry, Science', value: 'biology-chemistry-science' },
+      { label: 'Boot Camp Training/Coding', value: 'bootcamp' },
+      { label: 'Business & Financial', value: 'business-financial' },
+      { label: 'Computer & Information Sciences', value: 'computer-sciences' },
+      { label: 'Cosmetology/Barbering', value: 'cosmetology' },
+      { label: 'Criminal Justice', value: 'criminal-justice' },
+      { label: 'Culinary & Food Sciences', value: 'culinary' },
+      { label: 'Dental Studies', value: 'dental' },
+      { label: 'Education', value: 'education' },
+      { label: 'Engineering', value: 'engineering' },
+      { label: 'Intelligence & Homeland Security', value: 'intelligence-security' },
+      { label: 'Law Studies', value: 'law' },
+      { label: 'Liberal Arts, Gen Studies & Humanities', value: 'liberal-arts' },
+      { label: 'Mathematics', value: 'mathematics' }
     ];
   }
 

@@ -596,27 +596,26 @@ const LoanInfoForm = ({
                   value={formData.loanMajor}
                   error={errors.loanMajor}
                   options={fetchedFieldsOfStudy.length > 0 ? fetchedFieldsOfStudy : [
+                    { label: 'Undeclared', value: 'undeclared' },
                     { label: 'Agriculture & Natural Resources', value: 'agriculture' },
-                    { label: 'Architecture & Related Services', value: 'architecture' },
-                    { label: 'Arts, Visual & Performing', value: 'arts' },
-                    { label: 'Biological & Biomedical Sciences', value: 'biology' },
-                    { label: 'Business, Management & Marketing', value: 'business' },
-                    { label: 'Communication & Journalism', value: 'communication' },
-                    { label: 'Computer & Information Sciences', value: 'computer-science' },
+                    { label: 'Architecture, Planning & Preservation', value: 'architecture' },
+                    { label: 'Arts, Media & Film', value: 'arts' },
+                    { label: 'Aviation & Airline Programs', value: 'aviation' },
+                    { label: 'Behavioral & Social Sciences/Public Policy', value: 'behavioral-sciences' },
+                    { label: 'Biology, Chemistry, Science', value: 'biology-chemistry-science' },
+                    { label: 'Boot Camp Training/Coding', value: 'bootcamp' },
+                    { label: 'Business & Financial', value: 'business-financial' },
+                    { label: 'Computer & Information Sciences', value: 'computer-sciences' },
+                    { label: 'Cosmetology/Barbering', value: 'cosmetology' },
+                    { label: 'Criminal Justice', value: 'criminal-justice' },
+                    { label: 'Culinary & Food Sciences', value: 'culinary' },
+                    { label: 'Dental Studies', value: 'dental' },
                     { label: 'Education', value: 'education' },
                     { label: 'Engineering', value: 'engineering' },
-                    { label: 'English Language & Literature', value: 'english' },
-                    { label: 'Health Professions & Related Programs', value: 'health' },
-                    { label: 'History', value: 'history' },
-                    { label: 'Liberal Arts & Sciences, General Studies', value: 'liberal-arts' },
-                    { label: 'Mathematics & Statistics', value: 'math' },
-                    { label: 'Multi/Interdisciplinary Studies', value: 'multi-disciplinary' },
-                    { label: 'Physical Sciences', value: 'physical-sciences' },
-                    { label: 'Psychology', value: 'psychology' },
-                    { label: 'Public Administration & Social Service', value: 'public-admin' },
-                    { label: 'Social Sciences', value: 'social-sciences' },
-                    { label: 'Trades & Personal Services', value: 'trades' },
-                    { label: 'Other', value: 'other' }
+                    { label: 'Intelligence & Homeland Security', value: 'intelligence-security' },
+                    { label: 'Law Studies', value: 'law' },
+                    { label: 'Liberal Arts, Gen Studies & Humanities', value: 'liberal-arts' },
+                    { label: 'Mathematics', value: 'mathematics' }
                   ]}
                   onChange={(e) => handleChange({ loanMajor: e.target.value })}
                   placeholder={isFetchingFields ? "Loading curriculum from API..." : "Select"}
