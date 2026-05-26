@@ -7,7 +7,7 @@ const SCHOOL_COSTS: Record<string, { inState: number; outOfState: number }> = {
   'MASSACHUSETTS INSTITUTE OF TECHNOLOGY': { inState: 82000, outOfState: 82000 },
   'UNIVERSITY OF CALIFORNIA, BERKELEY': { inState: 44000, outOfState: 74000 },
   'OHIO UNIVERSITY': { inState: 31096, outOfState: 43184 },
-  'OHIO UNIVERSITY - HERITAGE COLLEGE OF OSTEOPATHIC MEDICINE': { inState: 42000, outOfState: 58000 },
+  'OHIO UNIVERSITY - HERITAGE COLLEGE OF OSTEOPATHIC MEDICINE': { inState: 74736, outOfState: 98436 },
   'OHIO CHRISTIAN UNIVERSITY': { inState: 34000, outOfState: 34000 },
   'OHIO DOMINICAN UNIVERSITY': { inState: 45000, outOfState: 45000 },
   'OHIO NORTHERN UNIVERSITY': { inState: 52000, outOfState: 52000 },
@@ -149,8 +149,10 @@ export async function GET(request: Request) {
   let costOfAttendance = 35062; // default matching the exact prompt screenshot
   let isCostMapped = false;
   
-  // Find in SCHOOL_COSTS
-  const match = Object.keys(SCHOOL_COSTS).find(key => upperSchool.includes(key));
+  // Find in SCHOOL_COSTS (sorted by length descending to prevent prefix/substring collisions)
+  const match = Object.keys(SCHOOL_COSTS)
+    .sort((a, b) => b.length - a.length)
+    .find(key => upperSchool.includes(key));
   if (match) {
     const costs = SCHOOL_COSTS[match];
     costOfAttendance = isInState ? costs.inState : costs.outOfState;
