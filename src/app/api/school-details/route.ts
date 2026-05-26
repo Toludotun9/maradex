@@ -225,15 +225,15 @@ export async function GET(request: Request) {
   const academicPeriods = [
     { label: `Spring Only ${currentYear}: ${termsCurrent.springStart} - ${termsCurrent.springEnd}`, value: `spring_only_${currentYear}` },
     { label: `Summer Only ${currentYear}: ${termsCurrent.summerStart} - ${termsCurrent.summerEnd}`, value: `summer_only_${currentYear}` },
-    { label: `Summer/Fall/Spring ${currentYear}-${nextYear}: ${termsCurrent.summerStart} - ${termsNext.springEnd}`, value: `summer_fall_spring_${currentYear}_${nextYear}` },
-    { label: `Fall/Spring ${currentYear}-${nextYear}: ${termsCurrent.fallStart} - ${termsNext.springEnd}`, value: `fall_spring_${currentYear}_${nextYear}` },
-    { label: `Summer/Fall ${currentYear}: ${termsCurrent.summerStart} - ${termsCurrent.fallEnd}`, value: `summer_fall_${currentYear}` },
-    { label: `Fall/Spring ${prevYear}-${currentYear}: ${termsPrev.fallStart} - ${termsCurrent.springEnd}`, value: `fall_spring_${prevYear}_${currentYear}` },
+    { label: `Summer, Fall and Spring ${currentYear}-${nextYear}: ${termsCurrent.summerStart} - ${termsNext.springEnd}`, value: `summer_fall_spring_${currentYear}_${nextYear}` },
+    { label: `Fall and Spring ${currentYear}-${nextYear}: ${termsCurrent.fallStart} - ${termsNext.springEnd}`, value: `fall_spring_${currentYear}_${nextYear}` },
+    { label: `Summer and Fall ${currentYear}: ${termsCurrent.summerStart} - ${termsCurrent.fallEnd}`, value: `summer_fall_${currentYear}` },
+    { label: `Fall and Spring ${prevYear}-${currentYear}: ${termsPrev.fallStart} - ${termsCurrent.springEnd}`, value: `fall_spring_${prevYear}_${currentYear}` },
     { label: `Fall Only ${currentYear}: ${termsCurrent.fallStart} - ${termsCurrent.fallEnd}`, value: `fall_only_${currentYear}` },
     { label: `Fall ${prevYear}: ${termsPrev.fallStart} - ${termsPrev.fallEnd}`, value: `fall_${prevYear}` },
     { label: `Summer ${prevYear}: ${termsPrev.summerStart} - ${termsPrev.summerEnd}`, value: `summer_${prevYear}` },
-    { label: `Summer/Fall ${prevYear}: ${termsPrev.summerStart} - ${termsPrev.fallEnd}`, value: `summer_fall_${prevYear}` },
-    { label: `Summer/Fall/Spring ${prevYear}-${currentYear}: ${termsPrev.summerStart} - ${termsCurrent.springEnd}`, value: `summer_fall_spring_${prevYear}_${currentYear}` },
+    { label: `Summer and Fall ${prevYear}: ${termsPrev.summerStart} - ${termsPrev.fallEnd}`, value: `summer_fall_${prevYear}` },
+    { label: `Summer, Fall and Spring ${prevYear}-${currentYear}: ${termsPrev.summerStart} - ${termsCurrent.springEnd}`, value: `summer_fall_spring_${prevYear}_${currentYear}` },
     { label: 'Custom academic loan period', value: 'custom' }
   ];
 

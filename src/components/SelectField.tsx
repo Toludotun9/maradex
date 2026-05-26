@@ -72,12 +72,6 @@ const SelectField: React.FC<SelectFieldProps> = ({
     if (!val) return placeholder;
     const selectedOpt = options.find(opt => opt.value === val);
     if (!selectedOpt) return placeholder;
-    
-    // Custom logic: if the label contains a colon (e.g. "Fall Only 2026: 08/24/2026 - ..."),
-    // show only the name (the part before the colon) when the dropdown is closed.
-    if (selectedOpt.label.includes(':')) {
-      return selectedOpt.label.split(':')[0].trim();
-    }
     return selectedOpt.label;
   };
 
