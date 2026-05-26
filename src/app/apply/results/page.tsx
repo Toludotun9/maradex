@@ -564,15 +564,15 @@ export default function DocumentUploadPage() {
           </div>
           
           <h1 className="text-2xl md:text-3.5xl font-extrabold text-primary-blue mb-8 tracking-tight leading-[1.2] max-w-2xl">
-            Your Student Loan Application Is Approved. You'll be Eligible for <span className="text-secondary-blue">{getDisplayLoanAmount()}</span> loan.
+            Your Student Loan Application is Approved.<br />You'll be Eligible for <span className="text-secondary-blue">{getDisplayLoanAmount()}</span> loan.
           </h1>
 
           <div className="w-full bg-[#F3F9FE] border border-blue-100 rounded-2xl p-6 sm:p-8 text-left space-y-4 shadow-sm mb-8">
             <p className="text-[14.5px] text-gray-700 leading-relaxed font-semibold">
-              Congratulation! Your Studenent loan request has been approved. Your application has succesfully passed our initial review. A final assessment wil now be conducted based on your financial profile credit history, and our internal leanding policies..
+              Congratulations! Your student loan request has been approved. Your application has successfully passed our initial review. A final assessment will now be conducted based on your financial profile, credit history, and our internal lending policies.
             </p>
             <p className="text-[14.5px] text-gray-700 leading-relaxed font-medium">
-              Please note that additional document or paperwork may be required to complet the processing and disbursement of the loan. A loan officer will contact you shortly to provide futher details,next steps, and any outstanding requirements
+              Please note that additional documentation or paperwork may be required to complete the processing and disbursement of the loan. A loan officer will contact you shortly to provide further details, next steps, and any outstanding requirements.
             </p>
             <p className="text-[14.5px] text-gray-700 leading-relaxed font-medium">
               We appreciate the opportunity to support your educational pursuits.
