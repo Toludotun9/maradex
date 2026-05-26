@@ -1,29 +1,173 @@
 import { NextResponse } from 'next/server';
 
+const SCHOOL_COSTS: Record<string, { inState: number; outOfState: number }> = {
+  'HARVARD UNIVERSITY': { inState: 85200, outOfState: 85200 },
+  'STANFORD UNIVERSITY': { inState: 78500, outOfState: 78500 },
+  'COLUMBIA UNIVERSITY': { inState: 89000, outOfState: 89000 },
+  'MASSACHUSETTS INSTITUTE OF TECHNOLOGY': { inState: 82000, outOfState: 82000 },
+  'UNIVERSITY OF CALIFORNIA, BERKELEY': { inState: 44000, outOfState: 74000 },
+  'OHIO UNIVERSITY': { inState: 31096, outOfState: 43184 },
+  'OHIO UNIVERSITY - HERITAGE COLLEGE OF OSTEOPATHIC MEDICINE': { inState: 42000, outOfState: 58000 },
+  'OHIO CHRISTIAN UNIVERSITY': { inState: 34000, outOfState: 34000 },
+  'OHIO DOMINICAN UNIVERSITY': { inState: 45000, outOfState: 45000 },
+  'OHIO NORTHERN UNIVERSITY': { inState: 52000, outOfState: 52000 },
+  'THE OHIO STATE UNIVERSITY': { inState: 30120, outOfState: 54800 },
+  'UNIVERSITY OF CINCINNATI': { inState: 29500, outOfState: 44800 },
+  'UNIVERSITY OF TOLEDO': { inState: 28200, outOfState: 39500 },
+  'MIAMI UNIVERSITY': { inState: 32100, outOfState: 52400 },
+  'KENT STATE UNIVERSITY': { inState: 27800, outOfState: 38900 },
+  'BOWLING GREEN STATE UNIVERSITY': { inState: 27500, outOfState: 38600 },
+  'CASE WESTERN RESERVE UNIVERSITY': { inState: 81000, outOfState: 81000 },
+  'WRIGHT STATE UNIVERSITY': { inState: 26500, outOfState: 37200 },
+  'CLEVELAND STATE UNIVERSITY': { inState: 28000, outOfState: 39000 },
+  'UNIVERSITY OF DAYTON': { inState: 68000, outOfState: 68000 },
+  'XAVIER UNIVERSITY': { inState: 62000, outOfState: 62000 },
+  'UNIVERSITY OF ALABAMA': { inState: 31000, outOfState: 53000 },
+  'AUBURN UNIVERSITY': { inState: 32000, outOfState: 54000 },
+  'UNIVERSITY OF ALABAMA AT BIRMINGHAM': { inState: 27000, outOfState: 41000 },
+  'UNIVERSITY OF ALASKA ANCHORAGE': { inState: 24000, outOfState: 41000 },
+  'UNIVERSITY OF ALASKA FAIRBANKS': { inState: 25000, outOfState: 42000 },
+  'ARIZONA STATE UNIVERSITY': { inState: 30000, outOfState: 50000 },
+  'UNIVERSITY OF ARIZONA': { inState: 31000, outOfState: 54000 },
+  'NORTHERN ARIZONA UNIVERSITY': { inState: 29000, outOfState: 45000 },
+  'UNIVERSITY OF ARKANSAS': { inState: 28000, outOfState: 46000 },
+  'ARKANSAS STATE UNIVERSITY': { inState: 22000, outOfState: 31000 },
+  'UNIVERSITY OF CALIFORNIA, LOS ANGELES': { inState: 38500, outOfState: 69500 },
+  'UNIVERSITY OF SOUTHERN CALIFORNIA': { inState: 85000, outOfState: 85000 },
+  'CALIFORNIA INSTITUTE OF TECHNOLOGY': { inState: 83000, outOfState: 83000 },
+  'UNIVERSITY OF COLORADO BOULDER': { inState: 33000, outOfState: 58000 },
+  'COLORADO STATE UNIVERSITY': { inState: 29000, outOfState: 50000 },
+  'YALE UNIVERSITY': { inState: 87000, outOfState: 87000 },
+  'UNIVERSITY OF CONNECTICUT': { inState: 34000, outOfState: 59000 },
+  'WESLEYAN UNIVERSITY': { inState: 84000, outOfState: 84000 },
+  'UNIVERSITY OF DELAWARE': { inState: 30000, outOfState: 55000 },
+  'DELAWARE STATE UNIVERSITY': { inState: 23000, outOfState: 34000 },
+  'UNIVERSITY OF FLORIDA': { inState: 22000, outOfState: 44000 },
+  'FLORIDA STATE UNIVERSITY': { inState: 23000, outOfState: 40000 },
+  'UNIVERSITY OF MIAMI': { inState: 78000, outOfState: 78000 },
+  'UNIVERSITY OF SOUTH FLORIDA': { inState: 22000, outOfState: 39000 },
+  'UNIVERSITY OF GEORGIA': { inState: 28000, outOfState: 49000 },
+  'GEORGIA INSTITUTE OF TECHNOLOGY': { inState: 29000, outOfState: 51000 },
+  'EMORY UNIVERSITY': { inState: 81000, outOfState: 81000 },
+  'UNIVERSITY OF HAWAII AT MANOA': { inState: 31000, outOfState: 52000 },
+  'UNIVERSITY OF IDAHO': { inState: 24000, outOfState: 43000 },
+  'BOISE STATE UNIVERSITY': { inState: 25000, outOfState: 42000 },
+  'UNIVERSITY OF ILLINOIS URBANA-CHAMPAIGN': { inState: 34000, outOfState: 57000 },
+  'NORTHWESTERN UNIVERSITY': { inState: 88000, outOfState: 88000 },
+  'UNIVERSITY OF CHICAGO': { inState: 89000, outOfState: 89000 },
+  'INDIANA UNIVERSITY BLOOMINGTON': { inState: 28000, outOfState: 54000 },
+  'PURDUE UNIVERSITY': { inState: 23000, outOfState: 42000 },
+  'UNIVERSITY OF NOTRE DAME': { inState: 83000, outOfState: 83000 },
+  'UNIVERSITY OF IOWA': { inState: 26000, outOfState: 48000 },
+  'IOWA STATE UNIVERSITY': { inState: 23000, outOfState: 40000 },
+  'UNIVERSITY OF KANSAS': { inState: 27000, outOfState: 45000 },
+  'KANSAS STATE UNIVERSITY': { inState: 25000, outOfState: 41000 },
+  'UNIVERSITY OF KENTUCKY': { inState: 30000, outOfState: 51000 },
+  'UNIVERSITY OF LOUISVILLE': { inState: 28000, outOfState: 45000 },
+  'LOUISIANA STATE UNIVERSITY': { inState: 29000, outOfState: 46000 },
+  'TULANE UNIVERSITY': { inState: 83000, outOfState: 83000 },
+  'UNIVERSITY OF MAINE': { inState: 26000, outOfState: 46000 },
+  'BOWDOIN COLLEGE': { inState: 84000, outOfState: 84000 },
+  'UNIVERSITY OF MARYLAND, COLLEGE PARK': { inState: 29000, outOfState: 55000 },
+  'JOHNS HOPKINS UNIVERSITY': { inState: 84000, outOfState: 84000 },
+  'BOSTON UNIVERSITY': { inState: 82000, outOfState: 82000 },
+  'AMHERST COLLEGE': { inState: 85000, outOfState: 85000 },
+  'UNIVERSITY OF MICHIGAN': { inState: 32000, outOfState: 72000 },
+  'MICHIGAN STATE UNIVERSITY': { inState: 30000, outOfState: 54000 },
+  'WAYNE STATE UNIVERSITY': { inState: 27000, outOfState: 42000 },
+  'UNIVERSITY OF MINNESOTA': { inState: 30000, outOfState: 52000 },
+  'UNIVERSITY OF MISSISSIPPI': { inState: 27000, outOfState: 45000 },
+  'MISSISSIPPI STATE UNIVERSITY': { inState: 26000, outOfState: 43000 },
+  'UNIVERSITY OF MISSOURI': { inState: 29000, outOfState: 48000 },
+  'WASHINGTON UNIVERSITY IN ST. LOUIS': { inState: 83000, outOfState: 83000 },
+  'UNIVERSITY OF MONTANA': { inState: 24000, outOfState: 44000 },
+  'MONTANA STATE UNIVERSITY': { inState: 25000, outOfState: 45000 },
+  'UNIVERSITY OF NEBRASKA-LINCOLN': { inState: 26000, outOfState: 44000 },
+  'UNIVERSITY OF NEVADA, RENO': { inState: 25000, outOfState: 41000 },
+  'UNIVERSITY OF NEVADA, LAS VEGAS': { inState: 25000, outOfState: 42000 },
+  'DARTMOUTH COLLEGE': { inState: 86000, outOfState: 86000 },
+  'UNIVERSITY OF NEW HAMPSHIRE': { inState: 33000, outOfState: 54000 },
+  'PRINCETON UNIVERSITY': { inState: 81000, outOfState: 81000 },
+  'RUTGERS UNIVERSITY': { inState: 33000, outOfState: 52000 },
+  'UNIVERSITY OF NEW MEXICO': { inState: 24000, outOfState: 40000 },
+  'NEW YORK UNIVERSITY': { inState: 85000, outOfState: 85000 },
+  'CORNELL UNIVERSITY': { inState: 84000, outOfState: 84000 },
+  'SYRACUSE UNIVERSITY': { inState: 80000, outOfState: 80000 },
+  'UNIVERSITY OF NORTH CAROLINA AT CHAPEL HILL': { inState: 26000, outOfState: 56000 },
+  'DUKE UNIVERSITY': { inState: 84000, outOfState: 84000 },
+  'WAKE FOREST UNIVERSITY': { inState: 82000, outOfState: 82000 },
+  'UNIVERSITY OF NORTH DAKOTA': { inState: 25000, outOfState: 38000 },
+  'UNIVERSITY OF OKLAHOMA': { inState: 29000, outOfState: 46000 },
+  'OKLAHOMA STATE UNIVERSITY': { inState: 26000, outOfState: 42000 },
+  'UNIVERSITY OF OREGON': { inState: 30000, outOfState: 58000 },
+  'OREGON STATE UNIVERSITY': { inState: 29000, outOfState: 50000 },
+  'UNIVERSITY OF PENNSYLVANIA': { inState: 85000, outOfState: 85000 },
+  'PENNSYLVANIA STATE UNIVERSITY': { inState: 35000, outOfState: 56000 },
+  'TEMPLE UNIVERSITY': { inState: 33000, outOfState: 51000 },
+  'BROWN UNIVERSITY': { inState: 85000, outOfState: 85000 },
+  'UNIVERSITY OF RHODE ISLAND': { inState: 31000, outOfState: 51000 },
+  'UNIVERSITY OF SOUTH CAROLINA': { inState: 29000, outOfState: 51000 },
+  'CLEMSON UNIVERSITY': { inState: 31000, outOfState: 54000 },
+  'UNIVERSITY OF SOUTH DAKOTA': { inState: 23000, outOfState: 32000 },
+  'VANDERBILT UNIVERSITY': { inState: 84000, outOfState: 84000 },
+  'UNIVERSITY OF TENNESSEE': { inState: 29000, outOfState: 49000 },
+  'UNIVERSITY OF TEXAS AT AUSTIN': { inState: 30000, outOfState: 60000 },
+  'TEXAS A&M UNIVERSITY': { inState: 30000, outOfState: 58000 },
+  'RICE UNIVERSITY': { inState: 74000, outOfState: 74000 },
+  'UNIVERSITY OF UTAH': { inState: 25000, outOfState: 46000 },
+  'BRIGHAM YOUNG UNIVERSITY': { inState: 25000, outOfState: 25000 },
+  'UNIVERSITY OF VERMONT': { inState: 35000, outOfState: 61000 },
+  'UNIVERSITY OF VIRGINIA': { inState: 36000, outOfState: 72000 },
+  'VIRGINIA TECH': { inState: 30000, outOfState: 52000 },
+  'COLLEGE OF WILLIAM & MARY': { inState: 38000, outOfState: 64000 },
+  'UNIVERSITY OF WASHINGTON': { inState: 30000, outOfState: 60000 },
+  'WASHINGTON STATE UNIVERSITY': { inState: 28000, outOfState: 45000 },
+  'WEST VIRGINIA UNIVERSITY': { inState: 25000, outOfState: 43000 },
+  'UNIVERSITY OF WISCONSIN-MADISON': { inState: 28000, outOfState: 56000 },
+  'UNIVERSITY OF WYOMING': { inState: 21000, outOfState: 35000 },
+};
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const schoolNameParam = searchParams.get('school') || '';
   const programType = searchParams.get('program') || 'undergrad';
   const degreeType = searchParams.get('degree') || '';
+  const studentState = searchParams.get('studentState')?.trim().toUpperCase() || '';
+  const academicPeriod = searchParams.get('academicPeriod') || '';
   
   // Clean up school name for display
   const cleanSchoolName = schoolNameParam ? schoolNameParam.split(',')[0].toUpperCase() : 'YOUR SCHOOL';
   const upperSchool = cleanSchoolName.toUpperCase();
 
+  // Extract school state
+  const schoolParts = schoolNameParam.split(',');
+  const schoolState = schoolParts.length > 2 ? schoolParts[2].trim().toUpperCase() : '';
+
+  const isInState = schoolState && studentState && schoolState === studentState;
+
   // 1. Determine tailored Cost of Attendance
   let costOfAttendance = 35062; // default matching the exact prompt screenshot
-  if (upperSchool.includes('HARVARD')) costOfAttendance = 85200;
-  else if (upperSchool.includes('STANFORD')) costOfAttendance = 78500;
-  else if (upperSchool.includes('COLUMBIA')) costOfAttendance = 89000;
-  else if (upperSchool.includes('MIT') || upperSchool.includes('MASSACHUSETTS INSTITUTE')) costOfAttendance = 82000;
-  else if (upperSchool.includes('BERKELEY')) costOfAttendance = 44000;
-  else if (schoolNameParam && !upperSchool.includes('OHIO')) {
-    // Generate deterministic premium cost based on string hash
-    let hash = 0;
-    for (let i = 0; i < upperSchool.length; i++) {
-      hash = upperSchool.charCodeAt(i) + ((hash << 5) - hash);
+  let isCostMapped = false;
+  
+  // Find in SCHOOL_COSTS
+  const match = Object.keys(SCHOOL_COSTS).find(key => upperSchool.includes(key));
+  if (match) {
+    const costs = SCHOOL_COSTS[match];
+    costOfAttendance = isInState ? costs.inState : costs.outOfState;
+    isCostMapped = true;
+  }
+
+  if (!isCostMapped) {
+    if (schoolNameParam) {
+      // Generate deterministic premium cost based on string hash
+      let hash = 0;
+      for (let i = 0; i < upperSchool.length; i++) {
+        hash = upperSchool.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      const inStateVal = 22000 + (Math.abs(hash) % 13000); // $22k to $35k
+      const outOfStateVal = inStateVal + 15000 + (Math.abs(hash >> 3) % 20000); // $37k to $70k
+      costOfAttendance = isInState ? inStateVal : outOfStateVal;
     }
-    costOfAttendance = 25000 + (Math.abs(hash) % 45000);
   }
 
   // 2. Generate dynamic Academic Periods
@@ -158,6 +302,20 @@ export async function GET(request: Request) {
   // Simulate a highly responsive production network delay
   await new Promise(resolve => setTimeout(resolve, 400));
 
+  const isSingle = academicPeriod && (
+    academicPeriod.toLowerCase().includes('only') || 
+    academicPeriod.toLowerCase() === 'custom' || 
+    (academicPeriod.toLowerCase().includes('spring') && !academicPeriod.toLowerCase().includes('fall') && !academicPeriod.toLowerCase().includes('summer')) ||
+    (academicPeriod.toLowerCase().includes('fall') && !academicPeriod.toLowerCase().includes('spring') && !academicPeriod.toLowerCase().includes('summer')) ||
+    (academicPeriod.toLowerCase().includes('summer') && !academicPeriod.toLowerCase().includes('spring') && !academicPeriod.toLowerCase().includes('fall'))
+  );
+
+  const costPeriodDescriptionSuffix = isSingle 
+    ? `, but your cost may be different because you selected a period that is less than the school year. You can use this estimate to help you determine the cost of attendance for your loan period or enter your own amount.`
+    : `. You can use this estimate or enter your own amount.`;
+
+  const descriptionText = `The estimated ${isInState ? 'in-state' : 'out-of-state'} cost of attendance for ${programType === 'undergrad' ? 'undergrad' : 'grad'} students enrolled full time at ${cleanSchoolName} is $${costOfAttendance.toLocaleString()}, and includes tuition, fees, housing, meals, books, and supplies${costPeriodDescriptionSuffix}`;
+
   return NextResponse.json({
     schoolName: cleanSchoolName,
     costOfAttendance,
@@ -165,7 +323,7 @@ export async function GET(request: Request) {
     fieldsOfStudy,
     costDetails: {
       formattedEstimate: `$${costOfAttendance.toLocaleString()}`,
-      description: `The estimated out-of-state cost of attendance for ${programType === 'undergrad' ? 'undergrad' : 'grad'} students enrolled full time at ${cleanSchoolName} is $${costOfAttendance.toLocaleString()}, for the whole school year, and includes tuition, fees, housing, meals, books, and supplies, but your cost may be different because you selected a period that is less than the school year. You can use this estimate to help you determine the cost of attendance for your loan period or enter your own amount.`
+      description: descriptionText
     }
   });
 }

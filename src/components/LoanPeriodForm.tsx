@@ -115,7 +115,9 @@ const LoanPeriodForm = ({
       const params = new URLSearchParams({
         school: formData.loanSchoolName,
         program: formData.loanProgramType || 'undergrad',
-        degree: formData.loanDegreeType || ''
+        degree: formData.loanDegreeType || '',
+        studentState: formData.addressState || '',
+        academicPeriod: formData.loanAcademicPeriod || ''
       });
       fetch(`/api/school-details?${params.toString()}`)
         .then(res => res.json())
@@ -149,7 +151,7 @@ const LoanPeriodForm = ({
         updateFormData({ loanCostOfAttendance: '35062' });
       }
     }
-  }, [formData.loanSchoolName, formData.loanProgramType]);
+  }, [formData.loanSchoolName, formData.loanProgramType, formData.loanAcademicPeriod, formData.addressState]);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
