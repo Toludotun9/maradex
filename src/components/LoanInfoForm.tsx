@@ -629,6 +629,7 @@ const LoanInfoForm = ({
                   ]}
                   onChange={(e) => handleChange({ loanMajor: e.target.value })}
                   placeholder={isFetchingFields ? "Loading curriculum from API..." : "Select"}
+                  hidePlaceholderOption
                 />
                 <p className="mt-4 text-xs text-gray-500 leading-relaxed font-medium">
                   We’re interested in learning more about your college journey. If you don’t see your major, choose whichever is closest. Your major won’t impact your loan application.

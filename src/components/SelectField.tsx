@@ -12,6 +12,7 @@ interface SelectFieldProps {
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   placeholder?: string;
   error?: string;
+  hidePlaceholderOption?: boolean;
 }
 
 const SelectField: React.FC<SelectFieldProps> = ({ 
@@ -23,7 +24,8 @@ const SelectField: React.FC<SelectFieldProps> = ({
   value,
   onChange,
   placeholder = 'Select',
-  error
+  error,
+  hidePlaceholderOption
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -122,7 +124,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
           `}
           role="listbox"
         >
-          {placeholder && (
+          {placeholder && !hidePlaceholderOption && (
             <button
               type="button"
               onClick={() => handleSelect('')}
