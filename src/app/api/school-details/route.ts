@@ -37,6 +37,7 @@ const SCHOOL_COSTS: Record<string, { inState: number; outOfState: number }> = {
   'CALIFORNIA INSTITUTE OF TECHNOLOGY': { inState: 83000, outOfState: 83000 },
   'UNIVERSITY OF COLORADO BOULDER': { inState: 33000, outOfState: 58000 },
   'COLORADO STATE UNIVERSITY': { inState: 29000, outOfState: 50000 },
+  'UNIVERSITY OF DENVER': { inState: 86039, outOfState: 86039 },
   'YALE UNIVERSITY': { inState: 87000, outOfState: 87000 },
   'UNIVERSITY OF CONNECTICUT': { inState: 34000, outOfState: 59000 },
   'WESLEYAN UNIVERSITY': { inState: 84000, outOfState: 84000 },
@@ -103,6 +104,7 @@ const SCHOOL_COSTS: Record<string, { inState: number; outOfState: number }> = {
   'OREGON STATE UNIVERSITY': { inState: 29000, outOfState: 50000 },
   'UNIVERSITY OF PENNSYLVANIA': { inState: 85000, outOfState: 85000 },
   'PENNSYLVANIA STATE UNIVERSITY': { inState: 35000, outOfState: 56000 },
+  'CARNEGIE MELLON UNIVERSITY': { inState: 90070, outOfState: 90070 },
   'TEMPLE UNIVERSITY': { inState: 33000, outOfState: 51000 },
   'BROWN UNIVERSITY': { inState: 85000, outOfState: 85000 },
   'UNIVERSITY OF RHODE ISLAND': { inState: 31000, outOfState: 51000 },
@@ -126,6 +128,74 @@ const SCHOOL_COSTS: Record<string, { inState: number; outOfState: number }> = {
   'UNIVERSITY OF WISCONSIN-MADISON': { inState: 28000, outOfState: 56000 },
   'UNIVERSITY OF WYOMING': { inState: 21000, outOfState: 35000 },
 };
+
+const STATE_AVERAGES: Record<string, { inStatePublic: number; outOfStatePublic: number; privateCost: number }> = {
+  'AL': { inStatePublic: 28500, outOfStatePublic: 49000, privateCost: 62000 },
+  'AK': { inStatePublic: 25000, outOfStatePublic: 42000, privateCost: 55000 },
+  'AZ': { inStatePublic: 30000, outOfStatePublic: 52000, privateCost: 64000 },
+  'AR': { inStatePublic: 26000, outOfStatePublic: 43000, privateCost: 58000 },
+  'CA': { inStatePublic: 36000, outOfStatePublic: 66000, privateCost: 82000 },
+  'CO': { inStatePublic: 31000, outOfStatePublic: 54000, privateCost: 75000 },
+  'CT': { inStatePublic: 33000, outOfStatePublic: 58000, privateCost: 84000 },
+  'DE': { inStatePublic: 29000, outOfStatePublic: 52000, privateCost: 65000 },
+  'FL': { inStatePublic: 22000, outOfStatePublic: 41000, privateCost: 72000 },
+  'GA': { inStatePublic: 27500, outOfStatePublic: 48000, privateCost: 78000 },
+  'HI': { inStatePublic: 31000, outOfStatePublic: 52000, privateCost: 65000 },
+  'ID': { inStatePublic: 24500, outOfStatePublic: 42500, privateCost: 55000 },
+  'IL': { inStatePublic: 33000, outOfStatePublic: 55000, privateCost: 85000 },
+  'IN': { inStatePublic: 26000, outOfStatePublic: 49000, privateCost: 79000 },
+  'IA': { inStatePublic: 25000, outOfStatePublic: 46000, privateCost: 72000 },
+  'KS': { inStatePublic: 26000, outOfStatePublic: 43000, privateCost: 64000 },
+  'KY': { inStatePublic: 29000, outOfStatePublic: 48000, privateCost: 62000 },
+  'LA': { inStatePublic: 28500, outOfStatePublic: 45000, privateCost: 78000 },
+  'ME': { inStatePublic: 26000, outOfStatePublic: 46000, privateCost: 81000 },
+  'MD': { inStatePublic: 28500, outOfStatePublic: 52000, privateCost: 82000 },
+  'MA': { inStatePublic: 32000, outOfStatePublic: 56000, privateCost: 85000 },
+  'MI': { inStatePublic: 29500, outOfStatePublic: 55000, privateCost: 68000 },
+  'MN': { inStatePublic: 29000, outOfStatePublic: 49000, privateCost: 74000 },
+  'MS': { inStatePublic: 26500, outOfStatePublic: 44000, privateCost: 58000 },
+  'MO': { inStatePublic: 28000, outOfStatePublic: 47000, privateCost: 76000 },
+  'MT': { inStatePublic: 24500, outOfStatePublic: 44500, privateCost: 55000 },
+  'NE': { inStatePublic: 26000, outOfStatePublic: 44000, privateCost: 62000 },
+  'NV': { inStatePublic: 25000, outOfStatePublic: 41500, privateCost: 60000 },
+  'NH': { inStatePublic: 33000, outOfStatePublic: 54000, privateCost: 84000 },
+  'NJ': { inStatePublic: 33000, outOfStatePublic: 52000, privateCost: 79000 },
+  'NM': { inStatePublic: 24000, outOfStatePublic: 40000, privateCost: 55000 },
+  'NY': { inStatePublic: 29000, outOfStatePublic: 49000, privateCost: 82000 },
+  'NC': { inStatePublic: 25500, outOfStatePublic: 53000, privateCost: 76000 },
+  'ND': { inStatePublic: 25000, outOfStatePublic: 38000, privateCost: 55000 },
+  'OH': { inStatePublic: 29500, outOfStatePublic: 48000, privateCost: 65000 },
+  'OK': { inStatePublic: 27500, outOfStatePublic: 44000, privateCost: 58000 },
+  'OR': { inStatePublic: 29500, outOfStatePublic: 54000, privateCost: 74000 },
+  'PA': { inStatePublic: 34000, outOfStatePublic: 53000, privateCost: 79000 },
+  'RI': { inStatePublic: 31000, outOfStatePublic: 51000, privateCost: 83000 },
+  'SC': { inStatePublic: 30000, outOfStatePublic: 52500, privateCost: 65000 },
+  'SD': { inStatePublic: 23000, outOfStatePublic: 32000, privateCost: 55000 },
+  'TN': { inStatePublic: 28500, outOfStatePublic: 48000, privateCost: 78000 },
+  'TX': { inStatePublic: 29500, outOfStatePublic: 57000, privateCost: 72000 },
+  'UT': { inStatePublic: 25000, outOfStatePublic: 45000, privateCost: 60000 },
+  'VT': { inStatePublic: 35000, outOfStatePublic: 61000, privateCost: 81000 },
+  'VA': { inStatePublic: 32000, outOfStatePublic: 59000, privateCost: 76000 },
+  'WA': { inStatePublic: 29000, outOfStatePublic: 53500, privateCost: 78000 },
+  'WV': { inStatePublic: 25000, outOfStatePublic: 43000, privateCost: 58000 },
+  'WI': { inStatePublic: 28000, outOfStatePublic: 56000, privateCost: 71000 },
+  'WY': { inStatePublic: 21000, outOfStatePublic: 35000, privateCost: 52000 }
+};
+
+function isPublicSchool(schoolName: string): boolean {
+  const upper = schoolName.toUpperCase();
+  const publicKeywords = [
+    'STATE', 'COMMUNITY', 'SYSTEM', 'COUNTY', 'CITY', 'TOWNSHIP',
+    'PUBLIC', 'MUNICIPAL', 'DISTRICT', 'VOCATIONAL', 'TECHNICAL'
+  ];
+  if (publicKeywords.some(keyword => upper.includes(keyword))) {
+    return true;
+  }
+  if (upper.includes('UNIVERSITY OF ') || upper.startsWith('COLLEGE OF ')) {
+    return true;
+  }
+  return false;
+}
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -161,14 +231,24 @@ export async function GET(request: Request) {
 
   if (!isCostMapped) {
     if (schoolNameParam) {
-      // Generate deterministic premium cost based on string hash
+      // Find state averages based on the school's state
+      const stateKey = schoolState || 'US';
+      const averages = STATE_AVERAGES[stateKey] || { inStatePublic: 28000, outOfStatePublic: 48000, privateCost: 65000 };
+      
+      const isPublic = isPublicSchool(upperSchool);
+      const baseCost = isPublic 
+        ? (isInState ? averages.inStatePublic : averages.outOfStatePublic)
+        : averages.privateCost;
+
+      // Generate deterministic premium cost based on string hash for unique variations (-$3,000 to +$3,000)
       let hash = 0;
       for (let i = 0; i < upperSchool.length; i++) {
         hash = upperSchool.charCodeAt(i) + ((hash << 5) - hash);
       }
-      const inStateVal = 22000 + (Math.abs(hash) % 13000); // $22k to $35k
-      const outOfStateVal = inStateVal + 15000 + (Math.abs(hash >> 3) % 20000); // $37k to $70k
-      costOfAttendance = isInState ? inStateVal : outOfStateVal;
+      const offset = (Math.abs(hash) % 6000) - 3000;
+      costOfAttendance = baseCost + offset;
+      costOfAttendance = Math.max(12000, costOfAttendance);
+      isCostMapped = true;
     }
   }
 
