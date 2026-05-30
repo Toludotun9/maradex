@@ -7,7 +7,7 @@ import { useAppContext } from '@/context/AppContext';
 
 export default function Home() {
   const router = useRouter();
-  const { applicantType, setApplicantType, setCurrentStep, setIsPageTransitioning, setTermsOpen } = useAppContext();
+  const { applicantType, setApplicantType, setCurrentStep, setIsPageTransitioning, setTermsOpen, setPrivacyOpen } = useAppContext();
 
   useEffect(() => {
     setCurrentStep(0);
@@ -135,7 +135,12 @@ export default function Home() {
             Terms of use
           </button>
           <span className="text-gray-300 font-light">|</span>
-          <a href="#" className="underline hover:text-[#003360] transition-colors">Privacy policy</a>
+          <button 
+            onClick={() => setPrivacyOpen(true)}
+            className="underline hover:text-[#003360] transition-colors cursor-pointer bg-transparent border-none p-0 font-bold text-xs text-[#004b87] outline-none"
+          >
+            Privacy policy
+          </button>
           <span className="text-gray-300 font-light">|</span>
           <a href="#" className="underline hover:text-[#003360] transition-colors">Website feedback</a>
         </div>

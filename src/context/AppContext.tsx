@@ -76,6 +76,8 @@ interface AppContextType {
   setIsPageTransitioning: (val: boolean) => void;
   isTermsOpen: boolean;
   setTermsOpen: (val: boolean) => void;
+  isPrivacyOpen: boolean;
+  setPrivacyOpen: (val: boolean) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -88,6 +90,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [isLoading, setIsLoading] = useState(true);
   const [isPageTransitioning, setIsPageTransitioning] = useState(false);
   const [isTermsOpen, setTermsOpen] = useState(false);
+  const [isPrivacyOpen, setPrivacyOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -492,7 +495,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       isPageTransitioning,
       setIsPageTransitioning,
       isTermsOpen,
-      setTermsOpen
+      setTermsOpen,
+      isPrivacyOpen,
+      setPrivacyOpen
     }}>
       {children}
     </AppContext.Provider>
