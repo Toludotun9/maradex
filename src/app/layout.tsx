@@ -5,8 +5,6 @@ import Footer from "@/components/Footer";
 import { AppProvider } from "@/context/AppContext";
 import BackgroundCurves from "@/components/BackgroundCurves";
 import LoadingOverlay from "@/components/LoadingOverlay";
-import TermsOfUseModal from "@/components/TermsOfUseModal";
-import PrivacyPolicyModal from "@/components/PrivacyPolicyModal";
 
 export const metadata: Metadata = {
   title: "Sallie Mae | Undergraduate Student Loan Application",
@@ -29,8 +27,6 @@ export default function RootLayout({
           </main>
           <Footer />
           <LoadingOverlay />
-          <TermsOfUseModal />
-          <PrivacyPolicyModal />
         </AppProvider>
       </body>
     </html>
