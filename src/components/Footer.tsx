@@ -1,28 +1,35 @@
 'use client';
 
 import React from 'react';
-import { useAppContext } from '@/context/AppContext';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
+import MainWebsiteFooter from './MainWebsiteFooter';
 
 const Footer = () => {
-  const { setTermsOpen, setPrivacyOpen } = useAppContext();
+  const pathname = usePathname();
+  const isInfoPage = pathname === '/terms-of-use' || pathname === '/privacy-policy';
+
+  if (isInfoPage) {
+    return <MainWebsiteFooter />;
+  }
 
   return (
     <footer className="w-full bg-[#F3F4F6] py-12 mt-auto border-t border-gray-200">
       <div className="max-w-[1200px] mx-auto px-8">
-        <div className="flex items-center gap-4 mb-8 text-sm text-secondary-blue font-semibold">
-          <button 
-            onClick={() => setTermsOpen(true)}
-            className="hover:underline bg-transparent border-none p-0 cursor-pointer font-semibold text-secondary-blue text-sm outline-none"
+        <div className="flex items-center gap-4 mb-8 text-sm text-[#004b87] font-semibold">
+          <Link 
+            href="/terms-of-use"
+            className="hover:underline font-semibold text-[#004b87] text-sm"
           >
             Terms of use
-          </button>
+          </Link>
           <span className="text-gray-400 font-normal">|</span>
-          <button 
-            onClick={() => setPrivacyOpen(true)}
-            className="hover:underline bg-transparent border-none p-0 cursor-pointer font-semibold text-secondary-blue text-sm outline-none"
+          <Link 
+            href="/privacy-policy"
+            className="hover:underline font-semibold text-[#004b87] text-sm"
           >
             Privacy policy
-          </button>
+          </Link>
           <span className="text-gray-400 font-normal">|</span>
           <a href="#" className="hover:underline">Website feedback</a>
         </div>

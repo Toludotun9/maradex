@@ -3,11 +3,19 @@
 import React from 'react';
 import ProgressStepper from './ProgressStepper';
 import { useAppContext } from '@/context/AppContext';
+import { usePathname } from 'next/navigation';
+import MainWebsiteHeader from './MainWebsiteHeader';
 
 const Header = () => {
+  const pathname = usePathname();
+  const isInfoPage = pathname === '/terms-of-use' || pathname === '/privacy-policy';
   const { currentStep } = useAppContext();
 
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+  if (isInfoPage) {
+    return <MainWebsiteHeader />;
+  }
 
   const steps = [
     'Personal info',

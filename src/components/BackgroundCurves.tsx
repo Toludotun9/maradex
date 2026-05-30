@@ -1,8 +1,14 @@
 'use client';
 
 import React from 'react';
+import { usePathname } from 'next/navigation';
 
 const BackgroundCurves = () => {
+  const pathname = usePathname();
+  const isInfoPage = pathname === '/terms-of-use' || pathname === '/privacy-policy';
+
+  if (isInfoPage) return null;
+
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none select-none">
       {/* Large Top Left Curve */}
