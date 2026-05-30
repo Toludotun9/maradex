@@ -1,13 +1,21 @@
 'use client';
 
 import React from 'react';
+import { useAppContext } from '@/context/AppContext';
 
 const Footer = () => {
+  const { setTermsOpen } = useAppContext();
+
   return (
     <footer className="w-full bg-[#F3F4F6] py-12 mt-auto border-t border-gray-200">
       <div className="max-w-[1200px] mx-auto px-8">
         <div className="flex items-center gap-4 mb-8 text-sm text-secondary-blue font-semibold">
-          <a href="#" className="hover:underline">Terms of use</a>
+          <button 
+            onClick={() => setTermsOpen(true)}
+            className="hover:underline bg-transparent border-none p-0 cursor-pointer font-semibold text-secondary-blue text-sm outline-none"
+          >
+            Terms of use
+          </button>
           <span className="text-gray-400 font-normal">|</span>
           <a href="#" className="hover:underline">Privacy policy</a>
           <span className="text-gray-400 font-normal">|</span>

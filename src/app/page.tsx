@@ -7,7 +7,7 @@ import { useAppContext } from '@/context/AppContext';
 
 export default function Home() {
   const router = useRouter();
-  const { applicantType, setApplicantType, setCurrentStep, setIsPageTransitioning } = useAppContext();
+  const { applicantType, setApplicantType, setCurrentStep, setIsPageTransitioning, setTermsOpen } = useAppContext();
 
   useEffect(() => {
     setCurrentStep(0);
@@ -31,6 +31,7 @@ export default function Home() {
             stroke="url(#wave-grad-1)" 
             strokeWidth="50" 
             strokeLinecap="round" 
+            strokeLinejoin="round"
           />
           {/* Wave Path 2 */}
           <path 
@@ -38,6 +39,7 @@ export default function Home() {
             stroke="url(#wave-grad-2)" 
             strokeWidth="35" 
             strokeLinecap="round" 
+            strokeLinejoin="round"
           />
           <defs>
             <linearGradient id="wave-grad-1" x1="0" y1="0" x2="1000" y2="1000" gradientUnits="userSpaceOnUse">
@@ -126,7 +128,12 @@ export default function Home() {
 
         {/* Brand Footer Links matching Sallie Mae exactly */}
         <div className="w-full flex items-center justify-start gap-4 mt-16 text-xs font-bold text-[#004b87] select-none z-10 border-t border-gray-200/20 pt-6">
-          <a href="#" className="underline hover:text-[#003360] transition-colors">Terms of use</a>
+          <button 
+            onClick={() => setTermsOpen(true)}
+            className="underline hover:text-[#003360] transition-colors cursor-pointer bg-transparent border-none p-0 font-bold text-xs text-[#004b87] outline-none"
+          >
+            Terms of use
+          </button>
           <span className="text-gray-300 font-light">|</span>
           <a href="#" className="underline hover:text-[#003360] transition-colors">Privacy policy</a>
           <span className="text-gray-300 font-light">|</span>

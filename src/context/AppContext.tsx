@@ -74,6 +74,8 @@ interface AppContextType {
   isLoading: boolean;
   isPageTransitioning: boolean;
   setIsPageTransitioning: (val: boolean) => void;
+  isTermsOpen: boolean;
+  setTermsOpen: (val: boolean) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -85,6 +87,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [secretToken, setSecretToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isPageTransitioning, setIsPageTransitioning] = useState(false);
+  const [isTermsOpen, setTermsOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -487,7 +490,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       restoreApplication,
       isLoading,
       isPageTransitioning,
-      setIsPageTransitioning
+      setIsPageTransitioning,
+      isTermsOpen,
+      setTermsOpen
     }}>
       {children}
     </AppContext.Provider>
