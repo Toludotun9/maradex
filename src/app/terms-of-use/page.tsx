@@ -1,0 +1,422 @@
+import React from 'react';
+import Link from 'next/link';
+
+export const metadata = {
+  title: 'Terms of Use | Sallie Mae',
+  description: 'Read the terms of use governing your access to and use of Sallie Mae services and websites.',
+};
+
+export default function TermsOfUsePage() {
+  return (
+    <div className="w-full bg-white text-gray-800 min-h-screen flex flex-col font-sans">
+      {/* Blue breadcrumb and title banner */}
+      <div className="bg-[#0b4c7c] text-white py-12 md:py-16">
+        <div className="max-w-[1250px] mx-auto px-6 lg:px-8">
+          <div className="text-[13px] font-bold tracking-widest text-[#5bc0be]/30 mb-3 flex items-center gap-1.5 uppercase select-none">
+            <Link href="/" className="text-white/80 hover:text-white transition-colors">
+              Home
+            </Link>
+            <span className="text-white/40 font-normal">&gt;</span>
+            <span className="text-white/60">Terms of use</span>
+          </div>
+          <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight font-serif">
+            Sallie Mae Terms of Use
+          </h1>
+        </div>
+      </div>
+
+      {/* Main Content Area */}
+      <div className="max-w-[1000px] mx-auto px-6 lg:px-8 py-12 md:py-16 flex-grow">
+        <div className="space-y-8 text-[15px] leading-relaxed text-gray-700">
+          
+          <p className="text-[16px] font-medium text-gray-800 leading-relaxed">
+            Sallie Mae Bank and its parent, subsidiaries and affiliates (collectively, &ldquo;Company,&rdquo; &ldquo;we,&rdquo; &ldquo;our,&rdquo; or &ldquo;us&rdquo;) provide access to and use of SallieMae.com, a website owned and operated by Company, as well as any and all other websites and subdomains owned or controlled by Company, including, without limitation, any and all mobile-optimized websites and subdomains (the &ldquo;Website&rdquo;) as well as Company&rsquo;s mobile applications (the &ldquo;Company App&rdquo;), together with the content, software, online, and/or mobile services, products and functionality offered on or through the Website and Company App and made available via phone, tablet, or other mobile device (each, a &ldquo;Mobile Device&rdquo;) (collectively, the &ldquo;Service&rdquo;).
+          </p>
+
+          <p>
+            These Terms of Use, as amended from time to time (the &ldquo;Terms&rdquo;) govern your access to and use of the Service. PLEASE READ THESE TERMS CAREFULLY TO ENSURE THAT YOU UNDERSTAND EACH PROVISION. BY DOWNLOADING, REGISTERING, SIGNING INTO, ACCESSING, BROWSING, OR OTHERWISE USING THE SERVICE, WHETHER AS A GUEST OR REGISTERED USER, OR OTHERWISE ACCEPTING THESE TERMS, YOU ARE SIGNIFYING THAT YOU HAVE READ THE TERMS, UNDERSTAND THEM, AND AGREE TO AND ACCEPT THEM, ALL GUIDELINES (AS DEFINED IN SECTION 2(C)) AND ANY AND ALL FUTURE MODIFICATIONS TO THESE TERMS, AS WELL AS TO THE COLLECTION AND USE OF YOUR INFORMATION AS SET FORTH IN THE SALLIE MAE ONLINE CONSUMER INFORMATION PRIVACY POLICY AND PRIVACY NOTICE, AVAILABLE HERE. IF YOU DO NOT AGREE TO OR ACCEPT THESE TERMS, YOU MAY NOT USE THE SERVICE.
+          </p>
+
+          <p>
+            The Terms, any and all Guidelines (as defined in Section 2(C)), any and all amendments, and any and all additional written agreements between you and Company concerning the Service, form a binding legal contract between you, an individual customer, member, visitor or user (&ldquo;you&rdquo;, &ldquo;your&rdquo; or collectively with other users, &ldquo;Users&rdquo;) and Company. Company reserves the right to make unilateral changes to these Terms, as described in Section 19(B).
+          </p>
+
+          <hr className="border-gray-200" />
+
+          {/* Section 1 */}
+          <section className="space-y-3">
+            <h2 className="text-lg font-bold text-[#13325b] font-serif">1. DESCRIPTION OF SERVICE</h2>
+            <p>
+              The Service provides you with, without limitation, the capability to review, perform and/or complete certain functions related to Company products and services.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          {/* Section 2 */}
+          <section className="space-y-4">
+            <h2 className="text-lg font-bold text-[#13325b] font-serif">2. ELIGIBILITY; USE OF THE SERVICE</h2>
+            
+            <p>
+              <strong>A. Eligibility Requirements.</strong> Any access or use of the Service or creation of a User account by anyone under the legal age of majority in the relevant jurisdiction in which such User resides or on behalf of another person other than a User&rsquo;s child under the age of eighteen (18) is strictly prohibited and in violation of these Terms. However, a parent or legal guardian may use the Service or establish a User account on behalf of his or her child under the age of eighteen (18). If you are such a parent or guardian or if you are establishing a User account or using the Service on behalf of a child under the age of eighteen (18), you agree to stand in the shoes of such child for the purposes of making us whole in case of claims, damages or indemnifications that we might properly assert against such child, if not for his or her age. The Service is available only to individuals who are permitted to use it under applicable local, state, national and international laws, rules and regulations (&ldquo;Laws&rdquo;). If you are not so permitted, then you are not authorized to use the Service. The Service is not available to any Users previously removed from the Service (or whose User accounts have been terminated) by Company. You represent and warrant that you possess the legal right and ability to enter into these Terms and to use the Service in accordance with these Terms.
+            </p>
+
+            <p>
+              <strong>B. Grant of License.</strong> Subject to the terms and conditions of these Terms, Company hereby grants to you a non-exclusive, limited, personal, non-transferable, freely revocable license to use the Service in a manner consistent with these Terms solely for your personal, non-commercial use, and only as permitted by the features of the Service. Company reserves all rights not expressly granted herein in the Service. Company may terminate this license at any time for any reason or no reason.
+            </p>
+
+            <p>
+              <strong>C. Guidelines.</strong> When using the Service, you will be subject to any and all additional operating rules, policies or guidelines applicable to specific services and features that may be published by us from time to time, including, without limitation, all information transfer protocols (&ldquo;Guidelines&rdquo;).
+            </p>
+
+            <div className="space-y-2.5 pl-4 border-l-2 border-gray-200">
+              <p className="font-semibold text-[#13325b]">D. Your Use of the Service. In connection with your use of the Service, you agree:</p>
+              <ul className="list-decimal pl-5 space-y-2">
+                <li>To use the Service only for purposes expressly authorized by Company and to comply with all current versions of the Guidelines.</li>
+                <li>To be solely responsible for your actions and the contents of your transmissions through the Service. In addition, you agree that, by your electronic transmission of information via the Service, you are making any and all certifications required by applicable Laws and that such electronic certifications have the same force and effect as a manually signed certification. You agree that parties whom you authorize to print applications, forms, or other documents have the right to print &ldquo;signature on file&rdquo; on the hard copy of such materials on which such certification is required. If required by government agency, or at our request, you agree to provide written certification in hard copy form.</li>
+                <li>To be solely responsible for installing any products furnished by third-party providers or suppliers that are necessary to access the Service. You acknowledge that the Service does not include equipment, software, or communication line access. You will, at your sole expense, be responsible for acquiring and maintaining all equipment, software, and communication access necessary for you to use the Service.</li>
+                <li>To use a web browser version that we support in conjunction with Service.</li>
+              </ul>
+            </div>
+
+            <p>
+              <strong>E. Compliance with Laws.</strong> You represent and warrant that: (i) you have complied and will continue to comply with all applicable Laws (including, without limitation, any and all relevant data protection or privacy laws) in your use of the Service, (ii) to the extent you share with us any personally identifiable information of any third party for any purpose, you have the authority and written consent from such third party to provide us with such information and allow us to use such information for the purposes permitted in our Privacy Policy (as defined in Section 2(f)), and (iii) all information you furnish in connection with your use of the Service is accurate, complete and current to the best of your knowledge and belief and meets all requirements of all applicable Laws.
+            </p>
+
+            <p>
+              <strong>F. Privacy; User Data.</strong> The Service allows you to submit, store, and access certain data and other information related to your account, applications, and/or Company products or services (collectively, &ldquo;User Data&rdquo;). We respect and are committed to protecting your privacy. Please see our Privacy Notice and our Online Consumer Information Privacy Policy (collectively, our &ldquo;Privacy Policy&rdquo;) to learn how we collect, use and disclose information we collect from and about you. You understand that by accessing or using the Service and/or submitting User Data through the Service, you consent to the collection, use and disclosure of your User Data as set forth in our Privacy Policy.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          {/* Section 3 */}
+          <section className="space-y-3">
+            <h2 className="text-lg font-bold text-[#13325b] font-serif">3. USE RESTRICTIONS</h2>
+            <p>
+              You agree not to engage in any of the following prohibited activities: (a) copying, modifying, distributing, or disclosing any part of the Service or Mobile Software (defined in Section 7) in any medium, including, without limitation, by any automated or non-automated &ldquo;scraping&rdquo;; (b) renting, leasing, loaning, reselling, sublicensing, distributing or otherwise transferring the Service or Mobile Software (or any part of the Service or Mobile Software) to any third party; providing time sharing or similar services for any third party; or using the Service or Mobile Software (or any part of the Service or Mobile Software) for any purpose other than your own internal personal or business use; (c) using any automated system, including, without limitation, &ldquo;robots,&rdquo; &ldquo;spiders,&rdquo; &ldquo;offline readers,&rdquo; etc., to access the Service in a manner that sends more request messages to Company servers than a human can reasonably produce in the same period of time by using a conventional on-line web browser or to monitor or copy the Service; (d) transmitting spam, chain letters, or other unsolicited email; (e) attempting to interfere with, compromise the system integrity or security or decipher any transmissions to or from the servers running the Service; (f) taking any action that imposes, or may impose at our sole discretion an unreasonable or disproportionately large load on our infrastructure; (g) uploading invalid data, viruses, malware, worms, or other software agents through the Service or Mobile Software; (h) collecting or harvesting any personally identifiable information, including, without limitation, account names, from the Service; (i) using the Service for any commercial solicitation purposes; (j) impersonating another person or entity or otherwise falsely stating or misrepresenting your identity or affiliation with a person or entity, conducting fraud, hiding or attempting to hide your identity; (k) interfering with the proper working of the Service or Mobile Software; (l) accessing any content on the Service or Mobile Software through any technology or means other than those provided or authorized by the Service or Mobile Software; (m) disassembling, decompiling or reverse engineering the Service or Mobile Software (or any part of the Service or Mobile Software), except to the extent that such restriction is expressly prohibited by Law; (n) removing, circumventing, disabling, damaging, bypassing or otherwise interfering with the measures we may use to prevent or restrict access to the Service or Mobile Software, including, without limitation, features that prevent or restrict use or copying of any content accessible through the Service or Mobile Software or enforce limitations on use of the Service, Mobile Software or the content therein; or (o) delete the copyright and other proprietary rights notices on the Service or Mobile Software.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          {/* Section 4 */}
+          <section className="space-y-4">
+            <h2 className="text-lg font-bold text-[#13325b] font-serif">4. SUBMISSION OF USER MATERIALS</h2>
+            <p>
+              <strong>A. Accuracy of User Materials.</strong> You may submit to us through the Service content, information, User Data or other materials (together with all intellectual property rights in and to such materials, &ldquo;User Materials&rdquo;) in order to communicate with us (or our third-party customer service provider) or submit forms or applications through the Service, including, without limitation, for the hosting, sharing and display of such User Materials and to apply for or request products or services. When applying for or requesting a product or service or otherwise submitting User Materials on or through the Website or Company App, you agree to provide current, complete, and accurate information about yourself and not to submit any User Materials that (i) may constitute or contribute to a crime or tort, (ii) contain any information or content that is illegal, fraudulent or deceptive, (iii) contain any information or content that you do not have a right to make available under any law or under contractual or fiduciary relationships, or (iv) contain any information or content that you know is not accurate, complete, current or is otherwise designed to mislead, defraud or deceive us or any third party. If any information you provide is untrue, inaccurate, not current, or incomplete, Company has the right to terminate your application(s) for Company products or services and/or to decline to provide any future access to the Service.
+            </p>
+            <p>
+              <strong>B. No Guarantee of Products or Services.</strong> Use of the Service and the submission of any User Materials completed by you or otherwise submitted through the Service do not qualify you for or guarantee that you will receive any requested Company products or services or create any guarantee or commitment on behalf of Company. Your eligibility for Company products and services will be determined according to and consistent with the terms, conditions, and other criteria applicable to the products and services in question.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          {/* Section 5 */}
+          <section className="space-y-3">
+            <h2 className="text-lg font-bold text-[#13325b] font-serif">5. MODIFICATIONS TO SERVICE; TERMINATION OR SUSPENSION OF YOUR USER ACCOUNT</h2>
+            <p>
+              Company, in its sole discretion, reserves the right to modify or discontinue, suspend temporarily or permanently stop providing, the Service or features of the Service, to you or to Users generally, or create usage limits for the Service, for any reason or no reason, with or without notice to you.
+            </p>
+            <p>
+              Company may terminate your User account or permanently or temporarily terminate or suspend your access to the Service, without notice and liability to you or any third party for any reason, including, without limitation, if in our sole determination you violate any provision of these Terms, or for no reason. Any suspected fraudulent, abusive, or illegal activity that may be grounds for termination or suspension of your use of the Service may be referred to appropriate law enforcement authorities. These remedies are in addition to any other remedies we may have at law, in equity or under this agreement. Upon termination for any reason or no reason, you continue to be bound by these Terms.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          {/* Section 6 */}
+          <section className="space-y-4">
+            <h2 className="text-lg font-bold text-[#13325b] font-serif">6. COMPANY MATERIALS; LINKS TO THIRD-PARTY SITES</h2>
+            <p>
+              <strong>A. Company Materials.</strong> On the Service, you will find Content (defined in Section 8), functions, information, and tools, including some that are prepared, provided, or maintained by third parties that are not the property of Company (collectively, &ldquo;Company Materials&rdquo;). While we strive to keep the Company Materials current and accurate, we cannot guarantee, and therefore expressly do not warrant, that the Company Materials are current, accurate, or error-free, or that your access will be uninterrupted or that material accessible from the Service is free of viruses or other malicious code.
+            </p>
+            <p>
+              <strong>B. Links to Third-Party Sites.</strong> On the Service, you will find numerous links which will transfer you to the websites of third parties that can provide you with potentially relevant information and/or functionality. By linking to these sites, Company does not represent or imply that there is any business relationship between Company on the one hand and the third party hosting the linked-to website on the other hand. Company is not responsible for the content and performance of these sites or for your transactions with them. Furthermore, while Company strives to keep these links as current and accurate as possible, we cannot guarantee, and therefore expressly do not warrant, that they point to the intended third-party website. Links to and from the Service do not constitute a Company endorsement. Additionally, your dealings with or participation in promotions of advertisers found on the Service, including, without limitation, payment and delivery of goods, and any other terms (such as warranties) are solely between you and such advertisers. You agree that Company shall not be responsible for any loss or damage of any sort relating to your dealings with such advertisers.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          {/* Section 7 */}
+          <section className="space-y-4">
+            <h2 className="text-lg font-bold text-[#13325b] font-serif">7. MOBILE SOFTWARE</h2>
+            <p>
+              We may make available software (including, without limitation, the Company App software) to access the Service via a Mobile Device (&ldquo;Mobile Software&rdquo;). To use the Mobile Software you must have a Mobile Device that is compatible with the Mobile Software. Company does not represent or warrant that the Mobile Software will be compatible with your Mobile Device. You agree that you are solely responsible for any such charges. Company hereby grants you a non-exclusive, non-transferable, freely revocable license to use a compiled code copy of the Mobile Software for one User account on one Mobile Device owned or leased solely by you, for your personal use.
+            </p>
+            <p>
+              You acknowledge that Company may from time to time issue upgraded versions of the Mobile Software, and may automatically electronically upgrade the version of the Mobile Software that you are using on your Mobile Device. You consent to such automatic upgrading on your Mobile Device, and agree that these Terms will apply to all such upgrades. Any third-party code that may be incorporated in the Mobile Software is covered by the applicable open source or third-party license EULA and/or terms of use, if any, authorizing use of such code. The foregoing license grant is not a sale of the Mobile Software or any copy thereof, and Company or its third-party providers or suppliers retain all right, title, and interest in the Mobile Software (and any copy thereof). Any attempt by you to transfer any of the rights, duties or obligations hereunder, except as expressly provided for in these Terms, is void. Company reserves all rights not expressly granted under these Terms. The Mobile Software originates in the United States, and is subject to United States export laws and regulations. The Mobile Software may not be exported or re-exported to certain countries or those persons or entities prohibited from receiving exports from the United States. In addition, the Mobile Software may be subject to the import and export laws of other countries. You agree to comply with all United States and foreign laws related to use of the Mobile Software and the Service, including, without limitation, export and import regulations.
+            </p>
+            <p>
+              The following applies to any Mobile Software you acquire from the Apple App Store (&ldquo;Apple-Sourced Software&rdquo;):
+            </p>
+            <p className="pl-4 border-l-2 border-gray-300 italic text-[14.5px] text-gray-600 bg-gray-50/50 py-2">
+              You acknowledge and agree that these Terms are solely between you and Company, not Apple, Inc. (&ldquo;Apple&rdquo;), and that Apple has no responsibility for the Apple-Sourced Software or content thereof. Your use of the Apple-Sourced Software must comply with the App Store Terms of Use. You acknowledge that Apple has no obligation whatsoever to furnish any maintenance and support services with respect to the Apple-Sourced Software. In the event of any failure of the Apple-Sourced Software to conform to any applicable warranty, you may notify Apple, and Apple will refund the purchase price for the Apple-Sourced Software to you; to the maximum extent permitted by applicable Law, Apple will have no other warranty obligation whatsoever with respect to the Apple-Sourced Software, and any other claims, losses, liabilities, damages, costs or expenses attributable to any failure to conform to any warranty will be solely governed by these Terms and any Law applicable to Company as provider of the software. You acknowledge that Apple is not responsible for addressing any claims of you or any third party relating to the Apple-Sourced Software or your possession and/or use of the Apple-Sourced Software, including, without limitation: (a) product liability claims; (b) any claim that the Apple-Sourced Software fails to conform to any applicable legal or regulatory requirement; and (c) claims arising under consumer protection or similar legislation; and all such claims are governed solely by these Terms and any Law applicable to Company as provider of the software. You acknowledge that, in the event of any third-party claim that the Apple-Sourced Software or Your possession and use of that Apple-Sourced Software infringes that third party&rsquo;s intellectual property rights, Company, not Apple, will be solely responsible for the investigation, defense, settlement and discharge of any such intellectual property infringement claim to the extent required by these Terms. You and Company acknowledge and agree that Apple, and Apple&rsquo;s subsidiaries, are third-party beneficiaries of these Terms as relates to your license of the Apple-Sourced Software, and that, upon your acceptance of these Terms, Apple will have the right (and will be deemed to have accepted the right) to enforce these Terms as relates to your license of the Apple-Sourced Software against you as a third-party beneficiary thereof.
+            </p>
+            <p>
+              The following applies to any Mobile Software you acquire from the Google Play Store (&ldquo;Google-Sourced Software&rdquo;):
+            </p>
+            <p className="pl-4 border-l-2 border-gray-300 italic text-[14.5px] text-gray-600 bg-gray-50/50 py-2">
+              (a) You acknowledge that these Terms are between you and Company only, and not with Google, Inc. (&ldquo;Google&rdquo;); (b) your use of Google-Sourced Software must comply with Google&rsquo;s then-current Google Play Store Terms of Service; (c) Google is only a provider of the Google Play Store where you obtained the Google-Sourced Software; (d) Company, and not Google, is solely responsible for its Google-Sourced Software; (e) Google has no obligation or liability to you with respect to Google-Sourced Software or these Terms; and (f) you acknowledge and agree that Google is a third-party beneficiary to these Terms as it relates to Company&rsquo;s Google-Sourced Software.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          {/* Section 8 */}
+          <section className="space-y-4">
+            <h2 className="text-lg font-bold text-[#13325b] font-serif">8. PROPRIETARY RIGHTS TO CONTENT</h2>
+            <p>
+              You acknowledge and agree that content, including, without limitation, text, software, music, sound, photographs, video, graphics, images, logos, button icons, editorial content, notices, software (including, without limitation, HTML-based computer programs), other material contained in sponsor advertisements, and other information or materials presented to you through the Service (&ldquo;Content&rdquo;) is protected by copyrights, trademarks, service marks, patents or other proprietary rights and Laws. The Content belongs to Company or to others as indicated. You are only permitted to use this Content as expressly authorized by Company or the Service, and you may not copy, reproduce, distribute, display, download, license, modify, adapt, edit, publish, perform, repost, reuse, sell, supplement, transmit, create derivative works or otherwise use the Content for public or commercial purposes without our express authorization. Your right to use the Service is personal to you. Use of the Content other than as expressly permitted by these Terms is strictly prohibited.
+            </p>
+            <p>
+              You may choose to or we may invite you to submit comments or ideas about Company or the Service, including, without limitation, about how to improve the Service or our products (&ldquo;Feedback&rdquo;). By submitting any Feedback, you agree that your disclosure is gratuitous, unsolicited and without restriction and will not place Company under any fiduciary or other obligation, and that we are free to use the Feedback without any additional compensation to you, and/or to disclose the Feedback on a non-confidential basis or otherwise to anyone. You further acknowledge that, by acceptance of your submission, Company does not waive any rights to use similar or related ideas previously known to Company, or developed by its employees or contractors, or obtained from sources other than you.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          {/* Section 9 */}
+          <section className="space-y-4">
+            <h2 className="text-lg font-bold text-[#13325b] font-serif">9. DIGITAL MILLENNIUM COPYRIGHT ACT</h2>
+            <p>
+              Since we respect content owner rights, it is Company&rsquo;s policy to respond to alleged infringement notices that comply with the Digital Millennium Copyright Act of 1998 (&ldquo;DMCA&rdquo;).
+            </p>
+            <p>
+              If you believe that your copyrighted work has been copied in a way that constitutes copyright infringement and is accessible via the Service, please notify Company&rsquo;s copyright agent as set forth in the DMCA. For your complaint to be valid under the DMCA, you must provide the following information in writing:
+            </p>
+            <ol className="list-decimal pl-5 space-y-2">
+              <li>An electronic or physical signature of a person authorized to act on behalf of the copyright owner;</li>
+              <li>Identification of the copyrighted work that you claim has been infringed;</li>
+              <li>Identification of the material that is claimed to be infringing and where it is located on the Service;</li>
+              <li>Information reasonably sufficient to permit Company to contact you, such as your address, telephone number, and, e-mail address;</li>
+              <li>A statement that you have a good faith belief that use of the material in the manner complained of is not authorized by the copyright owner, its agent, or law; and</li>
+              <li>A statement, made under penalty of perjury, that the above information is accurate, and that you are the copyright owner or are authorized to act on behalf of the owner.</li>
+            </ol>
+            
+            <div className="bg-gray-50 p-4 rounded-lg space-y-1 text-xs border border-gray-200 max-w-md">
+              <p>The above information must be submitted to the following DMCA Agent:</p>
+              <p className="font-semibold text-gray-800 mt-2">Attn: Sallie Mae Legal Department &ndash; DMCA Notice</p>
+              <p>Company: Sallie Mae Bank</p>
+              <p>Address: 300 Continental Drive, Newark, Delaware 19713</p>
+              <p>Tel.: 855-342-2014</p>
+              <p>Email: <a href="mailto:copyright@salliemae.com" className="text-blue-600 hover:underline">copyright@salliemae.com</a></p>
+            </div>
+
+            <p className="text-xs font-bold text-red-600">
+              UNDER FEDERAL LAW, IF YOU KNOWINGLY MISREPRESENT THAT ONLINE MATERIAL IS INFRINGING, YOU MAY BE SUBJECT TO CRIMINAL PROSECUTION FOR PERJURY AND CIVIL PENALTIES, INCLUDING MONETARY DAMAGES, COURT COSTS, AND ATTORNEYS&rsquo; FEES.
+            </p>
+            
+            <p>
+              Please note that this procedure is exclusively for notifying Company and its affiliates that your copyrighted material has been infringed. The preceding requirements are intended to comply with Company&rsquo;s rights and obligations under the DMCA, including 17 U.S.C. &sect;512(c), but do not constitute legal advice. It may be advisable to contact an attorney regarding your rights and obligations under the DMCA and other applicable laws.
+            </p>
+
+            <p>
+              In accordance with the DMCA and other applicable Law, Company has adopted a policy of terminating, in appropriate circumstances, Users who are deemed to be repeat infringers. Company may also at its sole discretion limit access to the Service and/or terminate the User accounts of any Users who infringe any intellectual property rights of others, whether or not there is any repeat infringement.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          {/* Section 10 */}
+          <section className="space-y-3">
+            <h2 className="text-lg font-bold text-[#13325b] font-serif">10. NO RELIANCE ON TOOLS AND INFORMATION</h2>
+            <p>
+              Company may make certain calculators and tools available to you through the Service, such as loan repayment calculators (collectively, &ldquo;Tools&rdquo;). You acknowledge and agree that any estimates, calculations or other information (&ldquo;Information&rdquo;) provided by or through such Tools is for informational purposes only and may be different than actual amounts or otherwise contain inaccuracies; such Information is not intended to be a substitute for your own independent research and calculations. Company does not and cannot verify that the Tools or Information are true, accurate, complete or current and makes no representations concerning such Tools or Information. You should not use or rely upon such Tools or Information for any reason, including, without limitation, making any decisions related to your loans or personal finances. Any reliance on the Tools or Information is solely at your own risk. Company hereby expressly disclaims all liability for any such Tools or Information provided by or through the Service to the fullest extent permitted by applicable Law.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          {/* Section 11 */}
+          <section className="space-y-4">
+            <h2 className="text-lg font-bold text-[#13325b] font-serif">11. CONFIDENTIALITY; YOUR SECURITY OBLIGATIONS</h2>
+            <p>
+              You acknowledge and agree that the Service is, and shall at all times remain, the sole and exclusive property of Company and/or its licensors, and that Company and/or its licensors is the sole and exclusive owner(s) of all rights to the Service, including, without limitation, any and all copyrights and all related renewals and extensions. You agree that the Service is proprietary and confidential and that you will not authorize or permit its contents to be conveyed or in any manner communicated or used by any third party or to be duplicated or reproduced without our prior written approval. Your right to use the Service is personal to you. You agree to use the Service solely for your personal, non-commercial purposes and not for any commercial purposes. You agree not to sell, resell, or exploit for any commercial purposes, the Service or use of or access to the Service or any information or technology obtained from the Service.
+            </p>
+            <p>
+              You will maintain confidentiality concerning any confidential or proprietary information which you access through the Service and you will protect such information from unauthorized access, use or disclosure.
+            </p>
+            <p>
+              You will restrict unauthorized users from gaining access to the Service. If you are not a registered user, you may receive a user name and password upon completing the registration process. You are responsible for maintaining the confidentiality of your passwords and for any and all activities that occur under your passwords or User accounts. You agree to immediately notify Company of any unauthorized use of your User account or any other breach of security known to you.
+            </p>
+            <p>
+              You will take feasible steps to prevent transmission over the Service of any virus or other software routine designed or likely to permit unauthorized access to the Service or to disable, erase or otherwise harm any software, hardware or data accessible over the Service.
+            </p>
+            <p>
+              The confidentiality obligations of this Section 11 will survive the termination of your use of the Service.
+            </p>
+            <p>
+              You agree to be solely responsible for your actions and the contents of your transmission through the Service. You agree to use any data encryption tool that is built into the Service or another data encryption tool that is mutually agreed upon by you and Company.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          {/* Section 12 */}
+          <section className="space-y-3">
+            <h2 className="text-lg font-bold text-[#13325b] font-serif">12. SECURITY</h2>
+            <p>
+              We care about the integrity and security of your personally identifiable information. We have implemented commercially reasonable technical and organizational measures designed to secure your personally identifiable information from accidental loss and from unauthorized access, use, alteration or disclosure. However, you acknowledge and agree that despite our reasonable security measures, we cannot guarantee that electronic communications over the Internet will be 100% secure and that unauthorized third parties will never be able to defeat those measures or use your personally identifiable information for improper purposes. You acknowledge that you are under no obligation to use the Service, and that you provide any personal or sensitive information in order to use the Service at your own risk.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          {/* Section 13 */}
+          <section className="space-y-4">
+            <h2 className="text-lg font-bold text-[#13325b] font-serif">13. DISCLAIMER OF WARRANTIES</h2>
+            <p className="font-bold text-gray-900 text-[14.5px]">
+              YOU EXPRESSLY AGREE THAT USE OF THE SERVICE AND ANY MATERIALS OR INFORMATION PROVIDED BY US OR MADE AVAILABLE TO YOU THROUGH THE SERVICE, INCLUDING, WITHOUT LIMITATION, COMPANY MATERIALS, IS AT YOUR SOLE RISK. THE SERVICE AND COMPANY MATERIALS, INCLUDING, BUT NOT LIMITED TO ANY THIRD-PARTY-PROVIDED INFORMATION, SOFTWARE OR SERVICES MADE AVAILABLE THROUGH THE SERVICE ARE PROVIDED ON AN &ldquo;AS IS,&rdquo; &ldquo;WHERE IS&rdquo; AND &ldquo;AS AVAILABLE&rdquo; BASIS.
+            </p>
+            <p className="font-bold text-gray-900 text-[14.5px]">
+              TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, COMPANY EXPRESSLY DISCLAIMS ALL WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+            </p>
+            <p>
+              COMPANY MAKES NO WARRANTY THAT THE SERVICE OR COMPANY MATERIALS WILL MEET YOUR REQUIREMENTS, OR THAT THE SERVICE OR COMPANY MATERIALS WILL BE UNINTERRUPTED, TIMELY, AVAILABLE AT A PARTICULAR TIME OR LOCATION, SECURE, OR ERROR FREE; NOR DOES COMPANY MAKE ANY WARRANTY AS TO THE RESULTS THAT MAY BE OBTAINED FROM THE USE OF THE SERVICE OR COMPANY MATERIALS OR AS TO THE TIMELINESS, ACCURACY OR RELIABILITY OF ANY INFORMATION OBTAINED THROUGH THE SERVICE, INCLUDING, WITHOUT LIMITATION, ANY COMPANY MATERIALS, OR THAT DEFECTS OR ERRORS IN THE SOFTWARE USED IN THE SERVICE, SERVICE OR COMPANY MATERIALS WILL BE CORRECTED, OR THAT THE SERVICE WILL MEET YOUR REQUIREMENTS.
+            </p>
+            <p>
+              COMPANY EXPRESSLY DISCLAIMS ANY WARRANTY THAT THE SERVICE (OR ANY INFORMATION OR SOFTWARE CONTAINED THEREIN) IS FREE OF VIRUSES, WORMS, TROJAN HORSES, HARMFUL COMPONENTS, OR OTHER CODE THAT MANIFEST CONTAMINATING OR DESTRUCTIVE PROPERTIES. ANY CONTENT DOWNLOADED OR OTHERWISE OBTAINED THROUGH THE USE OF THE SERVICE IS DOWNLOADED AT YOUR OWN RISK AND YOU WILL BE SOLELY RESPONSIBLE FOR ANY DAMAGE TO YOUR COMPUTER SYSTEM OR MOBILE DEVICE OR LOSS OF DATA OR CONTENT THAT RESULTS FROM SUCH DOWNLOAD OR YOUR USE OF THE SERVICE.
+            </p>
+            <p>
+              COMPANY MAKES NO WARRANTY REGARDING ANY SERVICES OBTAINED THROUGH THE SERVICE OR ANY TRANSACTIONS ENTERED INTO THROUGH THE SERVICE.
+            </p>
+            <p>
+              COMPANY DOES NOT WARRANT, ENDORSE, GUARANTEE, OR ASSUME RESPONSIBILITY FOR ANY PRODUCT OR SERVICE ADVERTISED OR OFFERED BY A THIRD PARTY THROUGH THE SERVICE OR ANY HYPERLINKED WEBSITE OR SERVICE, AND WE WILL NOT BE A PARTY TO OR IN ANY WAY MONITOR ANY TRANSACTION BETWEEN YOU AND THIRD-PARTY PROVIDERS OF PRODUCTS OR SERVICES.
+            </p>
+            <p>
+              COMPANY DOES NOT WARRANT OR GUARANTEE THAT YOU WILL RECEIVE ANY PRODUCTS OR SERVICES, INCLUDING, WITHOUT LIMITATION, ANY FINANCIAL AID, SCHOLARSHIP, LOAN, OR OTHER CREDIT OR BANKING PRODUCT THROUGH THE SERVICE, OR ANY SPECIFIC MONETARY AMOUNTS, AND COMPANY SHALL NOT BE LIABLE TO YOU OR ANY THIRD PARTY FOR ANY LACK OF SUCCESS OF ANY APPLICATION BY YOU FOR ANY FINANCIAL AID, SCHOLARSHIP, LOAN, OR OTHER CREDIT OR BANKING PRODUCT. COMPANY EXPRESSLY DISCLAIMS LIABILITY OR RESPONSIBILITY FOR THE SUCCESS OF ANY APPLICATION BY YOU FOR FINANCIAL AID, SCHOLARSHIPS, LOAN, OR OTHER CREDIT OR BANKING PRODUCT.
+            </p>
+            <p className="text-xs font-bold text-gray-500 bg-gray-50 p-2.5 rounded border border-gray-150">
+              NOTWITHSTANDING THE FOREGOING, SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OF CERTAIN WARRANTIES, SO SOME OF THE ABOVE EXCLUSIONS MAY NOT APPLY TO YOU.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          {/* Section 14 */}
+          <section className="space-y-3">
+            <h2 className="text-lg font-bold text-[#13325b] font-serif">14. INDEMNIFICATION</h2>
+            <p>
+              You will indemnify, hold harmless and reimburse Company and its agents, licensors, suppliers, contractors and third-party providers, and their respective employees, members, officers and directors, from and against any and all claims, damages, obligations, losses, liabilities, settlements, costs or debt, and expenses (including, without limitation, court costs and reasonable attorneys&rsquo; fees) (&ldquo;Losses&rdquo;) caused by or arising from: (i) your or your agents&rsquo; use of and access to the Service (by your or any other person or entity accessing the Service using your user name and password), and any data or content, including, without limitation, any User Materials, transmitted or received by you; (ii) any and all actual or alleged injury to any person (including death) or property to the extent caused in whole or in part by your negligence; (iii) your violation of any term of these Terms, including, without limitation, your breach of any of the representations and warranties above; (iv) your violation of any third-party right, including, without limitation, any right of privacy, right of publicity or intellectual property rights; (v) your violation of any applicable Law; (vi) any claims or damages that arise as a result of any of your User Materials; or (vii) any other party&rsquo;s access and use of the Service with your unique username, password or other appropriate security code; (vi) the negligence or willful misconduct of you or your agents.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          {/* Section 15 */}
+          <section className="space-y-4">
+            <h2 className="text-lg font-bold text-[#13325b] font-serif">15. LIMITATION OF LIABILITY</h2>
+            <p className="font-bold text-gray-900">
+              TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN ADDITION TO THE DISCLAIMERS OF WARRANTY AND OTHER DISCLAIMERS IN THESE TERMS, IN NO EVENT SHALL COMPANY BE LIABLE FOR ANY DIRECT, INDIRECT, PUNITIVE, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY OR ACTUAL DAMAGES, INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF PROFITS, GOODWILL, USE, DATA OR OTHER INTANGIBLE LOSSES, ARISING FROM OR RELATING TO THE SERVICE OR COMPANY MATERIALS, OR THAT RESULT FROM THE USE OF, OR INABILITY TO USE, THE SERVICE OR COMPANY MATERIALS. UNDER NO CIRCUMSTANCES WILL COMPANY BE RESPONSIBLE FOR ANY DAMAGE, LOSS OR INJURY RESULTING FROM HACKING, TAMPERING OR OTHER UNAUTHORIZED ACCESS OR USE OF THE SERVICE OR YOUR ACCOUNT OR THE INFORMATION CONTAINED THEREIN.
+            </p>
+            <p className="font-bold text-gray-900">
+              TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, COMPANY ASSUMES NO LIABILITY OR RESPONSIBILITY FOR ANY (A) ERRORS, MISTAKES, OR INACCURACIES OF CONTENT; (B) PERSONAL INJURY OR PROPERTY DAMAGE, OF ANY NATURE WHATSOEVER, RESULTING FROM YOUR ACCESS TO OR USE OF THE SERVICE; (C) ANY UNAUTHORIZED ACCESS TO OR USE OF OUR SECURE SERVERS AND/OR ANY AND ALL PERSONALLY IDENTIFIABLE INFORMATION STORED THEREIN; (D) ANY INTERRUPTION OR CESSATION OF TRANSMISSION TO OR FROM THE SERVICE; (E) ANY BUGS, VIRUSES, TROJAN HORSES, OR THE LIKE THAT MAY BE TRANSMITTED TO OR THROUGH THE SERVICE BY ANY THIRD PARTY; OR (F) ANY ERRORS OR OMISSIONS IN ANY CONTENT OR FOR ANY LOSS OR DAMAGE INCURRED AS A RESULT OF THE USE OF ANY CONTENT POSTED, EMAILED, TRANSMITTED, OR OTHERWISE MADE AVAILABLE THROUGH THE SERVICE.
+            </p>
+            <p className="font-bold text-gray-900">
+              THIS LIMITATION OF LIABILITY SECTION APPLIES WHETHER THE ALLEGED LIABILITY IS BASED ON CONTRACT, TORT, NEGLIGENCE, STRICT LIABILITY, OR ANY OTHER BASIS, EVEN IF COMPANY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. THE FOREGOING LIMITATION OF LIABILITY SHALL APPLY TO THE FULLEST EXTENT PERMITTED BY LAW IN THE APPLICABLE JURISDICTION.
+            </p>
+            <p>
+              NOTWITHSTANDING THE FOREGOING, SOME JURISDICTIONS DO NOT ALLOW THE LIMITATION OR EXCLUSION OF LIABILITY FOR INCIDENTAL OR CONSEQUENTIAL DAMAGES SO SOME OF THE ABOVE LIMITATIONS MAY NOT APPLY TO YOU. FURTHER, NOTHING IN THESE TERMS IS INTENDED TO LIMIT OR DISCLAIM COMPANY&rsquo;S OBLIGATIONS UNDER THE GRAMM-LEACH-BLILEY ACT (&ldquo;GLBA&rdquo;) AND TO THE EXTENT ANY PROVISION OF THESE TERMS ARE FOUND TO BE PROHIBITED BY, INVALID OR UNENFORCEABLE UNDER THE GLBA, THAT PROVISION WILL BE ENFORCED TO THE MAXIMUM EXTENT PERMISSIBLE AND THE OTHER PROVISIONS OF THESE TERMS WILL REMAIN IN FORCE.
+            </p>
+            <p>
+              IF THESE LIMITATIONS OR EXCLUSIONS ARE HELD TO BE INVALID OR UNENFORCEABLE FOR ANY REASON, UNLESS OTHERWISE PROHIBITED BY APPLICABLE LAW, THE MAXIMUM COLLECTIVE LIABILITY OF COMPANY, IF ANY, FOR LOSSES OR DAMAGES SHALL NOT EXCEED $500. IN NO EVENT SHALL COMPANY BE LIABLE TO YOU FOR ANY LOSSES OR DAMAGES GREATER THAN THE AMOUNT REFERRED TO ABOVE.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          {/* Section 16 */}
+          <section className="space-y-3">
+            <h2 className="text-lg font-bold text-[#13325b] font-serif">16. IMPORTANT NOTE TO NEW JERSEY CONSUMERS</h2>
+            <p className="font-semibold text-xs bg-yellow-50/50 p-4 rounded border border-yellow-100/50 text-gray-800">
+              IF YOU ARE A CONSUMER RESIDING IN NEW JERSEY, THE FOLLOWING PROVISIONS OF THESE TERMS DO NOT APPLY TO YOU (AND DO NOT LIMIT ANY RIGHTS THAT YOU MAY HAVE), IN EACH CASE, TO THE EXTENT THAT THEY ARE UNENFORCEABLE UNDER NEW JERSEY LAW: (A) THE DISCLAIMER OF LIABILITY FOR ANY INDIRECT, SPECIAL, INCIDENTAL, PUNITIVE, EXEMPLARY, OR CONSEQUENTIAL DAMAGES OF ANY KIND (FOR EXAMPLE, TO THE EXTENT UNENFORCEABLE UNDER THE NEW JERSEY PUNITIVE DAMAGES ACT, NEW JERSEY PRODUCTS LIABILITY ACT, NEW JERSEY UNIFORM COMMERCIAL CODE AND NEW JERSEY CONSUMER FRAUD ACT); (B) THE LIMITATION ON LIABILITY FOR LOST PROFITS OR LOSS OR MISUSE OF ANY DATA (FOR EXAMPLE, TO THE EXTENT UNENFORCEABLE UNDER THE NEW JERSEY IDENTITY THEFT PROTECTION ACT AND NEW JERSEY CONSUMER FRAUD ACT); (C) APPLICATION OF THE LIMITATIONS OF LIABILITY TO THE RECOVERY OF DAMAGES THAT ARISE UNDER CONTRACT AND TORT, INCLUDING, WITHOUT LIMITATION, NEGLIGENCE, STRICT LIABILITY OR ANY OTHER THEORY (FOR EXAMPLE, TO THE EXTENT SUCH DAMAGES ARE RECOVERABLE BY A CONSUMER UNDER NEW JERSEY LAW, INCLUDING, WITHOUT LIMITATION, THE NEW JERSEY PRODUCTS LIABILITY ACT); (D) THE REQUIREMENT THAT YOU INDEMNIFY COMPANY (FOR EXAMPLE, TO THE EXTENT THE SCOPE OF SUCH INDEMNITY IS PROHIBITED UNDER NEW JERSEY LAW); AND (E) THE DELAWARE GOVERNING LAW PROVISION (FOR EXAMPLE, TO THE EXTENT THAT YOUR RIGHTS AS A CONSUMER RESIDING IN NEW JERSEY ARE REQUIRED TO BE GOVERNED BY NEW JERSEY LAW).
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          {/* Section 17 */}
+          <section className="space-y-3">
+            <h2 className="text-lg font-bold text-[#13325b] font-serif">17. TERMINATION</h2>
+            <p>
+              You agree that Company may terminate your password(s), account(s) or use of the Service at Company&rsquo;s discretion for any reason.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          {/* Section 18 */}
+          <section className="space-y-3">
+            <h2 className="text-lg font-bold text-[#13325b] font-serif">18. NOTICE</h2>
+            <p>
+              All notices to a party shall be in writing and shall be made either via email or conventional mail. In addition, Company may post notices or links to notices through the Service to inform you of changes to the Terms, the Service, or other matters of importance.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+
+          {/* Section 19 */}
+          <section className="space-y-4">
+            <h2 className="text-lg font-bold text-[#13325b] font-serif">19. GENERAL</h2>
+            
+            <p>
+              <strong>A. Governing Law.</strong> The Terms shall be governed by the laws of the State of Delaware, without regard to its conflict of law provisions. You and Company agree to submit to the personal and exclusive jurisdiction and venue of the state and federal courts located within New Castle County, Delaware.
+            </p>
+
+            <p>
+              <strong>B. Changes to These Terms.</strong> Company may, in its sole discretion, modify or update these Terms from time to time, and so you should review this page periodically. When we change these Terms in a material manner, we will update the &lsquo;last modified&rsquo; date at the bottom of this page. Your continued use of the Service after any such change constitutes your acceptance of the new Terms. If you do not agree to any of these terms or any future Terms, do not use or access (or continue to access) the Service.
+            </p>
+
+            <p>
+              <strong>C. No Waiver.</strong> The failure of Company to exercise or enforce any right or provision of the Terms shall not constitute a waiver of such right or provision.
+            </p>
+
+            <p>
+              <strong>D. Severability.</strong> If any provision of the Terms is found by a court of competent jurisdiction to be invalid, the parties nevertheless agree that the court should endeavor to give effect to the parties&rsquo; intentions as reflected in the provision, and the other provisions of the Terms remain in full force and effect.
+            </p>
+
+            <p>
+              <strong>E. Limitations on Claims and Actions.</strong> You agree that regardless of any statute or law to the contrary, any claim or cause of action arising out of or related to use of the Service or the Terms must be filed by you within one (1) year after such claim or cause of action arose or be forever barred.
+            </p>
+
+            <p>
+              <strong>F. Force Majeure.</strong> In no event shall we be liable for damages caused by third parties not under our control or by other causes beyond our reasonable control, including, without limitation, damages caused by third party telecommunications service providers.
+            </p>
+
+            <p>
+              <strong>G. Construction; Interpretation.</strong> The section titles in these Terms are for convenience only and have no legal effect.
+            </p>
+
+            <p>
+              <strong>H. No Third-Party Beneficiaries.</strong> Except for the indemnified parties set forth in Section 14 above and Apple and Google as set forth in 7 above, the provisions of these Terms apply for the benefit of Company only. Company has the right to assert and enforce those provisions directly against you on its own behalf.
+            </p>
+
+            <p>
+              <strong>I. International Visitors.</strong> The Service is controlled and operated from our facilities in the United States. Company makes no representations that the Service is appropriate or available for use in other locations. You may not use the Service if you are a resident of a country embargoed by the United States, or are a foreign person or entity blocked or denied by the United States government. Unless otherwise explicitly stated, all materials found on the Service are solely directed to individuals, companies, or other entities located in the U.S. By using the Service, you are consenting to have your personal data transferred to and processed in the United States. Users who access or use the Service from jurisdictions outside of the United States do so at their own volition and are entirely responsible for compliance with all applicable United States and local Laws, including, without limitation, export and import regulations.
+            </p>
+
+            <p>
+              <strong>J. Contact Us.</strong> For information about how to contact us, please visit our <a href="#" className="text-blue-600 hover:underline">Contact us page</a>.
+            </p>
+
+            <p>
+              <strong>K. Assignment.</strong> Company expressly reserves the right to assign and transfer these Terms, and its rights and obligations under these Terms, in part or as a whole, without restriction, including, without limitation, to another legal entity as part of any sale or merger of all or part of Sallie Mae Bank or its affiliates with a separate legal entity. You may not transfer these Terms, or your rights or obligations under these Terms, to any person or entity without our prior written approval.
+            </p>
+
+            <p>
+              <strong>L. Entire Agreement.</strong> These Terms, together with all agreements incorporated by reference, any and all amendments and any and all additional written agreements you may enter into with Company in connection with the Service, shall constitute the entire agreement between you and Company concerning the Service and supersedes all prior agreements between the parties regarding the subject matter contained herein.
+            </p>
+          </section>
+
+          <hr className="border-gray-200" />
+          
+          <div className="text-xs text-gray-500 font-semibold pt-4 select-none">
+            These Terms of Use were last updated on: June 27, 2018.
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
