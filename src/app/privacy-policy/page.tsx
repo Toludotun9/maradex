@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import PrivacyNotice from '@/components/PrivacyNotice';
+import CookieConsentBanner from '@/components/CookieConsentBanner';
 
 export default function PrivacyPolicyPage() {
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -269,6 +270,7 @@ export default function PrivacyPolicyPage() {
 
         </div>
       </div>
+      <CookieConsentBanner />
     </div>
   );
 }

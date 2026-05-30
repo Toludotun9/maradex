@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import CookieConsentBanner from '@/components/CookieConsentBanner';
 
 export const metadata = {
   title: 'Terms of Use | Sallie Mae',
@@ -417,6 +418,7 @@ export default function TermsOfUsePage() {
           </div>
         </div>
       </div>
+      <CookieConsentBanner />
     </div>
   );
 }
