@@ -399,7 +399,7 @@ export default function TermsOfUsePage() {
             </p>
 
             <p>
-              <strong>J. Contact Us.</strong> For information about how to contact us, please visit our <a href="#" className="text-blue-600 hover:underline">Contact us page</a>.
+              <strong>J. Contact Us.</strong> For information about how to contact us, please visit our <span className="text-blue-600 hover:underline cursor-pointer select-none">Contact us page</span>.
             </p>
 
             <p>

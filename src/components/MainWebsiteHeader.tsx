@@ -22,13 +22,13 @@ const MainWebsiteHeader = () => {
 
         {/* Navigation Links (Hidden on Mobile) */}
         <nav className="hidden md:flex items-center gap-8 text-[14.5px] font-bold text-[#13325b]">
-          <Link href="#" className="hover:text-[#0084c9] transition-colors">
+          <Link href="#" onClick={(e) => e.preventDefault()} className="hover:text-[#0084c9] transition-colors">
             Student Loans
           </Link>
-          <Link href="#" className="hover:text-[#0084c9] transition-colors">
+          <Link href="#" onClick={(e) => e.preventDefault()} className="hover:text-[#0084c9] transition-colors">
             Savings
           </Link>
-          <Link href="#" className="hover:text-[#0084c9] transition-colors">
+          <Link href="#" onClick={(e) => e.preventDefault()} className="hover:text-[#0084c9] transition-colors">
             Resources and Tools
           </Link>
         </nav>

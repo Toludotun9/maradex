@@ -222,7 +222,7 @@ const PersonalInfoForm = ({
             <DisclaimerBox hasArrow className="md:mt-6 animate-in fade-in slide-in-from-left-2 duration-300">
               {formData.canText === 'yes' ? (
                 <>
-                  By selecting "Yes", you authorize Sallie Mae Bank to send automated and/or manual texts to the phone number entered above regarding instructions for returning to your application, the status of your application, and other information about your current or future applications and accounts. Message frequency depends on account status. Message and data rates may apply - reply HELP for assistance and STOP to revoke consent. Messages will be sent from 37903 or another number listed in our full SMS terms and conditions. You can also view our <a href="#" className="underline">privacy policy.</a>
+                  By selecting "Yes", you authorize Sallie Mae Bank to send automated and/or manual texts to the phone number entered above regarding instructions for returning to your application, the status of your application, and other information about your current or future applications and accounts. Message frequency depends on account status. Message and data rates may apply - reply HELP for assistance and STOP to revoke consent. Messages will be sent from 37903 or another number listed in our full SMS terms and conditions. You can also view our <a href="#" onClick={(e) => e.preventDefault()} className="underline">privacy policy.</a>
                 </>
               ) : (
                 <>
@@ -263,7 +263,7 @@ const PersonalInfoForm = ({
                   <span className="font-bold">For Non-U.S. citizens:</span> Please note that you'll need to reside in and attend school in the U.S. and apply with a creditworthy cosigner (who must be a U.S. citizen or U.S. permanent resident).
                 </p>
               )}
-              <a href="#" className="inline-block mt-4 text-secondary-blue font-bold border-b-2 border-secondary-blue hover:text-primary-blue hover:border-primary-blue transition-all">
+              <a href="#" onClick={(e) => e.preventDefault()} className="inline-block mt-4 text-secondary-blue font-bold border-b-2 border-secondary-blue hover:text-primary-blue hover:border-primary-blue transition-all">
                 Learn more
               </a>
             </div>

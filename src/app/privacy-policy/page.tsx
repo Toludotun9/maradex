@@ -258,6 +258,7 @@ export default function PrivacyPolicyPage() {
             <div className="space-y-3">
               <Link
                 href="#"
+                onClick={(e) => e.preventDefault()}
                 className="font-bold text-[#004b87] text-lg hover:underline cursor-pointer block"
               >
                 Sallie Mae Consumer Rights Request Form

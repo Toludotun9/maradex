@@ -430,7 +430,7 @@ const TermsOfUseModal = () => {
             </p>
 
             <p>
-              <strong>J. Contact Us.</strong> For information about how to contact us, please visit our <a href="#" className="text-blue-600 hover:underline">Contact us page</a>.
+              <strong>J. Contact Us.</strong> For information about how to contact us, please visit our <a href="#" onClick={(e) => e.preventDefault()} className="text-blue-600 hover:underline">Contact us page</a>.
             </p>
 
             <p>

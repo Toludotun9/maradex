@@ -143,7 +143,7 @@ export default function Home() {
             Privacy policy
           </Link>
           <span className="text-gray-300 font-light">|</span>
-          <a href="#" className="underline hover:text-[#003360] transition-colors">Website feedback</a>
+          <a href="#" onClick={(e) => e.preventDefault()} className="underline hover:text-[#003360] transition-colors">Website feedback</a>
         </div>
       </div>
     </div>

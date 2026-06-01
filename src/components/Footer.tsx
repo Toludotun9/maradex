@@ -31,7 +31,7 @@ const Footer = () => {
             Privacy policy
           </Link>
           <span className="text-gray-400 font-normal">|</span>
-          <a href="#" className="hover:underline">Website feedback</a>
+          <a href="#" onClick={(e) => e.preventDefault()} className="hover:underline">Website feedback</a>
         </div>
         
         <div className="text-xs text-text-muted leading-relaxed space-y-2">
