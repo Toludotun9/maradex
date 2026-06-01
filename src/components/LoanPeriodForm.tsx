@@ -96,6 +96,32 @@ const LoanPeriodForm = ({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSaved, setIsSaved] = useState(false);
   const [isContinuing, setIsContinuing] = useState(false);
+  const [showCostModal, setShowCostModal] = useState(false);
+  const [showAidModal, setShowAidModal] = useState(false);
+
+  // Prevent background scrolling when modal is open
+  useEffect(() => {
+    if (showCostModal || showAidModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [showCostModal, showAidModal]);
+
+  // Close modal on Escape key press
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setShowCostModal(false);
+        setShowAidModal(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   // Dynamic API states
   const [fetchedPeriods, setFetchedPeriods] = useState<{ label: string; value: string }[]>([]);
@@ -457,6 +483,7 @@ const LoanPeriodForm = ({
 
         <button 
           type="button" 
+          onClick={() => setShowCostModal(true)}
           className="text-xs font-bold text-secondary-blue border-b border-secondary-blue pb-0.5 mb-8 hover:text-primary-blue hover:border-primary-blue transition-colors block"
         >
           How we got this estimated cost of attendance
@@ -500,6 +527,7 @@ const LoanPeriodForm = ({
 
         <button 
           type="button" 
+          onClick={() => setShowAidModal(true)}
           className="text-xs font-bold text-secondary-blue border-b border-secondary-blue pb-0.5 mb-8 hover:text-primary-blue hover:border-primary-blue transition-colors block"
         >
           How to estimate financial aid
@@ -681,6 +709,77 @@ const LoanPeriodForm = ({
           </Button>
         </div>
       </div>
+
+      {/* Cost of Attendance Modal */}
+      {showCostModal && (
+        <div className="fixed inset-0 z-[2000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
+          <div className="absolute inset-0" onClick={() => setShowCostModal(false)} />
+          <div className="relative bg-white w-full max-w-[500px] rounded-xl shadow-2xl p-6 sm:p-8 animate-in fade-in zoom-in-95 duration-200 z-10 border border-gray-100">
+            <div className="flex justify-between items-start gap-4 mb-5">
+              <h3 className="text-xl font-bold text-primary-blue leading-snug">
+                How we got this estimated cost of attendance
+              </h3>
+              <button 
+                onClick={() => setShowCostModal(false)}
+                className="text-primary-blue hover:text-secondary-blue transition-colors p-1 flex-shrink-0"
+                aria-label="Close dialog"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+            <div className="space-y-4 text-[14.5px] text-gray-600 leading-relaxed font-medium">
+              <p>
+                We estimate your cost of attendance using information we get each year for full-time {formData.loanProgramType === 'grad' ? 'grad' : 'undergrad'} students at {schoolNameDisplay}. The cost of attendance typically includes:
+              </p>
+              <ul className="space-y-2 pl-5 list-disc text-gray-500">
+                <li>Tuition and fees</li>
+                <li>Food and housing</li>
+                <li>Books and supplies</li>
+                <li>Transportation to/from school</li>
+                <li>Other miscellaneous expenses</li>
+              </ul>
+              <p className="pt-2">
+                You can find out more about your cost of attendance by checking your financial aid package or your school’s website.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Financial Aid Modal */}
+      {showAidModal && (
+        <div className="fixed inset-0 z-[2000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
+          <div className="absolute inset-0" onClick={() => setShowAidModal(false)} />
+          <div className="relative bg-white w-full max-w-[500px] rounded-xl shadow-2xl p-6 sm:p-8 animate-in fade-in zoom-in-95 duration-200 z-10 border border-gray-100">
+            <div className="flex justify-between items-start gap-4 mb-5">
+              <h3 className="text-xl font-bold text-primary-blue leading-snug">
+                How to estimate your financial aid
+              </h3>
+              <button 
+                onClick={() => setShowAidModal(false)}
+                className="text-primary-blue hover:text-secondary-blue transition-colors p-1 flex-shrink-0"
+                aria-label="Close dialog"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+            <div className="space-y-4 text-[14.5px] text-gray-600 leading-relaxed font-medium">
+              <p>
+                To estimate your financial aid, you need to add up all of the aid you’re getting from federal, state, school, family, and private sources, plus any other sources of assistance used to determine eligibility for most financial aid.
+              </p>
+              <p>
+                If you’re unsure or have questions, you can request your estimated financial aid (also called estimated financial assistance) from {schoolNameDisplay}’s financial aid’s office.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
