@@ -182,8 +182,90 @@ const STATE_AVERAGES: Record<string, { inStatePublic: number; outOfStatePublic: 
   'WY': { inStatePublic: 21000, outOfStatePublic: 35000, privateCost: 52000 }
 };
 
+const COST_CACHE = new Map<string, { inState: number; outOfState: number }>();
+
+async function fetchCollegeScorecardCost(schoolName: string, stateCode: string): Promise<{ inState: number; outOfState: number } | null> {
+  const cleanName = schoolName.split(',')[0].trim();
+  if (!cleanName) return null;
+
+  const cacheKey = `${cleanName.toUpperCase()}_${stateCode.toUpperCase()}`;
+  if (COST_CACHE.has(cacheKey)) {
+    return COST_CACHE.get(cacheKey) || null;
+  }
+
+  try {
+    const encodedName = encodeURIComponent(cleanName);
+    let url = `https://api.data.gov/ed/collegescorecard/v1/schools?api_key=DEMO_KEY&school.name=${encodedName}&fields=school.name,latest.cost.attendance.academic_year,latest.cost.tuition.in_state,latest.cost.tuition.out_of_state&per_page=5`;
+    if (stateCode) {
+      url += `&school.state=${stateCode.toUpperCase()}`;
+    }
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 3000);
+
+    const res = await fetch(url, { signal: controller.signal });
+    clearTimeout(timeoutId);
+
+    if (!res.ok) {
+      return null;
+    }
+
+    const data = await res.json();
+    if (data.results && data.results.length > 0) {
+      const match = data.results.find((r: any) => r['school.name']?.toUpperCase() === cleanName.toUpperCase()) || data.results[0];
+      
+      const coa = match['latest.cost.attendance.academic_year'];
+      const tuitionIn = match['latest.cost.tuition.in_state'];
+      const tuitionOut = match['latest.cost.tuition.out_of_state'];
+
+      const inState = coa || (tuitionIn ? tuitionIn + 18000 : null);
+      const outOfState = coa 
+        ? (tuitionOut && tuitionIn ? coa + (tuitionOut - tuitionIn) : coa) 
+        : (tuitionOut ? tuitionOut + 18000 : null);
+
+      if (inState || outOfState) {
+        const result = {
+          inState: inState || 35000,
+          outOfState: outOfState || inState || 35000
+        };
+        COST_CACHE.set(cacheKey, result);
+        return result;
+      }
+    }
+    return null;
+  } catch (e) {
+    console.error('Error fetching from College Scorecard API:', e);
+    return null;
+  }
+}
+
 function isPublicSchool(schoolName: string): boolean {
   const upper = schoolName.toUpperCase();
+  
+  // Private universities/colleges that contain public keywords but should be private
+  const privateExceptions = [
+    'UNIVERSITY OF MIAMI',
+    'UNIVERSITY OF DAYTON',
+    'UNIVERSITY OF NOTRE DAME',
+    'UNIVERSITY OF DENVER',
+    'UNIVERSITY OF SAN FRANCISCO',
+    'UNIVERSITY OF SAN DIEGO',
+    'UNIVERSITY OF ROCHESTER',
+    'UNIVERSITY OF TULSA',
+    'UNIVERSITY OF PUGET SOUND',
+    'UNIVERSITY OF REDLANDS',
+    'UNIVERSITY OF PORTLAND',
+    'UNIVERSITY OF ST. THOMAS',
+    'COLLEGE OF THE HOLY CROSS',
+    'COLLEGE OF ST. SCHOLASTICA',
+    'COLLEGE OF ST. BENEDICT',
+    'UNIVERSITY OF SOUTHERN CALIFORNIA'
+  ];
+
+  if (privateExceptions.some(ex => upper.includes(ex))) {
+    return false;
+  }
+
   const publicKeywords = [
     'STATE', 'COMMUNITY', 'SYSTEM', 'COUNTY', 'CITY', 'TOWNSHIP',
     'PUBLIC', 'MUNICIPAL', 'DISTRICT', 'VOCATIONAL', 'TECHNICAL'
@@ -231,24 +313,22 @@ export async function GET(request: Request) {
 
   if (!isCostMapped) {
     if (schoolNameParam) {
-      // Find state averages based on the school's state
-      const stateKey = schoolState || 'US';
-      const averages = STATE_AVERAGES[stateKey] || { inStatePublic: 28000, outOfStatePublic: 48000, privateCost: 65000 };
-      
-      const isPublic = isPublicSchool(upperSchool);
-      const baseCost = isPublic 
-        ? (isInState ? averages.inStatePublic : averages.outOfStatePublic)
-        : averages.privateCost;
-
-      // Generate deterministic premium cost based on string hash for unique variations (-$3,000 to +$3,000)
-      let hash = 0;
-      for (let i = 0; i < upperSchool.length; i++) {
-        hash = upperSchool.charCodeAt(i) + ((hash << 5) - hash);
+      // Try to query the College Scorecard API dynamically
+      const dynamicCost = await fetchCollegeScorecardCost(cleanSchoolName, schoolState);
+      if (dynamicCost) {
+        costOfAttendance = isInState ? dynamicCost.inState : dynamicCost.outOfState;
+        isCostMapped = true;
+      } else {
+        // Fall back to clean state average costs without random hash offsets
+        const stateKey = schoolState || 'US';
+        const averages = STATE_AVERAGES[stateKey] || { inStatePublic: 28000, outOfStatePublic: 48000, privateCost: 65000 };
+        
+        const isPublic = isPublicSchool(upperSchool);
+        costOfAttendance = isPublic 
+          ? (isInState ? averages.inStatePublic : averages.outOfStatePublic)
+          : averages.privateCost;
+        isCostMapped = true;
       }
-      const offset = (Math.abs(hash) % 6000) - 3000;
-      costOfAttendance = baseCost + offset;
-      costOfAttendance = Math.max(12000, costOfAttendance);
-      isCostMapped = true;
     }
   }
 

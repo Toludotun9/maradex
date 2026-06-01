@@ -129,12 +129,8 @@ const LoanPeriodForm = ({
             if (data.costOfAttendance) {
               setCostEstimate(data.costOfAttendance);
               
-              // Calculate correct cost based on academic period
-              const currentPeriod = formData.loanAcademicPeriod || '';
-              let initialCost = data.costOfAttendance;
-              if (currentPeriod && isSingleSemester(currentPeriod)) {
-                initialCost = Math.round(data.costOfAttendance / 2);
-              }
+              // Always use original costOfAttendance without division
+              const initialCost = data.costOfAttendance;
               
               updateFormData({ loanCostOfAttendance: initialCost.toString() });
             }
@@ -324,12 +320,7 @@ const LoanPeriodForm = ({
             options={activePeriods}
             onChange={(e) => {
               const selectedPeriod = e.target.value;
-              let updatedCost = costEstimate;
-              
-              // Calculate correct cost: divide by 2 if single semester or custom
-              if (selectedPeriod && isSingleSemester(selectedPeriod)) {
-                updatedCost = Math.round(costEstimate / 2);
-              }
+              const updatedCost = costEstimate;
 
               handleChange({ 
                 loanAcademicPeriod: selectedPeriod,
