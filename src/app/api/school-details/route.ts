@@ -239,6 +239,15 @@ async function fetchCollegeScorecardCost(schoolName: string, stateCode: string):
   }
 }
 
+function normalizeName(name: string): string {
+  return name
+    .toUpperCase()
+    .replace(/^THE\s+/, '')
+    .replace(/[^A-Z0-9\s]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 function isPublicSchool(schoolName: string): boolean {
   const upper = schoolName.toUpperCase();
   
@@ -302,9 +311,13 @@ export async function GET(request: Request) {
   let isCostMapped = false;
   
   // Find in SCHOOL_COSTS (sorted by length descending to prevent prefix/substring collisions)
+  const normalizedInput = normalizeName(upperSchool);
   const match = Object.keys(SCHOOL_COSTS)
     .sort((a, b) => b.length - a.length)
-    .find(key => upperSchool.includes(key));
+    .find(key => {
+      const normalizedKey = normalizeName(key);
+      return normalizedInput.includes(normalizedKey) || normalizedKey.includes(normalizedInput);
+    });
   if (match) {
     const costs = SCHOOL_COSTS[match];
     costOfAttendance = isInState ? costs.inState : costs.outOfState;

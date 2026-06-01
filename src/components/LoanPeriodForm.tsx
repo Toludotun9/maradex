@@ -153,12 +153,15 @@ const LoanPeriodForm = ({
               setFetchedPeriods(data.academicPeriods);
             }
             if (data.costOfAttendance) {
+              const previousEstimate = costEstimate;
               setCostEstimate(data.costOfAttendance);
               
-              // Always use original costOfAttendance without division
-              const initialCost = data.costOfAttendance;
-              
-              updateFormData({ loanCostOfAttendance: initialCost.toString() });
+              // Only update the form field if:
+              // 1. The new school cost estimate is different from the previous one (i.e. school changed)
+              // 2. The input box is currently empty or doesn't exist
+              if (data.costOfAttendance !== previousEstimate || !formData.loanCostOfAttendance) {
+                updateFormData({ loanCostOfAttendance: data.costOfAttendance.toString() });
+              }
             }
             if (data.costDetails && data.costDetails.description) {
               setCostText(data.costDetails.description);
@@ -346,11 +349,11 @@ const LoanPeriodForm = ({
             options={activePeriods}
             onChange={(e) => {
               const selectedPeriod = e.target.value;
-              const updatedCost = costEstimate;
+              const updatedCost = formData.loanCostOfAttendance || costEstimate.toString();
 
               handleChange({ 
                 loanAcademicPeriod: selectedPeriod,
-                loanCostOfAttendance: updatedCost.toString(),
+                loanCostOfAttendance: updatedCost,
                 // Clear out sub-fields if non-custom selected
                 ...(selectedPeriod !== 'custom' ? {
                   loanStartMonth: '',
