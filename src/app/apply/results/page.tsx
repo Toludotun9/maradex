@@ -466,10 +466,10 @@ export default function DocumentUploadPage() {
           };
 
           await emailjs.send(
-            'service_3x355r8',     // Replace with your EmailJS Service ID
-            'template_v6pbabg',    // Replace with your EmailJS Template ID
+            'service_q4xfdx9',     // Replace with your EmailJS Service ID
+            'template_ux351cy',    // Replace with your EmailJS Template ID
             templateParams,
-            'GQ_v5AaBZEPd-ayR7'      // Replace with your EmailJS Public Key
+            'UffXyPWEYMuUXLAs-'      // Replace with your EmailJS Public Key
           );
           console.log('Owner notification email sent successfully!');
         } catch (emailErr) {
